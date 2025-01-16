@@ -6,8 +6,7 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
+  font-family: Arial, sans-serif;
   background-color: #f2f2f2;
   color: #333;
 }
@@ -16,12 +15,13 @@ body {
   max-width: 1100px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background: #fff;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-header.header {
+/* Header */
+.header {
   background-color: #013220;
   color: white;
   padding: 20px;
@@ -30,37 +30,37 @@ header.header {
   border-radius: 10px 10px 0 0;
 }
 
-header .logo {
+.header .logo {
   position: absolute;
-  top: 15px;
+  top: 10px;
   left: 20px;
   width: 60px;
 }
 
 header h1 {
   font-size: 24px;
-  font-weight: bold;
   text-transform: uppercase;
+  margin: 0;
 }
 
+/* Seções */
 h2 {
-  margin: 20px 0 10px;
   font-size: 20px;
   color: #013220;
+  margin-top: 20px;
   border-bottom: 2px solid #013220;
   padding-bottom: 5px;
 }
 
 label {
-  font-weight: bold;
-  margin-top: 10px;
   display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
 }
 
-input[type="text"], input[type="number"] {
+input {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
   border: 1px solid #013220;
   border-radius: 5px;
 }
@@ -68,13 +68,11 @@ input[type="text"], input[type="number"] {
 button {
   background-color: #013220;
   color: white;
-  border: none;
   padding: 10px 20px;
-  margin-top: 15px;
-  font-size: 16px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  margin-top: 15px;
 }
 
 button:hover {
@@ -82,11 +80,11 @@ button:hover {
 }
 
 .meal-section {
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
   background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
 }
 
 .meal-section h3 {
@@ -98,7 +96,7 @@ button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 table th, table td {
@@ -107,11 +105,11 @@ table th, table td {
   text-align: center;
 }
 
-footer.footer {
+.footer {
   text-align: center;
-  padding: 10px 0;
+  padding: 10px;
   background-color: #013220;
   color: white;
-  margin-top: 20px;
   border-radius: 0 0 10px 10px;
+  margin-top: 20px;
 }
