@@ -1,135 +1,54 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const mealsContainer = document.getElementById("mealsContainer");
-  const addMealButton = document.getElementById("addMealButton");
-  const generatePdfButton = document.getElementById("generatePdfButton");
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano Alimentar Personalizado</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="logo-henrique-cordeiro.png.png" alt="Logo Henrique Cordeiro" class="logo">
+      <h1>Plano Alimentar Personalizado</h1>
+    </header>
 
-  // Adicionar uma nova refeição
-  addMealButton.addEventListener("click", () => {
-    const mealSection = document.createElement("div");
-    mealSection.classList.add("meal-section");
+    <main>
+      <!-- Informações do Cliente -->
+      <section class="client-info">
+        <h2>Informações do Cliente</h2>
+        <div class="form-group">
+          <label for="clientName">Nome do Cliente:</label>
+          <input type="text" id="clientName" placeholder="Digite o nome do cliente">
+        </div>
+        <div class="form-group">
+          <label for="protocolNumber">Número do Protocolo:</label>
+          <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
+        </div>
+        <div class="form-group">
+          <label for="weight">Peso Atual (kg):</label>
+          <input type="number" id="weight" placeholder="Digite o peso atual">
+        </div>
+      </section>
 
-    mealSection.innerHTML = `
-      <h3>Refeição</h3>
-      <label>Nome da Refeição:</label>
-      <input type="text" class="mealName" placeholder="Digite o nome da refeição">
-      <table>
-        <thead>
-          <tr>
-            <th>Alimento</th>
-            <th>Proporção</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><input type="text" class="foodName" placeholder="Ex.: Frango"></td>
-            <td><input type="text" class="foodProportion" placeholder="Ex.: 100g"></td>
-            <td><button type="button" class="removeRowBtn">Excluir</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <button type="button" class="addRowBtn">Adicionar Linha</button>
-    `;
+      <!-- Refeições -->
+      <section id="mealsContainer">
+        <h2>Refeições</h2>
+      </section>
+      <button type="button" id="addMealButton" class="btn btn-add">Adicionar Refeição</button>
 
-    mealsContainer.appendChild(mealSection);
-    attachMealEvents(mealSection);
-  });
+      <!-- Botões de Ação -->
+      <section class="controls">
+        <button type="button" id="generatePdfButton" class="btn btn-generate">Gerar PDF</button>
+      </section>
+    </main>
 
-  // Gerenciar eventos dentro de uma refeição
-  function attachMealEvents(section) {
-    const addRowBtn = section.querySelector(".addRowBtn");
-    const tableBody = section.querySelector("table tbody");
+    <footer class="footer">
+      <p>&copy; 2025 Henrique Cordeiro Nutrition | Todos os direitos reservados</p>
+    </footer>
+  </div>
 
-    // Adicionar linha
-    addRowBtn.addEventListener("click", () => {
-      const newRow = document.createElement("tr");
-      newRow.innerHTML = `
-        <td><input type="text" class="foodName" placeholder="Ex.: Arroz"></td>
-        <td><input type="text" class="foodProportion" placeholder="Ex.: 50g"></td>
-        <td><button type="button" class="removeRowBtn">Excluir</button></td>
-      `;
-      tableBody.appendChild(newRow);
-
-      newRow.querySelector(".removeRowBtn").addEventListener("click", () => {
-        newRow.remove();
-      });
-    });
-
-    section.querySelectorAll(".removeRowBtn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        btn.closest("tr").remove();
-      });
-    });
-  }
-
-  // Gerar PDF com logomarca e informações completas
-  generatePdfButton.addEventListener("click", () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Configurações básicas
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-
-    // Cabeçalho do PDF
-    const logoPath = "logo-henrique-cordeiro.png.png"; // Caminho da logomarca
-    const currentDate = new Date().toLocaleDateString("pt-BR");
-
-    doc.addImage(logoPath, "PNG", 10, 10, 30, 30); // Logomarca
-    doc.setFontSize(18);
-    doc.setTextColor("#013220");
-    doc.text("Plano Alimentar Personalizado", 50, 20);
-
-    const clientName = document.getElementById("clientName").value || "Nome não especificado";
-    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-    const weight = document.getElementById("weight").value || "Não especificado";
-
-    doc.setFontSize(12);
-    doc.setTextColor("#000");
-    doc.text(`Nome do Cliente: ${clientName}`, 10, 50);
-    doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 60);
-    doc.text(`Peso Atual: ${weight} kg`, 10, 70);
-
-    // Listar refeições
-    let yPosition = 90;
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.setFontSize(14);
-      doc.setTextColor("#013220");
-      doc.text(`${index + 1}. ${mealName}`, 10, yPosition);
-      yPosition += 10;
-
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        doc.setFontSize(12);
-        doc.setTextColor("#000");
-        doc.text(`- ${foodName}: ${foodProportion}`, 15, yPosition);
-        yPosition += 8;
-      });
-
-      yPosition += 10;
-
-      // Adicionar nova página, se necessário
-      if (yPosition > pageHeight - 30) {
-        doc.addPage();
-        yPosition = 20;
-      }
-    });
-
-    // Rodapé
-    const email = "diegossilva03@gmail.com";
-    doc.setFillColor("#013220");
-    doc.rect(0, pageHeight - 20, pageWidth, 20, "F");
-
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text(`E-mail: ${email}`, 10, pageHeight - 10);
-    doc.text(`Nome do Cliente: ${clientName}`, pageWidth / 2, pageHeight - 10, { align: "center" });
-    doc.text(`Data: ${currentDate}`, pageWidth - 40, pageHeight - 10);
-
-    // Salvar PDF
-    doc.save("Plano_Alimentar.pdf");
-  });
-});
+  <script src="script.js"></script>
+</body>
+</html>
