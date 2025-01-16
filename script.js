@@ -8,7 +8,7 @@ function addMeal() {
   mealSection.classList.add("meal-section");
 
   mealSection.innerHTML = `
-    <div class="meal-title">Nova Refeição</div>
+    <div class="meal-title">Refeição</div>
     <div class="field-group">
       <label for="mealName">Nome da Refeição:</label>
       <input type="text" class="meal-name" placeholder="Digite o nome da refeição">
@@ -26,17 +26,16 @@ function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Logomarca
+  // Adicionar logomarca
   const logo = new Image();
   logo.src = "logo-henrique-cordeiro.png.png";
 
   logo.onload = () => {
-    // Adicionar logomarca ao PDF
     doc.addImage(logo, "PNG", 10, 10, 40, 40);
 
     // Título do PDF
-    doc.setFont("Arial", "bold");
     doc.setFontSize(22);
+    doc.setTextColor("#013220");
     doc.text("PLANO ALIMENTAR PERSONALIZADO", 60, 30);
 
     // Dados do cliente
@@ -45,6 +44,7 @@ function generatePDF() {
     const weight = document.getElementById("weight").value || "Não especificado";
 
     doc.setFontSize(12);
+    doc.setTextColor("#000");
     doc.text(`Nome do Cliente: ${clientName}`, 20, 60);
     doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 70);
     doc.text(`Peso Atual: ${weight} kg`, 20, 80);
@@ -57,15 +57,16 @@ function generatePDF() {
       const food = meal.querySelector(".food").value || "Não especificado";
 
       doc.setFontSize(14);
-      doc.text(`${mealName}`, 20, yPosition);
+      doc.setTextColor("#013220");
+      doc.text(mealName, 20, yPosition);
       yPosition += 10;
 
       doc.setFontSize(12);
+      doc.setTextColor("#000");
       doc.text(`- ${food}`, 30, yPosition);
       yPosition += 10;
     });
 
-    // Salvar PDF
     doc.save("plano_alimentar_personalizado.pdf");
   };
 }
