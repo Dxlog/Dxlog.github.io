@@ -1,87 +1,98 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plano Alimentar Personalizado</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano Alimentar Personalizado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      background-color: #006400;
+      padding: 10px;
+      color: white;
+    }
+    header img {
+      height: 50px;
+      margin-right: 20px;
+    }
+    header h1 {
+      font-size: 24px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .field-group {
+      margin-bottom: 15px;
+    }
+    .field-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .field-group input, .field-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .meal-title {
+      background-color: #006400;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #006400;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #004d00;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>PLANO ALIMENTAR PERSONALIZADO</h1>
-        <form id="nutritionForm">
-            <!-- Nome do cliente -->
-            <div class="form-section">
-                <label for="clientName">Nome do Cliente:</label>
-                <input type="text" id="clientName" placeholder="Ex: João da Silva" required>
-            </div>
-            
-            <!-- Peso atual -->
-            <div class="form-section">
-                <label for="weight">Peso Atual (kg):</label>
-                <input type="number" id="weight" placeholder="Ex: 70.5" required>
-            </div>
-
-            <!-- Número do protocolo -->
-            <div class="form-section">
-                <label for="protocolNumber">Número do Protocolo:</label>
-                <input type="text" id="protocolNumber" placeholder="Ex: 12345" required>
-            </div>
-
-            <!-- Data -->
-            <div class="form-section">
-                <label for="date">Data:</label>
-                <input type="date" id="date" required>
-            </div>
-
-            <!-- Container de refeições -->
-            <div id="mealsContainer">
-                <h3>Refeições</h3>
-                <div class="meal" id="meal1">
-                    <div class="form-section">
-                        <label for="mealName1">Nome da Refeição:</label>
-                        <input type="text" id="mealName1" placeholder="Ex: Café da Manhã" required>
-                    </div>
-                    <table id="mealTable1">
-                        <thead>
-                            <tr>
-                                <th>Nome do Alimento</th>
-                                <th>Proporção</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="text" placeholder="Ex: Aveia" required></td>
-                                <td><input type="text" placeholder="Ex: 50g" required></td>
-                                <td><button type="button" onclick="addRow('mealTable1')">Adicionar Linha</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-section">
-                        <label for="substitutions1">Opções de Substituição:</label>
-                        <textarea id="substitutions1" placeholder="Ex: Granola ou Cereal Integral"></textarea>
-                    </div>
-                </div>
-            </div>
-            <button type="button" onclick="addMeal()">Adicionar Mais Refeições</button>
-
-            <!-- Campos adicionais -->
-            <div class="form-section">
-                <label for="suggestions">Sugestões:</label>
-                <textarea id="suggestions" placeholder="Ex: Beba pelo menos 2 litros de água por dia"></textarea>
-            </div>
-            <div class="form-section">
-                <label for="supplements">Suplementações:</label>
-                <textarea id="supplements" placeholder="Ex: Whey Protein após o treino"></textarea>
-            </div>
-
-            <!-- Botão de gerar PDF -->
-            <button type="button" onclick="generatePDF()">Gerar PDF</button>
-        </form>
+  <header>
+    <img src="logo.png" alt="Henrique Cordeiro Nutrition">
+    <h1>Plano Alimentar Personalizado</h1>
+  </header>
+  <div class="container">
+    <div class="field-group">
+      <label for="clientName">Nome do Cliente:</label>
+      <input type="text" id="clientName" placeholder="Digite o nome do cliente">
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
+    <div class="field-group">
+      <label for="protocolNumber">Número do Protocolo:</label>
+      <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
+    </div>
+    <div class="field-group">
+      <label for="weight">Peso Atual:</label>
+      <input type="text" id="weight" placeholder="Digite o peso atual">
+    </div>
+    <!-- Refeições -->
+    <div id="mealsContainer"></div>
+    <button onclick="addMeal()">Adicionar Refeição</button>
+    <br><br>
+    <button onclick="generatePDF()">Gerar PDF</button>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
