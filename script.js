@@ -24,41 +24,44 @@ function generatePDF() {
   const doc = new jsPDF();
 
   const logo = new Image();
-  logo.src = "logo-henrique-cordeiro.png"; // Certifique-se de que o arquivo esteja disponível no diretório.
+  logo.src = "logo-henrique-cordeiro.png"; // Caminho da logomarca
 
-  // Inserindo logomarca
-  doc.addImage(logo, "PNG", 10, 10, 40, 40);
+  logo.onload = () => {
+    // Inserindo logomarca
+    doc.addImage(logo, "PNG", 10, 10, 40, 40);
 
-  // Título
-  doc.setFont("Arial", "bold");
-  doc.setFontSize(22);
-  doc.text("PLANO ALIMENTAR PERSONALIZADO", 60, 30);
+    // Título
+    doc.setFont("Arial", "bold");
+    doc.setFontSize(22);
+    doc.text("PLANO ALIMENTAR PERSONALIZADO", 60, 30);
 
-  // Dados do Cliente
-  const clientName = document.getElementById("clientName").value || "Não especificado";
-  const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-  const weight = document.getElementById("weight").value || "Não especificado";
-
-  doc.setFontSize(12);
-  doc.text(`Nome do Cliente: ${clientName}`, 20, 60);
-  doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 70);
-  doc.text(`Peso Atual: ${weight}kg`, 20, 80);
-
-  // Refeições
-  const meals = document.querySelectorAll(".meal-section");
-  let yPosition = 100;
-  meals.forEach((meal, index) => {
-    const mealName = meal.querySelector(".meal-name").value || `Refeição ${index + 1}`;
-    const food = meal.querySelector(".food").value || "Não especificado";
-
-    doc.setFontSize(14);
-    doc.text(`${mealName}`, 20, yPosition);
-    yPosition += 10;
+    // Dados do Cliente
+    const clientName = document.getElementById("clientName").value || "Não especificado";
+    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
+    const weight = document.getElementById("weight").value || "Não especificado";
 
     doc.setFontSize(12);
-    doc.text(`- ${food}`, 30, yPosition);
-    yPosition += 10;
-  });
+    doc.text(`Nome do Cliente: ${clientName}`, 20, 60);
+    doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 70);
+    doc.text(`Peso Atual: ${weight}kg`, 20, 80);
 
-  doc.save("plano_alimentar_personalizado.pdf");
+    // Refeições
+    const meals = document.querySelectorAll(".meal-section");
+    let yPosition = 100;
+    meals.forEach((meal, index) => {
+      const mealName = meal.querySelector(".meal-name").value || `Refeição ${index + 1}`;
+      const food = meal.querySelector(".food").value || "Não especificado";
+
+      doc.setFontSize(14);
+      doc.text(`${mealName}`, 20, yPosition);
+      yPosition += 10;
+
+      doc.setFontSize(12);
+      doc.text(`- ${food}`, 30, yPosition);
+      yPosition += 10;
+    });
+
+    // Salvar o PDF
+    doc.save("plano_alimentar_personalizado.pdf");
+  };
 }
