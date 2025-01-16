@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF com refeições estilizadas por bloco
+  // Gerar PDF estilizado e futurista
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -71,14 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
 
-    // Cabeçalho do PDF
+    // Cabeçalho do PDF com título estilizado
     const logoPath = "logo-henrique-cordeiro.png.png"; // Caminho da logomarca
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
     doc.addImage(logoPath, "PNG", 10, 10, 30, 30); // Logomarca
-    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(28); // Título em fonte grande
     doc.setTextColor("#013220");
-    doc.text("Plano Alimentar Personalizado", 50, 20);
+    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 25, { align: "center" });
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
@@ -90,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 60);
     doc.text(`Peso Atual: ${weight} kg`, 10, 70);
 
-    // Listar refeições estilizadas por bloco
+    // Listar refeições estilizadas em blocos futuristas
     let yPosition = 90;
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
