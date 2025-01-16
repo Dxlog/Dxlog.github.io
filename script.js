@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mealSection.classList.add("meal-section");
 
     mealSection.innerHTML = `
-      <label for="mealName">Nome da Refeição:</label>
+      <label for="mealName" class="meal-title">Nome da Refeição:</label>
       <input type="text" class="mealName" placeholder="Digite o nome da refeição">
       <table class="meal-table">
         <thead>
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     mealsContainer.appendChild(mealSection);
-
     attachRowHandlers(mealSection);
   });
 
