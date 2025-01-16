@@ -1,69 +1,89 @@
-body {
-  font-family: Arial, sans-serif;
+/* Reset básico */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
   background-color: #f4f4f4;
-  color: #000000;
+  color: #333;
 }
 
 .container {
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 1100px;
+  margin: 20px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 header {
   background-color: #013220;
   color: #ffffff;
   text-align: center;
-  padding: 10px 0;
+  padding: 20px 0;
   border-radius: 10px 10px 0 0;
   position: relative;
 }
 
 header .logo {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 50px;
+  top: 15px;
+  left: 15px;
+  width: 70px;
 }
 
 header h1 {
+  font-size: 28px;
+  text-transform: uppercase;
   margin: 0;
-  font-size: 24px;
 }
 
 h2 {
+  margin-top: 20px;
+  font-size: 20px;
   color: #013220;
+  text-transform: uppercase;
   border-bottom: 2px solid #013220;
   padding-bottom: 5px;
 }
 
+.form-group {
+  margin-bottom: 15px;
+}
+
 label {
-  display: block;
-  margin-top: 10px;
   font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
 }
 
 input {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid #013220;
   border-radius: 5px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #016635;
 }
 
 table {
   width: 100%;
-  margin-top: 10px;
   border-collapse: collapse;
+  margin-top: 15px;
 }
 
 table th, table td {
+  padding: 10px;
   border: 1px solid #013220;
-  padding: 8px;
   text-align: center;
 }
 
@@ -71,7 +91,8 @@ button {
   background-color: #013220;
   color: #ffffff;
   border: none;
-  padding: 8px 15px;
+  padding: 10px 15px;
+  margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -81,12 +102,20 @@ button:hover {
 }
 
 .addRowBtn, .removeRowBtn {
-  margin-top: 10px;
   font-size: 14px;
 }
 
 .controls {
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #013220;
+  color: #ffffff;
+  border-radius: 0 0 10px 10px;
 }
