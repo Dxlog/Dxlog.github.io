@@ -1,21 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mealsContainer = document.getElementById("mealsContainer");
-  const addMealBtn = document.getElementById("addMealBtn");
+  const addMealButton = document.getElementById("addMealButton");
+  const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Adicionar Refeição
-  addMealBtn.addEventListener("click", () => {
+  // Adicionar uma nova refeição
+  addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
 
     mealSection.innerHTML = `
-      <label for="mealName" class="meal-title">Nome da Refeição:</label>
+      <h3>Refeição</h3>
+      <label>Nome da Refeição:</label>
       <input type="text" class="mealName" placeholder="Digite o nome da refeição">
-      <table class="meal-table">
+      <table>
         <thead>
           <tr>
             <th>Alimento</th>
             <th>Proporção</th>
-            <th>Ação</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -30,35 +32,51 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     mealsContainer.appendChild(mealSection);
-    attachRowHandlers(mealSection);
+
+    attachMealEvents(mealSection);
   });
 
-  // Adicionar/Remover Linhas
-  function attachRowHandlers(section) {
+  // Anexar eventos de adicionar/remover linhas
+  function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
-    const mealTable = section.querySelector(".meal-table tbody");
+    const tableBody = section.querySelector("table tbody");
 
+    // Adicionar linha
     addRowBtn.addEventListener("click", () => {
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
-        <td><input type="text" class="foodName" placeholder="Ex.: Frango"></td>
-        <td><input type="text" class="foodProportion" placeholder="Ex.: 100g"></td>
+        <td><input type="text" class="foodName" placeholder="Ex.: Arroz"></td>
+        <td><input type="text" class="foodProportion" placeholder="Ex.: 50g"></td>
         <td><button type="button" class="removeRowBtn">Excluir</button></td>
       `;
-      mealTable.appendChild(newRow);
+      tableBody.appendChild(newRow);
 
       newRow.querySelector(".removeRowBtn").addEventListener("click", () => {
         newRow.remove();
       });
     });
 
+    // Remover linha existente
     section.querySelectorAll(".removeRowBtn").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.target.closest("tr").remove();
+      btn.addEventListener("click", () => {
+        btn.closest("tr").remove();
       });
     });
   }
 
-  // Inicializar para a seção existente
-  attachRowHandlers(mealsContainer.querySelector(".meal-section"));
+  // Gerar PDF
+  generatePdfButton.addEventListener("click", () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("Plano Alimentar Personalizado", 105, 20, { align: "center" });
+
+    const clientName = document.getElementById("clientName").value || "Nome não especificado";
+    doc.setFontSize(12);
+    doc.text(`Nome do Cliente: ${clientName}`, 20, 40);
+
+    doc.save("Plano_Alimentar.pdf");
+  });
 });
