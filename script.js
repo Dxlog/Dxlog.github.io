@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF estilizado e futurista
+  // Gerar PDF futurista e formatado
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     doc.addImage(logoPath, "PNG", 10, 10, 30, 30); // Logomarca
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(28); // Título em fonte grande
+    doc.setFontSize(30); // Título em fonte maior e estilizada
     doc.setTextColor("#013220");
     doc.text("Plano Alimentar Personalizado", pageWidth / 2, 25, { align: "center" });
 
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
 
-    doc.setFontSize(12);
+    doc.setFontSize(14);
     doc.setTextColor("#000");
     doc.text(`Nome do Cliente: ${clientName}`, 10, 50);
     doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 60);
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Estilizar bloco da refeição
       doc.setFillColor("#013220");
       doc.roundedRect(10, yPosition, pageWidth - 20, 15, 3, 3, "F"); // Fundo verde escuro
-      doc.setFontSize(14);
+      doc.setFontSize(16);
       doc.setTextColor("#FFFFFF");
       doc.text(`${index + 1}. ${mealName}`, 15, yPosition + 10); // Nome da refeição
       yPosition += 20;
@@ -119,12 +119,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Adicionar nova página, se necessário
       if (yPosition > pageHeight - 30) {
+        addFooter(doc, pageWidth, pageHeight, clientName, currentDate); // Adicionar rodapé antes de criar nova página
         doc.addPage();
         yPosition = 20;
       }
     });
 
-    // Rodapé
+    // Rodapé em todas as páginas
+    addFooter(doc, pageWidth, pageHeight, clientName, currentDate);
+
+    // Salvar PDF
+    doc.save("Plano_Alimentar.pdf");
+  });
+
+  // Função para adicionar rodapé
+  function addFooter(doc, pageWidth, pageHeight, clientName, currentDate) {
     const email = "diegossilva03@gmail.com";
     doc.setFillColor("#013220");
     doc.rect(0, pageHeight - 20, pageWidth, 20, "F");
@@ -134,8 +143,5 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`E-mail: ${email}`, 10, pageHeight - 10);
     doc.text(`Nome do Cliente: ${clientName}`, pageWidth / 2, pageHeight - 10, { align: "center" });
     doc.text(`Data: ${currentDate}`, pageWidth - 40, pageHeight - 10);
-
-    // Salvar PDF
-    doc.save("Plano_Alimentar.pdf");
-  });
+  }
 });
