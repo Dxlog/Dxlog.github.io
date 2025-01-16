@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Gerenciar eventos dentro de uma refeição
+  // Eventos para adicionar/remover linhas
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -61,34 +61,43 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF
+  // Gerar PDF com todas as informações
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
+    doc.setTextColor("#013220");
     doc.text("Plano Alimentar Personalizado", 105, 20, { align: "center" });
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
+    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
+    const weight = document.getElementById("weight").value || "Não especificado";
+
     doc.setFontSize(12);
+    doc.setTextColor("#000");
     doc.text(`Nome do Cliente: ${clientName}`, 20, 40);
+    doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 50);
+    doc.text(`Peso Atual: ${weight} kg`, 20, 60);
 
-    // Processar refeições
-    const meals = document.querySelectorAll(".meal-section");
-    let yPosition = 60;
+    let yPosition = 80;
 
-    meals.forEach((meal, index) => {
-      const mealName = meal.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.text(`${mealName}:`, 20, yPosition);
+    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
+      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      doc.setFontSize(14);
+      doc.setTextColor("#013220");
+      doc.text(`${index + 1}. ${mealName}`, 20, yPosition);
       yPosition += 10;
 
-      const rows = meal.querySelectorAll("tbody tr");
-      rows.forEach(row => {
-        const foodName = row.querySelector(".foodName").value || "Alimento não especificado";
-        const proportion = row.querySelector(".foodProportion").value || "Proporção não especificada";
-        doc.text(`- ${foodName}: ${proportion}`, 30, yPosition);
-        yPosition += 10;
+      mealSection.querySelectorAll("tbody tr").forEach((row) => {
+        const foodName = row.querySelector(".foodName").value || "Não especificado";
+        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
+
+        doc.setFontSize(12);
+        doc.setTextColor("#000");
+        doc.text(`- ${foodName}: ${foodProportion}`, 25, yPosition);
+        yPosition += 8;
       });
 
       yPosition += 10;
