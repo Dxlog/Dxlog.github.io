@@ -1,8 +1,13 @@
-/* Geral */
-body {
-  font-family: 'Arial', sans-serif;
+/* Reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: 'Arial', sans-serif;
   background-color: #f2f2f2;
   color: #333;
 }
@@ -11,17 +16,21 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: #004d00;
+  background-color: #013220;
   color: white;
-  padding: 10px 20px;
+  padding: 15px 20px;
 }
 
 .logo {
   height: 50px;
+  margin-right: 15px;
 }
 
-/* Container principal */
+.header h1 {
+  font-size: 24px;
+}
+
+/* Container */
 .container {
   max-width: 900px;
   margin: 20px auto;
@@ -33,14 +42,13 @@ body {
 
 /* Títulos */
 h1, h2 {
-  margin: 0 0 10px;
-  color: #004d00;
+  margin-bottom: 20px;
+  color: #013220;
   text-align: center;
 }
 
 h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
+  font-size: 18px;
 }
 
 /* Campos de formulário */
@@ -63,30 +71,26 @@ h2 {
 
 /* Botões */
 .btn {
-  background-color: #004d00;
+  display: inline-block;
+  background-color: #013220;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 16px;
-  margin: 10px 0;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 .btn:hover {
-  background-color: #003300;
+  background-color: #0a4d28;
 }
 
-/* Refeições */
-.meal-section {
-  margin-bottom: 20px;
-}
-
-.meal-title {
-  background-color: #004d00;
-  color: white;
+/* Footer */
+.footer {
+  text-align: center;
   padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
+  background-color: #013220;
+  color: white;
+  margin-top: 20px;
 }
