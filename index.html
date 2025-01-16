@@ -9,12 +9,12 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <img src="logo-henrique-cordeiro.png.png" alt="Logomarca" class="logo">
-      <h1>PLANO ALIMENTAR PERSONALIZADO</h1>
+    <header class="header">
+      <img src="logo-henrique-cordeiro.png.png" alt="Logo Henrique Cordeiro Nutrition" class="logo">
+      <h1>Plano Alimentar Personalizado</h1>
     </header>
 
-    <form id="nutritionForm">
+    <main>
       <!-- Informações do Cliente -->
       <section class="client-info">
         <h2>Informações do Cliente</h2>
@@ -35,41 +35,20 @@
       <!-- Refeições -->
       <section id="mealsContainer">
         <h2>Refeições</h2>
-        <div class="meal-section">
-          <label for="mealName" class="meal-title">Nome da Refeição:</label>
-          <input type="text" class="mealName" placeholder="Digite o nome da refeição">
-
-          <table class="meal-table">
-            <thead>
-              <tr>
-                <th>Alimento</th>
-                <th>Proporção</th>
-                <th>Ação</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="text" class="foodName" placeholder="Ex.: Frango"></td>
-                <td><input type="text" class="foodProportion" placeholder="Ex.: 100g"></td>
-                <td><button type="button" class="removeRowBtn">Excluir</button></td>
-              </tr>
-            </tbody>
-          </table>
-          <button type="button" class="addRowBtn">Adicionar Linha</button>
-        </div>
+        <!-- As refeições dinâmicas serão adicionadas aqui -->
       </section>
+      <button type="button" id="addMealButton" class="btn btn-add">Adicionar Refeição</button>
 
-      <!-- Botões de Controle -->
+      <!-- Botões de Ação -->
       <section class="controls">
-        <button type="button" id="addMealBtn">Adicionar Refeição</button>
-        <button type="button" id="generatePdfButton">Gerar PDF</button>
+        <button type="button" id="generatePdfButton" class="btn btn-generate">Gerar PDF</button>
       </section>
-    </form>
-  </div>
+    </main>
 
-  <footer>
-    <p>&copy; 2025 Henrique Cordeiro Nutrition | Todos os direitos reservados</p>
-  </footer>
+    <footer class="footer">
+      <p>&copy; 2025 Henrique Cordeiro Nutrition - Todos os Direitos Reservados</p>
+    </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
