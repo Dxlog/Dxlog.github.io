@@ -32,16 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     mealsContainer.appendChild(mealSection);
-
     attachMealEvents(mealSection);
   });
 
-  // Anexar eventos de adicionar/remover linhas
+  // Gerenciar eventos dentro de uma refeição
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
 
-    // Adicionar linha
     addRowBtn.addEventListener("click", () => {
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Remover linha existente
     section.querySelectorAll(".removeRowBtn").forEach((btn) => {
       btn.addEventListener("click", () => {
         btn.closest("tr").remove();
