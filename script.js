@@ -35,11 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Eventos para adicionar/remover linhas
+  // Gerenciar eventos dentro de uma refeição
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
 
+    // Adicionar linha
     addRowBtn.addEventListener("click", () => {
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
@@ -67,9 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const doc = new jsPDF();
 
     // Cabeçalho do PDF
-    doc.setFont("helvetica", "bold");
+    doc.setFillColor("#013220");
+    doc.rect(0, 0, 210, 30, "F");
     doc.setFontSize(18);
-    doc.setTextColor("#013220");
+    doc.setTextColor("#FFFFFF");
     doc.text("Plano Alimentar Personalizado", 105, 20, { align: "center" });
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
@@ -78,11 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(`Nome do Cliente: ${clientName}`, 20, 40);
-    doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 50);
-    doc.text(`Peso Atual: ${weight} kg`, 20, 60);
+    doc.text(`Nome do Cliente: ${clientName}`, 20, 50);
+    doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 60);
+    doc.text(`Peso Atual: ${weight} kg`, 20, 70);
 
-    let yPosition = 80;
+    let yPosition = 90;
 
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
@@ -103,6 +105,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += 10;
     });
+
+    // Rodapé
+    doc.setFillColor("#013220");
+    doc.rect(0, 287, 210, 10, "F");
+    doc.setFontSize(10);
+    doc.setTextColor("#FFFFFF");
+    doc.text("© 2025 Henrique Cordeiro Nutrition", 105, 293, { align: "center" });
 
     doc.save("Plano_Alimentar.pdf");
   });
