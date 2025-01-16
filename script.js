@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(28); // Título em fonte maior e estilizada
     doc.setTextColor("#013220");
-    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 25, { align: "center" });
+    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 35, { align: "center" });
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (yPosition > pageHeight - 30) {
         addFooter(doc, pageWidth, pageHeight, clientName, currentDate); // Adicionar rodapé antes de criar nova página
         doc.addPage();
-        yPosition = 20;
+        yPosition = margin;
       }
     });
 
