@@ -62,17 +62,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF com todas as informações
+  // Gerar PDF com logomarca e informações completas
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    // Configurações básicas
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
     // Cabeçalho do PDF
-    doc.setFillColor("#013220");
-    doc.rect(0, 0, 210, 30, "F");
+    const logoPath = "logo-henrique-cordeiro.png.png"; // Caminho da logomarca
+    const currentDate = new Date().toLocaleDateString("pt-BR");
+
+    doc.addImage(logoPath, "PNG", 10, 10, 30, 30); // Logomarca
     doc.setFontSize(18);
-    doc.setTextColor("#FFFFFF");
-    doc.text("Plano Alimentar Personalizado", 105, 20, { align: "center" });
+    doc.setTextColor("#013220");
+    doc.text("Plano Alimentar Personalizado", 50, 20);
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
@@ -80,17 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(`Nome do Cliente: ${clientName}`, 20, 50);
-    doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 60);
-    doc.text(`Peso Atual: ${weight} kg`, 20, 70);
+    doc.text(`Nome do Cliente: ${clientName}`, 10, 50);
+    doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 60);
+    doc.text(`Peso Atual: ${weight} kg`, 10, 70);
 
+    // Listar refeições
     let yPosition = 90;
-
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
       doc.setTextColor("#013220");
-      doc.text(`${index + 1}. ${mealName}`, 20, yPosition);
+      doc.text(`${index + 1}. ${mealName}`, 10, yPosition);
       yPosition += 10;
 
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
@@ -99,20 +105,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         doc.setFontSize(12);
         doc.setTextColor("#000");
-        doc.text(`- ${foodName}: ${foodProportion}`, 25, yPosition);
+        doc.text(`- ${foodName}: ${foodProportion}`, 15, yPosition);
         yPosition += 8;
       });
 
       yPosition += 10;
+
+      // Adicionar nova página, se necessário
+      if (yPosition > pageHeight - 30) {
+        doc.addPage();
+        yPosition = 20;
+      }
     });
 
     // Rodapé
+    const email = "diegossilva03@gmail.com";
     doc.setFillColor("#013220");
-    doc.rect(0, 287, 210, 10, "F");
+    doc.rect(0, pageHeight - 20, pageWidth, 20, "F");
+
     doc.setFontSize(10);
     doc.setTextColor("#FFFFFF");
-    doc.text("© 2025 Henrique Cordeiro Nutrition", 105, 293, { align: "center" });
+    doc.text(`E-mail: ${email}`, 10, pageHeight - 10);
+    doc.text(`Nome do Cliente: ${clientName}`, pageWidth / 2, pageHeight - 10, { align: "center" });
+    doc.text(`Data: ${currentDate}`, pageWidth - 40, pageHeight - 10);
 
+    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
