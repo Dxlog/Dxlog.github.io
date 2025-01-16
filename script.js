@@ -1,3 +1,6 @@
+document.getElementById("addMealButton").addEventListener("click", addMeal);
+document.getElementById("generatePdfButton").addEventListener("click", generatePDF);
+
 function addMeal() {
   const mealsContainer = document.getElementById("mealsContainer");
 
@@ -23,19 +26,20 @@ function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
+  // Logomarca
   const logo = new Image();
-  logo.src = "logo-henrique-cordeiro.png"; // Caminho da logomarca
+  logo.src = "logo-henrique-cordeiro.png.png";
 
   logo.onload = () => {
-    // Inserindo logomarca
+    // Adicionar logomarca ao PDF
     doc.addImage(logo, "PNG", 10, 10, 40, 40);
 
-    // Título
+    // Título do PDF
     doc.setFont("Arial", "bold");
     doc.setFontSize(22);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", 60, 30);
 
-    // Dados do Cliente
+    // Dados do cliente
     const clientName = document.getElementById("clientName").value || "Não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
@@ -43,7 +47,7 @@ function generatePDF() {
     doc.setFontSize(12);
     doc.text(`Nome do Cliente: ${clientName}`, 20, 60);
     doc.text(`Número do Protocolo: ${protocolNumber}`, 20, 70);
-    doc.text(`Peso Atual: ${weight}kg`, 20, 80);
+    doc.text(`Peso Atual: ${weight} kg`, 20, 80);
 
     // Refeições
     const meals = document.querySelectorAll(".meal-section");
@@ -61,7 +65,7 @@ function generatePDF() {
       yPosition += 10;
     });
 
-    // Salvar o PDF
+    // Salvar PDF
     doc.save("plano_alimentar_personalizado.pdf");
   };
 }
