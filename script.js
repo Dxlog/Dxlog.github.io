@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF com logomarca e informações completas
+  // Gerar PDF com refeições estilizadas por bloco
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -90,19 +90,24 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 60);
     doc.text(`Peso Atual: ${weight} kg`, 10, 70);
 
-    // Listar refeições
+    // Listar refeições estilizadas por bloco
     let yPosition = 90;
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      
+      // Estilizar bloco da refeição
+      doc.setFillColor("#013220");
+      doc.roundedRect(10, yPosition, pageWidth - 20, 15, 3, 3, "F"); // Fundo verde escuro
       doc.setFontSize(14);
-      doc.setTextColor("#013220");
-      doc.text(`${index + 1}. ${mealName}`, 10, yPosition);
-      yPosition += 10;
+      doc.setTextColor("#FFFFFF");
+      doc.text(`${index + 1}. ${mealName}`, 15, yPosition + 10); // Nome da refeição
+      yPosition += 20;
 
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
+        // Informações dos alimentos
         doc.setFontSize(12);
         doc.setTextColor("#000");
         doc.text(`- ${foodName}: ${foodProportion}`, 15, yPosition);
