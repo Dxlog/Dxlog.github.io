@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Alimentar Personalizado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PLANO ALIMENTAR PERSONALIZADO</h1>
+        <form id="nutritionForm">
+            <!-- Nome do cliente -->
+            <div class="form-section">
+                <label for="clientName">Nome do Cliente:</label>
+                <input type="text" id="clientName" placeholder="Ex: João da Silva" required>
+            </div>
+            
+            <!-- Peso atual -->
+            <div class="form-section">
+                <label for="weight">Peso Atual (kg):</label>
+                <input type="number" id="weight" placeholder="Ex: 70.5" required>
+            </div>
+
+            <!-- Número do protocolo -->
+            <div class="form-section">
+                <label for="protocolNumber">Número do Protocolo:</label>
+                <input type="text" id="protocolNumber" placeholder="Ex: 12345" required>
+            </div>
+
+            <!-- Data -->
+            <div class="form-section">
+                <label for="date">Data:</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <!-- Container de refeições -->
+            <div id="mealsContainer">
+                <h3>Refeições</h3>
+                <div class="meal" id="meal1">
+                    <div class="form-section">
+                        <label for="mealName1">Nome da Refeição:</label>
+                        <input type="text" id="mealName1" placeholder="Ex: Café da Manhã" required>
+                    </div>
+                    <table id="mealTable1">
+                        <thead>
+                            <tr>
+                                <th>Nome do Alimento</th>
+                                <th>Proporção</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" placeholder="Ex: Aveia" required></td>
+                                <td><input type="text" placeholder="Ex: 50g" required></td>
+                                <td><button type="button" onclick="addRow('mealTable1')">Adicionar Linha</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-section">
+                        <label for="substitutions1">Opções de Substituição:</label>
+                        <textarea id="substitutions1" placeholder="Ex: Granola ou Cereal Integral"></textarea>
+                    </div>
+                </div>
+            </div>
+            <button type="button" onclick="addMeal()">Adicionar Mais Refeições</button>
+
+            <!-- Campos adicionais -->
+            <div class="form-section">
+                <label for="suggestions">Sugestões:</label>
+                <textarea id="suggestions" placeholder="Ex: Beba pelo menos 2 litros de água por dia"></textarea>
+            </div>
+            <div class="form-section">
+                <label for="supplements">Suplementações:</label>
+                <textarea id="supplements" placeholder="Ex: Whey Protein após o treino"></textarea>
+            </div>
+
+            <!-- Botão de gerar PDF -->
+            <button type="button" onclick="generatePDF()">Gerar PDF</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
