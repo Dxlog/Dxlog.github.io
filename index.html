@@ -1,60 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plano Alimentar Personalizado</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <img src="logo-henrique-cordeiro.png.png" alt="Logo Henrique Cordeiro Nutrition" class="logo">
-    <h1>Plano Alimentar Personalizado</h1>
-  </header>
+  <div class="container">
+    <header>
+      <img src="logo-henrique-cordeiro.png.png" alt="Logomarca" class="logo">
+      <h1>PLANO ALIMENTAR PERSONALIZADO</h1>
+    </header>
 
-  <!-- Conteúdo Principal -->
-  <main class="container">
-    <!-- Dados do Cliente -->
-    <section class="section client-info">
-      <h2>Dados do Cliente</h2>
-      <div class="field-group">
+    <form id="nutritionForm">
+      <!-- Informações do Cliente -->
+      <section class="client-info">
+        <h2>Informações do Cliente</h2>
         <label for="clientName">Nome do Cliente:</label>
         <input type="text" id="clientName" placeholder="Digite o nome do cliente">
-      </div>
-      <div class="field-group">
+        
         <label for="protocolNumber">Número do Protocolo:</label>
         <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
-      </div>
-      <div class="field-group">
+
         <label for="weight">Peso Atual (kg):</label>
         <input type="number" id="weight" placeholder="Digite o peso atual">
-      </div>
-    </section>
+      </section>
 
-    <!-- Refeições -->
-    <section class="section" id="mealsContainer">
-      <h2>Refeições</h2>
-    </section>
-    <button class="btn btn-add-meal" id="addMealButton">Adicionar Refeição</button>
+      <!-- Refeições -->
+      <section id="mealsContainer">
+        <h2>Refeições</h2>
+        <div class="meal-section">
+          <label for="mealName">Nome da Refeição:</label>
+          <input type="text" class="mealName" placeholder="Digite o nome da refeição">
 
-    <!-- Suplementações e Sugestões -->
-    <section class="section">
-      <h2>Suplementações e Sugestões</h2>
-      <textarea id="supplementations" rows="4" placeholder="Adicione suplementações..."></textarea>
-      <textarea id="suggestions" rows="4" placeholder="Adicione sugestões..."></textarea>
-    </section>
+          <table class="meal-table">
+            <thead>
+              <tr>
+                <th>Alimento</th>
+                <th>Proporção</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" class="foodName" placeholder="Ex.: Frango"></td>
+                <td><input type="text" class="foodProportion" placeholder="Ex.: 100g"></td>
+                <td><button type="button" class="removeRowBtn">Excluir</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="addRowBtn">Adicionar Linha</button>
+        </div>
+      </section>
 
-    <!-- Botão Gerar PDF -->
-    <button class="btn btn-generate-pdf" id="generatePdfButton">Gerar PDF</button>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2025 Henrique Cordeiro Nutrition</p>
-  </footer>
+      <!-- Botões de Controle -->
+      <section class="controls">
+        <button type="button" id="addMealBtn">Adicionar Refeição</button>
+        <button type="button" id="generatePdfButton">Gerar PDF</button>
+      </section>
+    </form>
+  </div>
 
   <script src="script.js"></script>
 </body>
