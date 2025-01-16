@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,21 +18,25 @@
       <!-- Informações do Cliente -->
       <section class="client-info">
         <h2>Informações do Cliente</h2>
-        <label for="clientName">Nome do Cliente:</label>
-        <input type="text" id="clientName" placeholder="Digite o nome do cliente">
-        
-        <label for="protocolNumber">Número do Protocolo:</label>
-        <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
-
-        <label for="weight">Peso Atual (kg):</label>
-        <input type="number" id="weight" placeholder="Digite o peso atual">
+        <div class="form-group">
+          <label for="clientName">Nome do Cliente:</label>
+          <input type="text" id="clientName" placeholder="Digite o nome do cliente">
+        </div>
+        <div class="form-group">
+          <label for="protocolNumber">Número do Protocolo:</label>
+          <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
+        </div>
+        <div class="form-group">
+          <label for="weight">Peso Atual (kg):</label>
+          <input type="number" id="weight" placeholder="Digite o peso atual">
+        </div>
       </section>
 
       <!-- Refeições -->
       <section id="mealsContainer">
         <h2>Refeições</h2>
         <div class="meal-section">
-          <label for="mealName">Nome da Refeição:</label>
+          <label for="mealName" class="meal-title">Nome da Refeição:</label>
           <input type="text" class="mealName" placeholder="Digite o nome da refeição">
 
           <table class="meal-table">
@@ -62,6 +66,10 @@
       </section>
     </form>
   </div>
+
+  <footer>
+    <p>&copy; 2025 Henrique Cordeiro Nutrition | Todos os direitos reservados</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
