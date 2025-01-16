@@ -1,4 +1,4 @@
-/* Reset básico */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background-color: #f4f4f4;
+  background-color: #f2f2f2;
   color: #333;
 }
 
@@ -16,63 +16,83 @@ body {
   max-width: 1100px;
   margin: 20px auto;
   padding: 20px;
-  background: #ffffff;
+  background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-header {
+header.header {
   background-color: #013220;
-  color: #ffffff;
+  color: white;
+  padding: 20px;
   text-align: center;
-  padding: 20px 0;
-  border-radius: 10px 10px 0 0;
   position: relative;
+  border-radius: 10px 10px 0 0;
 }
 
 header .logo {
   position: absolute;
   top: 15px;
-  left: 15px;
-  width: 70px;
+  left: 20px;
+  width: 60px;
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 24px;
+  font-weight: bold;
   text-transform: uppercase;
-  margin: 0;
 }
 
 h2 {
-  margin-top: 20px;
+  margin: 20px 0 10px;
   font-size: 20px;
   color: #013220;
-  text-transform: uppercase;
   border-bottom: 2px solid #013220;
   padding-bottom: 5px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
 label {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-top: 10px;
   display: block;
 }
 
-input {
+input[type="text"], input[type="number"] {
   width: 100%;
   padding: 10px;
-  font-size: 16px;
+  margin-top: 5px;
   border: 1px solid #013220;
   border-radius: 5px;
-  outline: none;
 }
 
-input:focus {
-  border-color: #016635;
+button {
+  background-color: #013220;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #016635;
+}
+
+.meal-section {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.meal-section h3 {
+  color: #013220;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 table {
@@ -82,40 +102,16 @@ table {
 }
 
 table th, table td {
-  padding: 10px;
   border: 1px solid #013220;
-  text-align: center;
-}
-
-button {
-  background-color: #013220;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #016635;
-}
-
-.addRowBtn, .removeRowBtn {
-  font-size: 14px;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-footer {
-  text-align: center;
-  margin-top: 30px;
   padding: 10px;
+  text-align: center;
+}
+
+footer.footer {
+  text-align: center;
+  padding: 10px 0;
   background-color: #013220;
-  color: #ffffff;
+  color: white;
+  margin-top: 20px;
   border-radius: 0 0 10px 10px;
 }
