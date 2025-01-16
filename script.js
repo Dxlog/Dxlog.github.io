@@ -74,6 +74,26 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(12);
     doc.text(`Nome do Cliente: ${clientName}`, 20, 40);
 
+    // Processar refeições
+    const meals = document.querySelectorAll(".meal-section");
+    let yPosition = 60;
+
+    meals.forEach((meal, index) => {
+      const mealName = meal.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      doc.text(`${mealName}:`, 20, yPosition);
+      yPosition += 10;
+
+      const rows = meal.querySelectorAll("tbody tr");
+      rows.forEach(row => {
+        const foodName = row.querySelector(".foodName").value || "Alimento não especificado";
+        const proportion = row.querySelector(".foodProportion").value || "Proporção não especificada";
+        doc.text(`- ${foodName}: ${proportion}`, 30, yPosition);
+        yPosition += 10;
+      });
+
+      yPosition += 10;
+    });
+
     doc.save("Plano_Alimentar.pdf");
   });
 });
