@@ -4,102 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plano Alimentar Personalizado</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f2f2f2;
-      color: #333;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      background-color: #004d00;
-      color: white;
-      padding: 10px;
-    }
-    header img {
-      height: 60px;
-      margin-right: 20px;
-    }
-    header h1 {
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .container {
-      max-width: 900px;
-      margin: 20px auto;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
-    .field-group {
-      margin-bottom: 20px;
-    }
-    .field-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .field-group input, .field-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    .meal-section {
-      margin-bottom: 20px;
-    }
-    .meal-title {
-      background-color: #004d00;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    button {
-      background-color: #004d00;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-    button:hover {
-      background-color: #003300;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <img src="logo-henrique-cordeiro.png" alt="Logo Henrique Cordeiro Nutrition">
+  <header class="header">
+    <img src="logo-henrique-cordeiro.png.png" alt="Logo Henrique Cordeiro Nutrition" class="logo">
     <h1>Plano Alimentar Personalizado</h1>
   </header>
-  <div class="container">
-    <div class="field-group">
-      <label for="clientName">Nome do Cliente:</label>
-      <input type="text" id="clientName" placeholder="Digite o nome do cliente">
-    </div>
-    <div class="field-group">
-      <label for="protocolNumber">Número do Protocolo:</label>
-      <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
-    </div>
-    <div class="field-group">
-      <label for="weight">Peso Atual:</label>
-      <input type="text" id="weight" placeholder="Digite o peso atual">
-    </div>
 
-    <!-- Área para Refeições -->
-    <div id="mealsContainer"></div>
-    <button onclick="addMeal()">Adicionar Refeição</button>
-    <br><br>
-    <button onclick="generatePDF()">Gerar PDF</button>
-  </div>
+  <main class="container">
+    <!-- Dados do Cliente -->
+    <section class="client-info">
+      <h2>Dados do Cliente</h2>
+      <div class="field-group">
+        <label for="clientName">Nome do Cliente:</label>
+        <input type="text" id="clientName" placeholder="Digite o nome do cliente">
+      </div>
+      <div class="field-group">
+        <label for="protocolNumber">Número do Protocolo:</label>
+        <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
+      </div>
+      <div class="field-group">
+        <label for="weight">Peso Atual (kg):</label>
+        <input type="number" id="weight" placeholder="Digite o peso atual">
+      </div>
+    </section>
+
+    <!-- Refeições -->
+    <section id="mealsContainer">
+      <h2>Refeições</h2>
+    </section>
+    <button class="btn" id="addMealButton">Adicionar Refeição</button>
+
+    <!-- Gerar PDF -->
+    <button class="btn" id="generatePdfButton">Gerar PDF</button>
+  </main>
 
   <script src="script.js"></script>
 </body>
