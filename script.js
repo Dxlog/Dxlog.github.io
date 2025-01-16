@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    // Cabeçalho do PDF
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor("#013220");
