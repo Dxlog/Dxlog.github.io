@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
   margin: 0;
   padding: 0;
   color: #333;
@@ -21,13 +21,13 @@ header {
 }
 
 header h1 {
-  font-size: 30px;
-  color: #013220;
+  font-size: 28px;
+  color: #ff6600;
 }
 
 h2 {
   font-size: 22px;
-  color: #013220;
+  color: #ff6600;
   margin-bottom: 15px;
 }
 
@@ -55,7 +55,7 @@ input {
   margin: 20px auto;
   font-size: 16px;
   color: white;
-  background-color: #013220;
+  background-color: #ff6600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -63,11 +63,11 @@ input {
 }
 
 .btn-primary {
-  background-color: #016635;
+  background-color: #ff4500;
 }
 
 .btn:hover {
-  background-color: #014d29;
+  background-color: #cc5200;
 }
 
 main {
@@ -75,6 +75,6 @@ main {
 }
 
 .button-container {
-  margin-top: 30px; /* Ajuste do botão Gerar PDF */
+  margin-top: 30px; /* Botão Gerar PDF mais abaixo */
   text-align: center;
 }
