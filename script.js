@@ -66,33 +66,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const doc = new jsPDF();
 
     const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 15;
+    let yPosition = 30;
 
-    // Margem verde estilizada
-    doc.setFillColor("#013220");
-    doc.rect(0, 0, pageWidth, pageHeight, "S");
-
-    // Logomarca
-    const logoPath = "logo-henrique-cordeiro.png";
+    // Adicionar logomarca
+    const logoPath = "logo-henrique-cordeiro.png"; // Certifique-se de que o arquivo está no diretório correto
     doc.addImage(logoPath, "PNG", margin, 10, 30, 30);
 
     // Título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
-    doc.setTextColor("#FFFFFF");
+    doc.setTextColor("#013220");
     doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, 25, { align: "center" });
 
-    let yPosition = 50;
+    yPosition += 50;
 
-    // Informações do Cliente
+    // Informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
     doc.setFontSize(12);
-    doc.setTextColor("#FFFFFF");
+    doc.setTextColor("#000");
     doc.text(`ALUNO(A): ${clientName}`, margin, yPosition);
     doc.text(`PROTOCOLO: ${protocolNumber}`, margin, yPosition + 10);
     doc.text(`PESO ATUAL: ${weight} kg`, margin, yPosition + 20);
@@ -104,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
-      doc.setTextColor("#FFFFFF");
+      doc.setTextColor("#013220");
       doc.text(`Refeição ${index + 1}: ${mealName}`, margin, yPosition);
 
       yPosition += 10;
@@ -120,8 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += 10;
 
-      // Nova página se necessário
-      if (yPosition > pageHeight - 20) {
+      // Adicionar nova página se necessário
+      if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
       }
