@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Gerenciar eventos dentro de uma refeição
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 30;
 
-    // Título
+    // Título estilizado
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
     doc.setTextColor("#013220");
@@ -99,14 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const items = mealSection.querySelectorAll("tbody tr");
       const sectionHeight = 15 + items.length * 8;
 
-      // Quadro da refeição
+      // Quadro de refeição
       doc.setFillColor("#013220");
       doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 3, 3, "F");
       doc.setFontSize(14);
       doc.setTextColor("#FFFFFF");
       doc.text(`${index + 1}. ${mealName}`, margin + 5, yPosition + 10);
 
-      // Itens da refeição
       let itemY = yPosition + 20;
       items.forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
@@ -120,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += sectionHeight + 10;
 
-      // Adicionar nova página se necessário
+      // Nova página se necessário
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
@@ -132,8 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.rect(0, 280, pageWidth, 20, "F");
     doc.setFontSize(10);
     doc.setTextColor("#FFFFFF");
-    doc.text("E-mail: diegossilva03@gmail.com", 10, 290);
     doc.text("HC Nutrition - Todos os direitos reservados", pageWidth / 2, 290, { align: "center" });
+    doc.text("E-mail: diegossilva03@gmail.com", 10, 290);
 
     // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
