@@ -66,60 +66,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const doc = new jsPDF();
 
     const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 15;
     let yPosition = 30;
 
-    // Adicionar título
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.setTextColor("#013220");
-    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, yPosition, { align: "center" });
+    // Adicionar logomarca e cabeçalho estilizado
+    doc.setFillColor("#ff6600");
+    doc.rect(0, 0, pageWidth, 20, "F");
+    doc.setFontSize(14);
+    doc.setTextColor("#FFFFFF");
+    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 13, { align: "center" });
 
-    yPosition += 20;
+    // Rodapé estilizado
+    doc.setFillColor("#ff6600");
+    doc.rect(0, pageHeight - 20, pageWidth, 20, "F");
+    doc.setTextColor("#FFFFFF");
+    doc.setFontSize(10);
+    doc.text(`Cliente: ${document.getElementById("clientName").value || "Nome não especificado"}`, margin, pageHeight - 10);
+    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, pageHeight - 10, { align: "right" });
 
-    // Informações do cliente
-    const clientName = document.getElementById("clientName").value || "Nome não especificado";
-    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-    const weight = document.getElementById("weight").value || "Não especificado";
-    const currentDate = new Date().toLocaleDateString("pt-BR");
+    yPosition += 30;
 
-    doc.setFontSize(12);
-    doc.setTextColor("#000");
-    doc.text(`ALUNO(A): ${clientName}`, margin, yPosition);
-    doc.text(`PROTOCOLO: ${protocolNumber}`, margin, yPosition + 10);
-    doc.text(`PESO ATUAL: ${weight} kg`, margin, yPosition + 20);
-    doc.text(`DATA: ${currentDate}`, margin, yPosition + 30);
+    // Adicionar refeições e campos de sugestões/suplementações
+    // Segunda folha: logomarca no centro inferior + campos adicionais
+    doc.addPage();
+    doc.text("Suplementações:", margin, 30);
+    doc.text("Sugestões:", margin, 80);
+    doc.addImage("logo-path.png", "PNG", pageWidth / 2 - 15, pageHeight - 40, 30, 30);
 
-    yPosition += 50;
-
-    // Refeições
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.setFontSize(14);
-      doc.setTextColor("#013220");
-      doc.text(`Refeição ${index + 1}: ${mealName}`, margin, yPosition);
-
-      yPosition += 10;
-
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        doc.setFontSize(12);
-        doc.text(`- ${foodName}: ${foodProportion}`, margin + 10, yPosition);
-        yPosition += 8;
-      });
-
-      yPosition += 10;
-
-      // Adicionar nova página se necessário
-      if (yPosition > 270) {
-        doc.addPage();
-        yPosition = 20;
-      }
-    });
-
-    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
