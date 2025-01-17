@@ -35,12 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Gerenciar eventos dentro de uma refeição
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
 
-    // Adicionar linha
     addRowBtn.addEventListener("click", () => {
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
@@ -62,84 +60,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF com formato ajustado
+  // Gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Configurações básicas
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 15; // Margem padrão
-    const sectionHeight = 50; // Altura dos blocos das refeições
-    let yPosition = 50;
+    // Adiciona título e informações do cliente
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor("#013220");
+    doc.text("Plano Alimentar Personalizado", 105, 20, { align: "center" });
 
-    // Adicionar título e cabeçalho
-    const logoPath = "logo-henrique-cordeiro.png.png";
-    const currentDate = new Date().toLocaleDateString("pt-BR");
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
 
-    // Logomarca e título
-    doc.addImage(logoPath, "PNG", margin, margin, 30, 30);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.setTextColor("#013220");
-    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, 25, { align: "center" });
-
-    // Informações do cliente
     doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(`Aluno(a): ${clientName}`, margin, 45);
-    doc.text(`Peso Atual: ${weight} kg`, margin, 55);
-    doc.text(`Protocolo: ${protocolNumber}`, margin, 65);
-    doc.text(`Data: ${currentDate}`, margin, 75);
+    doc.text(`Nome do Cliente: ${clientName}`, 10, 40);
+    doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 50);
+    doc.text(`Peso Atual: ${weight} kg`, 10, 60);
 
-    // Enquadrar refeições
+    // Adicionar refeições
+    let yPosition = 80;
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.setFillColor("#013220");
-      doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 3, 3, "F"); // Fundo verde
       doc.setFontSize(14);
-      doc.setTextColor("#FFFFFF");
-      doc.text(`${index + 1}. ${mealName}`, margin + 5, yPosition + 10); // Nome da refeição
+      doc.setTextColor("#013220");
+      doc.text(`${index + 1}. ${mealName}`, 10, yPosition);
+      yPosition += 10;
 
-      // Alimentos dentro do bloco
-      let itemY = yPosition + 20;
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
         doc.setFontSize(12);
         doc.setTextColor("#000");
-        doc.text(`- ${foodName}: ${foodProportion}`, margin + 10, itemY);
-        itemY += 6;
+        doc.text(`- ${foodName}: ${foodProportion}`, 15, yPosition);
+        yPosition += 8;
       });
 
-      yPosition += sectionHeight + 10; // Espaçamento entre os blocos
+      yPosition += 10;
 
-      // Criar nova página, se necessário
+      // Nova página, se necessário
       if (yPosition > 270) {
-        yPosition = 20; // Reiniciar a posição no topo da nova página
         doc.addPage();
+        yPosition = 20;
       }
     });
 
-    // Adicionar rodapé
-    addFooter(doc, pageWidth);
-
-    // Salvar o PDF
+    // Salva o PDF
     doc.save("Plano_Alimentar.pdf");
   });
-
-  // Função para adicionar rodapé
-  function addFooter(doc, pageWidth) {
-    doc.setFillColor("#013220");
-    doc.rect(0, 280, pageWidth, 20, "F");
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text("E-mail: diegossilva03@gmail.com", 10, 290);
-    doc.text("HC Nutrition - Todos os direitos reservados", pageWidth / 2, 290, { align: "center" });
-    doc.text(`Data: ${new Date().toLocaleDateString("pt-BR")}`, pageWidth - 40, 290);
-  }
 });
