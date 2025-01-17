@@ -78,3 +78,27 @@ main {
   margin-top: 30px; /* Botão Gerar PDF mais abaixo */
   text-align: center;
 }
+
+table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #ff6600;
+  color: white;
+}
+
+.meal-section {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
