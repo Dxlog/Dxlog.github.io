@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
+  // Gerenciar eventos dentro de uma refeição
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const items = mealSection.querySelectorAll("tbody tr");
       const sectionHeight = 15 + items.length * 8;
 
-      // Quadro de refeição
+      // Quadro da refeição
       doc.setFillColor("#013220");
       doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 3, 3, "F");
       doc.setFontSize(14);
@@ -118,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += sectionHeight + 10;
 
-      // Nova página se necessário
+      // Adicionar nova página se necessário
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
