@@ -1,113 +1,72 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
   color: #333;
 }
 
 .container {
-  max-width: 1100px;
-  margin: 20px auto;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
   background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header {
-  background-color: #013220;
-  color: white;
-  padding: 20px;
+header {
   text-align: center;
-  position: relative;
-  border-radius: 10px 10px 0 0;
-}
-
-.header .logo {
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  width: 60px;
+  margin-bottom: 20px;
 }
 
 header h1 {
   font-size: 24px;
-  text-transform: uppercase;
-  margin: 0;
+  color: #013220;
 }
 
 h2 {
   font-size: 20px;
   color: #013220;
-  margin-top: 20px;
-  border-bottom: 2px solid #013220;
-  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
 }
 
 label {
-  display: block;
-  margin: 10px 0 5px;
   font-weight: bold;
 }
 
 input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #013220;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  margin-top: 5px;
 }
 
-button {
-  background-color: #013220;
-  color: white;
+.btn {
+  display: inline-block;
   padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 16px;
+  color: white;
+  background-color: #013220;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 15px;
 }
 
-button:hover {
+.btn-primary {
   background-color: #016635;
 }
 
-.meal-section {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 20px;
+.btn:hover {
+  background-color: #014d29;
 }
 
-.meal-section h3 {
-  color: #013220;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-table th, table td {
-  border: 1px solid #013220;
-  padding: 10px;
-  text-align: center;
-}
-
-.footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #013220;
-  color: white;
-  border-radius: 0 0 10px 10px;
+main {
   margin-top: 20px;
 }
