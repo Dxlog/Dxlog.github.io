@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 30;
 
-    // Título
+    // Adicionar título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
     doc.setTextColor("#013220");
