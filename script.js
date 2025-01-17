@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
+  // Gerenciar eventos dentro de uma refeição
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -60,47 +61,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF
+  // Gerar PDF com novo layout
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Adiciona título e informações do cliente
+    // Configurações de layout
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 15;
+    let yPosition = 30;
+
+    // Cabeçalho com título estilizado
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.setTextColor("#013220");
-    doc.text("Plano Alimentar Personalizado", 105, 20, { align: "center" });
+    doc.text("P L A N O  A L I M E N T A R  I  P E R S O N A L I Z A D O", pageWidth / 2, yPosition, { align: "center" });
 
+    yPosition += 20;
+
+    // Informações do Cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
+    const currentDate = new Date().toLocaleDateString("pt-BR");
 
     doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(`Nome do Cliente: ${clientName}`, 10, 40);
-    doc.text(`Número do Protocolo: ${protocolNumber}`, 10, 50);
-    doc.text(`Peso Atual: ${weight} kg`, 10, 60);
+    doc.text(`ALUNO(A): ${clientName}`, margin, yPosition);
+    doc.text(`PESO ATUAL: ${weight} kg`, margin, yPosition + 10);
+    doc.text(`PROTOCOLO: ${protocolNumber}`, margin, yPosition + 20);
+    doc.text(`DATA: ${currentDate}`, margin, yPosition + 30);
 
-    // Adicionar refeições
-    let yPosition = 80;
+    yPosition += 50;
+
+    // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.setFontSize(14);
-      doc.setTextColor("#013220");
-      doc.text(`${index + 1}. ${mealName}`, 10, yPosition);
-      yPosition += 10;
+      const items = mealSection.querySelectorAll("tbody tr");
+      const sectionHeight = 15 + items.length * 8;
 
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
+      // Quadro da refeição
+      doc.setFillColor("#013220");
+      doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 3, 3, "F");
+      doc.setFontSize(14);
+      doc.setTextColor("#FFFFFF");
+      doc.text(`${index + 1}. ${mealName}`, margin + 5, yPosition + 10);
+
+      // Alimentos
+      let itemY = yPosition + 20;
+      items.forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
         doc.setFontSize(12);
         doc.setTextColor("#000");
-        doc.text(`- ${foodName}: ${foodProportion}`, 15, yPosition);
-        yPosition += 8;
+        doc.text(`- ${foodName}: ${foodProportion}`, margin + 10, itemY);
+        itemY += 8;
       });
 
-      yPosition += 10;
+      yPosition += sectionHeight + 10;
 
       // Nova página, se necessário
       if (yPosition > 270) {
@@ -109,7 +128,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Salva o PDF
+    // Rodapé
+    addFooter(doc, pageWidth);
+
+    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
+
+  // Rodapé
+  function addFooter(doc, pageWidth) {
+    doc.setFillColor("#013220");
+    doc.rect(0, 280, pageWidth, 20, "F");
+    doc.setFontSize(10);
+    doc.setTextColor("#FFFFFF");
+    doc.text("HC NUTRITION - Todos os direitos reservados", pageWidth / 2, 290, { align: "center" });
+    doc.text("E-mail: diegossilva03@gmail.com", 10, 290);
+  }
 });
