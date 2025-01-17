@@ -70,3 +70,8 @@ input {
 main {
   margin-top: 20px;
 }
+
+.button-container {
+  margin-top: 30px; /* Ajusta a distância do botão Gerar PDF */
+  text-align: center;
+}
