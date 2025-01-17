@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plano Alimentar - Gerador de PDF</title>
+  <title>Plano Alimentar Personalizado</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,13 +32,13 @@
         <h2>Refeições</h2>
       </section>
       <button id="addMealButton" class="btn">Adicionar Refeição</button>
-      <div
-    </button>
+      <div class="button-container">
+        <button id="generatePdfButton" class="btn btn-primary">Gerar PDF</button>
       </div>
     </main>
   </div>
 
-  <!-- CDN da versão 2.4.0 do jsPDF -->
+  <!-- Importação do CDN do jsPDF v2.4.0 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
