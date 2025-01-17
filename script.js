@@ -61,25 +61,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF com novo layout
+  // Gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Configurações de layout
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
     let yPosition = 30;
 
-    // Cabeçalho com título estilizado
+    // Título
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
+    doc.setFontSize(22);
     doc.setTextColor("#013220");
-    doc.text("P L A N O  A L I M E N T A R  I  P E R S O N A L I Z A D O", pageWidth / 2, yPosition, { align: "center" });
+    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, yPosition, { align: "center" });
 
     yPosition += 20;
 
-    // Informações do Cliente
+    // Informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
@@ -88,13 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(12);
     doc.setTextColor("#000");
     doc.text(`ALUNO(A): ${clientName}`, margin, yPosition);
-    doc.text(`PESO ATUAL: ${weight} kg`, margin, yPosition + 10);
-    doc.text(`PROTOCOLO: ${protocolNumber}`, margin, yPosition + 20);
+    doc.text(`PROTOCOLO: ${protocolNumber}`, margin, yPosition + 10);
+    doc.text(`PESO ATUAL: ${weight} kg`, margin, yPosition + 20);
     doc.text(`DATA: ${currentDate}`, margin, yPosition + 30);
 
     yPosition += 50;
 
-    // Refeições
+    // Gerar refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       const items = mealSection.querySelectorAll("tbody tr");
@@ -107,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor("#FFFFFF");
       doc.text(`${index + 1}. ${mealName}`, margin + 5, yPosition + 10);
 
-      // Alimentos
+      // Itens da refeição
       let itemY = yPosition + 20;
       items.forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
@@ -121,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += sectionHeight + 10;
 
-      // Nova página, se necessário
+      // Adicionar nova página se necessário
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
@@ -129,19 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Rodapé
-    addFooter(doc, pageWidth);
-
-    // Salvar PDF
-    doc.save("Plano_Alimentar.pdf");
-  });
-
-  // Rodapé
-  function addFooter(doc, pageWidth) {
     doc.setFillColor("#013220");
     doc.rect(0, 280, pageWidth, 20, "F");
     doc.setFontSize(10);
     doc.setTextColor("#FFFFFF");
-    doc.text("HC NUTRITION - Todos os direitos reservados", pageWidth / 2, 290, { align: "center" });
     doc.text("E-mail: diegossilva03@gmail.com", 10, 290);
-  }
+    doc.text("HC Nutrition - Todos os direitos reservados", pageWidth / 2, 290, { align: "center" });
+
+    // Salvar PDF
+    doc.save("Plano_Alimentar.pdf");
+  });
 });
