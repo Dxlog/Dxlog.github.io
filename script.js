@@ -69,17 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 30;
 
-    // Adicionar logomarca
-    const logoPath = "logo-henrique-cordeiro.png"; // Certifique-se de que o arquivo está no diretório correto
-    doc.addImage(logoPath, "PNG", margin, 10, 30, 30);
-
     // Título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
     doc.setTextColor("#013220");
-    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, 25, { align: "center" });
+    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, yPosition, { align: "center" });
 
-    yPosition += 50;
+    yPosition += 20;
 
     // Informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
@@ -96,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 50;
 
-    // Refeições
+    // Gerar refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
