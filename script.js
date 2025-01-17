@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 30;
 
-    // Título
+    // Adicionar título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
     doc.setTextColor("#013220");
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 50;
 
-    // Gerar refeições
+    // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
