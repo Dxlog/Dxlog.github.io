@@ -65,66 +65,29 @@ document.addEventListener("DOMContentLoaded", () => {
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
+
+    // Configurações do PDF
     const margin = 15;
     let yPosition = 30;
 
-    // Cabeçalho com logo e título
+    // Adicionar logo e título
     const logoPath = "logo-henrique-cordeiro.png.png";
     doc.addImage(logoPath, "PNG", margin, 5, 40, 15);
     doc.setFontSize(22);
     doc.setTextColor("#ff6600");
-    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 25, { align: "center" });
+    doc.text("Plano Alimentar Personalizado", 105, 25, { align: "center" });
 
-    yPosition += 30;
-
-    // Informações do cliente
+    // Adicionar informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
     doc.setFontSize(12);
-    doc.setTextColor("#000");
     doc.text(`Cliente: ${clientName}`, margin, yPosition);
     doc.text(`Protocolo: ${protocolNumber}`, margin, yPosition + 10);
     doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 20);
     doc.text(`Data: ${currentDate}`, margin, yPosition + 30);
-
-    yPosition += 40;
-
-    // Refeições
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.setFontSize(14);
-      doc.setTextColor("#ff6600");
-      doc.text(`Refeição ${index + 1}: ${mealName}`, margin, yPosition);
-
-      yPosition += 10;
-
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        doc.setFontSize(12);
-        doc.setTextColor("#000");
-        doc.text(`- ${foodName}: ${foodProportion}`, margin + 10, yPosition);
-        yPosition += 8;
-      });
-
-      yPosition += 10;
-
-      if (yPosition > 270) {
-        doc.addPage();
-        yPosition = 30;
-      }
-    });
-
-    // Rodapé
-    doc.setFontSize(10);
-    doc.setTextColor("#ff6600");
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
-    doc.text(`Cliente: ${clientName}`, margin, 290);
 
     // Salvar o PDF
     doc.save("Plano_Alimentar.pdf");
