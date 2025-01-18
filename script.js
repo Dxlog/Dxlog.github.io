@@ -124,11 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Fundo laranja estilizado e proporcional para o título da refeição
+      // Fundo laranja estilizado para o título da refeição
       doc.setFontSize(14);
       doc.setFillColor("#ff6600");
-      const titleWidth = pageWidth - 30; // Tamanho fixo do fundo
-      doc.rect(margin, yPosition, titleWidth, 15, "F");
+      doc.rect(margin, yPosition, pageWidth - 2 * margin, 15, "F");
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 10, { align: "center" });
 
