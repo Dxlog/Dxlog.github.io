@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
+  // Função para anexar eventos às refeições
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -65,46 +66,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
-    let yPosition = 30;
+    let yPosition = 40;
 
-    const logoPath = "logo-henrique-cordeiro.png.png";
+    // Informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
     // Cabeçalho estilizado
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 30, "F");
+    doc.setFillColor(0, 0, 0); // Fundo preto
+    doc.rect(0, 0, pageWidth, 30, "F");
     doc.setFont("helvetica", "bold");
-    doc.setTextColor("#FFFFFF");
-    doc.setFontSize(14);
-    doc.text(`Cliente: ${clientName}`, margin, 20);
-    doc.text(`Data: ${currentDate}`, margin, 28);
-    doc.text("henrique.cordeiro@gmail.com", doc.internal.pageSize.getWidth() - margin, 20, { align: "right" });
-
-    // Logo no canto esquerdo
-    doc.addImage(logoPath, "PNG", margin, 5, 20, 20);
-
-    yPosition += 40;
-
-    // Informações principais
-    doc.setFontSize(12);
-    doc.setTextColor("#000");
-    doc.text(`Protocolo: ${protocolNumber}`, margin, yPosition);
-    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 10);
+    doc.setFontSize(18);
+    doc.setTextColor("#FFFFFF"); // Texto branco
+    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
 
     yPosition += 20;
+
+    // Informações principais do aluno
+    doc.setFontSize(12);
+    doc.setTextColor("#000");
+    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
+    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 10);
+    doc.text(`Data: ${currentDate}`, margin, yPosition + 20);
+    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 30);
+
+    yPosition += 40;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
-      doc.setTextColor("#ff6600");
-      doc.text(`Refeição ${index + 1}: ${mealName}`, margin, yPosition);
+      doc.setFillColor("#ff6600"); // Fundo laranja
+      doc.setTextColor("#FFFFFF"); // Texto branco
+      doc.rect(margin, yPosition, pageWidth - 2 * margin, 10, "F"); // Fundo laranja para o título da refeição
+      doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
 
-      yPosition += 10;
+      yPosition += 15;
 
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
@@ -117,7 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       yPosition += 10;
+
+      // Adicionar nova página se necessário
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = 30;
+      }
     });
+
+    // Rodapé
+    doc.setFontSize(10);
+    doc.setTextColor("#ff6600"); // Laranja
+    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
+    doc.text(`Aluno(a): ${clientName}`, margin, 290);
 
     // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
