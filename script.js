@@ -67,9 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Linha em "V" no canto esquerdo
+    // Duas linhas diagonais no canto superior esquerdo
+    doc.setDrawColor("#ff6600");
+    doc.setLineWidth(0.5);
+    doc.line(5, 5, 20, 15); // Primeira linha diagonal
+    doc.line(5, 15, 20, 5); // Segunda linha diagonal
+
+    // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
-    doc.triangle(0, 0, 15, 0, 0, 15, "F");
+    doc.rect(pageWidth - 20, 28, 20, 2, "F");
 
     // Título
     doc.setFont("helvetica", "bold");
@@ -124,18 +130,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Fundo laranja estilizado para o título da refeição
+      // Fundo laranja estilizado (grosso somente abaixo do nome da refeição)
       doc.setFontSize(14);
       doc.setFillColor("#ff6600");
-      doc.rect(margin, yPosition, pageWidth - 2 * margin, 15, "F");
-      doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 10, { align: "center" });
+      doc.rect(margin, yPosition + 5, pageWidth - 2 * margin, 5, "F");
+      doc.setTextColor("#000000");
+      doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
       yPosition += 20;
 
-      // Linha de separação preta
+      // Linha de separação fina entre refeições
       doc.setFillColor("#000000");
-      doc.rect(margin, yPosition, pageWidth - 2 * margin, 1, "F");
+      doc.rect(margin, yPosition, pageWidth - 2 * margin, 0.5, "F");
       yPosition += 5;
 
       // Alimentos e proporções
