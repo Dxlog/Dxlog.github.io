@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Função para anexar eventos às refeições (linhas de alimentos)
+  // Função para anexar eventos às refeições
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let yPosition = 30;
 
     // Cabeçalho
-    const logoPath = "logo-henrique-cordeiro.png"; // Caminho para a logo
+    const logoPath = "logo-henrique-cordeiro.png.png";
     doc.addImage(logoPath, "PNG", margin, 5, 40, 15);
     doc.setFontSize(22);
     doc.setTextColor("#ff6600");
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 40;
 
-    // Refeições
+    // Refeições no PDF
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
