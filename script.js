@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 40;
 
-    // Informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
@@ -83,6 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(18);
     doc.setTextColor("#FFFFFF"); // Texto branco
     doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
+
+    // Detalhe laranja no cabeçalho
+    doc.setFillColor("#ff6600");
+    doc.rect(0, 28, pageWidth, 2, "F");
 
     yPosition += 20;
 
@@ -115,22 +118,34 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.setTextColor("#000");
         doc.text(`- ${foodName}: ${foodProportion}`, margin + 10, yPosition);
         yPosition += 8;
+
+        // Adicionar nova página se necessário
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 40;
+
+          // Repetir cabeçalho na nova página
+          doc.setFillColor(0, 0, 0); // Fundo preto
+          doc.rect(0, 0, pageWidth, 30, "F");
+          doc.setTextColor("#FFFFFF");
+          doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
+          doc.setFillColor("#ff6600");
+          doc.rect(0, 28, pageWidth, 2, "F");
+
+          yPosition += 20;
+        }
       });
 
       yPosition += 10;
-
-      // Adicionar nova página se necessário
-      if (yPosition > 270) {
-        doc.addPage();
-        yPosition = 30;
-      }
     });
 
-    // Rodapé
+    // Rodapé com fundo preto menor
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 280, pageWidth, 15, "F"); // Fundo preto menor
     doc.setFontSize(10);
-    doc.setTextColor("#ff6600"); // Laranja
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
+    doc.setTextColor("#FFFFFF");
     doc.text(`Aluno(a): ${clientName}`, margin, 290);
+    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
 
     // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
