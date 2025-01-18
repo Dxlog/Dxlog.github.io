@@ -69,41 +69,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 30;
 
-    // Adicionar cabeçalho
-    doc.setFillColor("#ff6600");
-    doc.rect(0, 0, pageWidth, 20, "F");
+    // Título
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.setTextColor("#FFFFFF");
-    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 13, { align: "center" });
+    doc.setFontSize(22);
+    doc.setTextColor("#013220");
+    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, yPosition, { align: "center" });
 
-    // Logotipo no canto superior esquerdo (primeira página)
-    const logoPath = "logo-henrique-cordeiro.png";
-    doc.addImage(logoPath, "PNG", margin, 5, 20, 20);
+    yPosition += 20;
 
-    yPosition += 30;
-
-    // Adicionar informações do cliente
+    // Informações do cliente
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
     doc.setFontSize(12);
-    doc.setTextColor("#000");
     doc.text(`Cliente: ${clientName}`, margin, yPosition);
     doc.text(`Protocolo: ${protocolNumber}`, margin, yPosition + 10);
-    doc.text(`Peso: ${weight} kg`, margin, yPosition + 20);
+    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 20);
     doc.text(`Data: ${currentDate}`, margin, yPosition + 30);
 
-    yPosition += 50;
+    yPosition += 40;
 
-    // Gerar refeições centralizadas
+    // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
-      doc.setTextColor("#ff6600");
-      doc.text(`Refeição ${index + 1}: ${mealName}`, pageWidth / 2, yPosition, { align: "center" });
+      doc.text(`Refeição ${index + 1}: ${mealName}`, margin, yPosition);
 
       yPosition += 10;
 
@@ -118,30 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += 10;
 
-      // Adicionar nova página se necessário
       if (yPosition > 270) {
         doc.addPage();
-        yPosition = 30;
+        yPosition = 20;
       }
     });
 
-    // Adicionar campos adicionais na segunda página
-    doc.addPage();
-    doc.setFontSize(14);
-    doc.text("Suplementações", margin, 40);
-    doc.text("Sugestões", margin, 100);
-
-    // Logotipo centralizado na segunda página
-    doc.addImage(logoPath, "PNG", pageWidth / 2 - 15, 250, 30, 30);
-
-    // Rodapé
-    doc.setFillColor("#ff6600");
-    doc.rect(0, 280, pageWidth, 20, "F");
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text(`Cliente: ${clientName}`, margin, 290);
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
-
+    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
