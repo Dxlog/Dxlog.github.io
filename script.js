@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
-    let yPosition = 40;
+    let yPosition = 35;
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
@@ -83,33 +83,38 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF"); // Texto branco
     doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
 
-    // Detalhe laranja no cabeçalho
+    // Detalhe laranja estilizado no cabeçalho (metade direita, fino)
     doc.setFillColor("#ff6600");
-    doc.rect(0, 28, pageWidth, 2, "F");
+    doc.rect(pageWidth / 2, 28, pageWidth / 2, 1, "F");
 
-    yPosition += 20;
+    yPosition += 10;
 
-    // Informações principais do aluno
+    // Informações principais do aluno (subidas no layout)
     doc.setFontSize(12);
     doc.setTextColor("#000");
     doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
-    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 10);
-    doc.text(`Data: ${currentDate}`, margin, yPosition + 20);
-    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 30);
+    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 8);
+    doc.text(`Data: ${currentDate}`, margin, yPosition + 16);
+    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 24);
 
-    yPosition += 40;
+    yPosition += 35;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+
+      // Fundo laranja estilizado e proporcional para o título da refeição
       doc.setFontSize(14);
-      doc.setFillColor("#ff6600"); // Fundo laranja
-      doc.setTextColor("#FFFFFF"); // Texto branco
-      doc.rect(margin, yPosition, pageWidth - 2 * margin, 10, "F"); // Fundo laranja para o título da refeição
+      doc.setFillColor("#ff6600");
+      const titleWidth = doc.getTextWidth(mealName) + 20; // Proporcional ao texto
+      const titleX = (pageWidth - titleWidth) / 2;
+      doc.rect(titleX, yPosition, titleWidth, 10, "F");
+      doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
 
       yPosition += 15;
 
+      // Alimentos e proporções
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
@@ -122,17 +127,17 @@ document.addEventListener("DOMContentLoaded", () => {
         // Adicionar nova página se necessário
         if (yPosition > 270) {
           doc.addPage();
-          yPosition = 40;
+          yPosition = 35;
 
           // Repetir cabeçalho na nova página
-          doc.setFillColor(0, 0, 0); // Fundo preto
+          doc.setFillColor(0, 0, 0);
           doc.rect(0, 0, pageWidth, 30, "F");
           doc.setTextColor("#FFFFFF");
           doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
           doc.setFillColor("#ff6600");
-          doc.rect(0, 28, pageWidth, 2, "F");
+          doc.rect(pageWidth / 2, 28, pageWidth / 2, 1, "F");
 
-          yPosition += 20;
+          yPosition += 10;
         }
       });
 
