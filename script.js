@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealButton = document.getElementById("addMealButton");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Adicionar uma nova refeição
+  // Adicionar nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -64,16 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-
-    const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
     let yPosition = 30;
 
-    // Título
-    doc.setFont("helvetica", "bold");
+    // Logotipo no PDF
+    const logoPath = "logo-henrique-cordeiro.png";
+    doc.addImage(logoPath, "PNG", margin, 5, 40, 15);
+
+    // Cabeçalho
     doc.setFontSize(22);
-    doc.setTextColor("#013220");
-    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, yPosition, { align: "center" });
+    doc.setTextColor("#ff6600");
+    doc.text("Plano Alimentar Personalizado", 105, 25, { align: "center" });
 
     yPosition += 20;
 
@@ -86,17 +87,16 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(12);
     doc.text(`Cliente: ${clientName}`, margin, yPosition);
     doc.text(`Protocolo: ${protocolNumber}`, margin, yPosition + 10);
-    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 20);
+    doc.text(`Peso: ${weight} kg`, margin, yPosition + 20);
     doc.text(`Data: ${currentDate}`, margin, yPosition + 30);
 
     yPosition += 40;
 
-    // Refeições
+    // Refeições no PDF
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
       doc.text(`Refeição ${index + 1}: ${mealName}`, margin, yPosition);
-
       yPosition += 10;
 
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
@@ -109,11 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       yPosition += 10;
-
-      if (yPosition > 270) {
-        doc.addPage();
-        yPosition = 20;
-      }
     });
 
     // Salvar PDF
