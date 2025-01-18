@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealButton = document.getElementById("addMealButton");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Função para adicionar uma nova refeição
+  // Função para adicionar nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para gerar o PDF
+  // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 30;
 
-    // Cabeçalho
+    // Cabeçalho com logo e título
     const logoPath = "logo-henrique-cordeiro.png.png";
     doc.addImage(logoPath, "PNG", margin, 5, 40, 15);
     doc.setFontSize(22);
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 40;
 
-    // Refeições no PDF
+    // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += 10;
 
-      // Adicionar nova página se necessário
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 30;
