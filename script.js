@@ -67,11 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // "V" no canto superior esquerdo
+    // "V" estilizado no canto superior esquerdo
     doc.setDrawColor("#ff6600");
-    doc.setLineWidth(0.5);
-    doc.line(5, 5, 20, 15); // Linha diagonal 1
-    doc.line(5, 15, 20, 5); // Linha diagonal 2
+    doc.setLineWidth(0.8);
+    doc.line(5, 5, 25, 15); // Primeira linha diagonal
+    doc.line(5, 15, 25, 5); // Segunda linha diagonal
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
@@ -135,13 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setFillColor("#ff6600");
       doc.rect(margin, yPosition, pageWidth - 2 * margin, 5, "F");
       doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition - 2, { align: "center" });
+      doc.text(mealName, pageWidth / 2, yPosition + 3, { align: "center" });
 
-      // Linhas laterais para compor
+      // Linhas laterais em preto e laranja
       doc.setDrawColor("#ff6600");
-      doc.setLineWidth(0.5);
-      doc.line(margin, yPosition + 5, margin, yPosition + 15);
-      doc.line(pageWidth - margin, yPosition + 5, pageWidth - margin, yPosition + 15);
+      doc.setLineWidth(1);
+      doc.line(margin, yPosition + 5, margin, yPosition + 25);
+      doc.line(pageWidth - margin, yPosition + 5, pageWidth - margin, yPosition + 25);
 
       yPosition += 20;
 
