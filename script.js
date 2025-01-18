@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealButton = document.getElementById("addMealButton");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Adicionar nova refeição
+  // Função para adicionar nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -83,11 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF"); // Texto branco
     doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
 
-    // Detalhe laranja estilizado no cabeçalho (metade direita, fino)
+    // Detalhe laranja estilizado no cabeçalho
     doc.setFillColor("#ff6600");
     doc.rect(pageWidth / 2, 28, pageWidth / 2, 1, "F");
 
-    yPosition += 10;
+    yPosition += 15;
 
     // Informações principais do aluno (subidas no layout)
     doc.setFontSize(12);
