@@ -12,6 +12,7 @@
       <h1>Plano Alimentar Personalizado</h1>
     </header>
     <main>
+      <!-- Informações do Cliente -->
       <section class="client-info">
         <h2>Informações do Cliente</h2>
         <div class="form-group">
@@ -28,17 +29,20 @@
         </div>
       </section>
 
+      <!-- Refeições -->
       <section id="mealsContainer">
         <h2>Refeições</h2>
       </section>
       <button id="addMealButton" class="btn">Adicionar Refeição</button>
+
+      <!-- Botão para gerar PDF -->
       <div class="button-container">
         <button id="generatePdfButton" class="btn btn-primary">Gerar PDF</button>
       </div>
     </main>
   </div>
 
-  <!-- Importação do jsPDF v2.4.0 -->
+  <!-- Importação do jsPDF via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
