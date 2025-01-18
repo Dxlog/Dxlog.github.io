@@ -22,16 +22,26 @@ header {
   margin-bottom: 20px;
 }
 
+header .logo-container {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+header .logo {
+  width: 100px;
+  height: auto;
+}
+
 header h1 {
   font-size: 28px;
-  color: #013220;
+  color: #ff6600;
   font-weight: bold;
 }
 
 /* Títulos */
 h2 {
   font-size: 22px;
-  color: #013220;
+  color: #ff6600;
   margin-bottom: 15px;
   font-weight: bold;
 }
@@ -63,7 +73,7 @@ input {
   margin: 20px auto;
   font-size: 16px;
   color: white;
-  background-color: #013220;
+  background-color: #ff6600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -71,11 +81,11 @@ input {
 }
 
 .btn-primary {
-  background-color: #016635;
+  background-color: #ff4500;
 }
 
 .btn:hover {
-  background-color: #014d29;
+  background-color: #cc5200;
 }
 
 .button-container {
@@ -105,7 +115,7 @@ table th, table td {
 }
 
 table th {
-  background-color: #013220;
+  background-color: #ff6600;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
