@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealButton = document.getElementById("addMealButton");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Função para adicionar nova refeição
+  // Adicionar nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -61,6 +61,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Função para desenhar o cabeçalho
+  function drawHeader(doc, pageWidth) {
+    // Fundo preto
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 0, pageWidth, 30, "F");
+
+    // Detalhe laranja no canto esquerdo
+    doc.setFillColor("#ff6600");
+    doc.rect(0, 0, 10, 10, "F");
+
+    // Título
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor("#FFFFFF"); // Texto branco
+    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
+
+    // Linha laranja na parte inferior do cabeçalho
+    doc.setFillColor("#ff6600");
+    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
+  }
+
+  // Função para desenhar o rodapé
+  function drawFooter(doc, pageWidth, clientName) {
+    // Fundo preto no rodapé
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 280, pageWidth, 15, "F");
+
+    // Texto no rodapé
+    doc.setFontSize(10);
+    doc.setTextColor("#FFFFFF");
+    doc.text(`Aluno(a): ${clientName}`, 15, 290);
+    doc.text("henrique.cordeiro@gmail.com", pageWidth - 15, 290, { align: "right" });
+  }
+
   // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
@@ -68,28 +102,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
-    let yPosition = 35;
+    let yPosition = 40;
 
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
-    // Cabeçalho estilizado
-    doc.setFillColor(0, 0, 0); // Fundo preto
-    doc.rect(0, 0, pageWidth, 30, "F");
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.setTextColor("#FFFFFF"); // Texto branco
-    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
+    // Desenhar cabeçalho na primeira página
+    drawHeader(doc, pageWidth);
 
-    // Detalhe laranja estilizado no cabeçalho
-    doc.setFillColor("#ff6600");
-    doc.rect(pageWidth / 2, 28, pageWidth / 2, 1, "F");
+    yPosition += 10;
 
-    yPosition += 15;
-
-    // Informações principais do aluno (subidas no layout)
+    // Informações principais do aluno
     doc.setFontSize(12);
     doc.setTextColor("#000");
     doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
@@ -127,30 +152,19 @@ document.addEventListener("DOMContentLoaded", () => {
         // Adicionar nova página se necessário
         if (yPosition > 270) {
           doc.addPage();
-          yPosition = 35;
+          yPosition = 40;
 
-          // Repetir cabeçalho na nova página
-          doc.setFillColor(0, 0, 0);
-          doc.rect(0, 0, pageWidth, 30, "F");
-          doc.setTextColor("#FFFFFF");
-          doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
-          doc.setFillColor("#ff6600");
-          doc.rect(pageWidth / 2, 28, pageWidth / 2, 1, "F");
-
-          yPosition += 10;
+          // Repetir cabeçalho e rodapé na nova página
+          drawHeader(doc, pageWidth);
+          drawFooter(doc, pageWidth, clientName);
         }
       });
 
       yPosition += 10;
     });
 
-    // Rodapé com fundo preto menor
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 280, pageWidth, 15, "F"); // Fundo preto menor
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text(`Aluno(a): ${clientName}`, margin, 290);
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
+    // Rodapé na última página
+    drawFooter(doc, pageWidth, clientName);
 
     // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
