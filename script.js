@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealButton = document.getElementById("addMealButton");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Adicionar nova refeição
+  // Função para adicionar nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -63,23 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para desenhar o cabeçalho
   function drawHeader(doc, pageWidth) {
-    // Fundo preto
+    // Fundo preto no cabeçalho
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe laranja no canto esquerdo
+    // Linha em "V" no canto esquerdo
     doc.setFillColor("#ff6600");
-    doc.rect(0, 0, 10, 10, "F");
+    doc.triangle(0, 0, 15, 0, 0, 15, "F");
 
     // Título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor("#FFFFFF"); // Texto branco
     doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
-
-    // Linha laranja na parte inferior do cabeçalho
-    doc.setFillColor("#ff6600");
-    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
   }
 
   // Função para desenhar o rodapé
@@ -131,23 +127,34 @@ document.addEventListener("DOMContentLoaded", () => {
       // Fundo laranja estilizado e proporcional para o título da refeição
       doc.setFontSize(14);
       doc.setFillColor("#ff6600");
-      const titleWidth = doc.getTextWidth(mealName) + 20; // Proporcional ao texto
-      const titleX = (pageWidth - titleWidth) / 2;
-      doc.rect(titleX, yPosition, titleWidth, 10, "F");
+      const titleWidth = pageWidth - 30; // Tamanho fixo do fundo
+      doc.rect(margin, yPosition, titleWidth, 15, "F");
       doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
+      doc.text(mealName, pageWidth / 2, yPosition + 10, { align: "center" });
 
-      yPosition += 15;
+      yPosition += 20;
+
+      // Linha de separação preta
+      doc.setFillColor("#000000");
+      doc.rect(margin, yPosition, pageWidth - 2 * margin, 1, "F");
+      yPosition += 5;
 
       // Alimentos e proporções
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        doc.setFontSize(12);
+        // Quadrinho cinza claro
+        doc.setFillColor("#f5f5f5");
+        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F"); // Alimento
+        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F"); // Proporção
+
+        doc.setFontSize(10);
         doc.setTextColor("#000");
-        doc.text(`- ${foodName}: ${foodProportion}`, margin + 10, yPosition);
-        yPosition += 8;
+        doc.text(foodName, margin + 5, yPosition + 7);
+        doc.text(foodProportion, margin + (pageWidth - 2 * margin) / 2 + 5, yPosition + 7);
+
+        yPosition += 12;
 
         // Adicionar nova página se necessário
         if (yPosition > 270) {
