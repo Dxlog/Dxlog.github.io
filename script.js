@@ -61,42 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar o cabeçalho
-  function drawHeader(doc, pageWidth) {
-    // Fundo preto no cabeçalho
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 0, pageWidth, 30, "F");
-
-    // Detalhe no canto superior esquerdo (mais moderno)
-    doc.setDrawColor("#ff6600");
-    doc.setLineWidth(1);
-    doc.line(5, 5, 20, 10); // Linha diagonal maior
-    doc.line(5, 10, 20, 5); // Linha diagonal menor
-
-    // Linha laranja no canto inferior direito
-    doc.setFillColor("#ff6600");
-    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
-
-    // Título centralizado
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22); // Aumentado o tamanho da fonte
-    doc.setTextColor("#FFFFFF"); // Texto branco
-    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
-  }
-
-  // Função para desenhar o rodapé
-  function drawFooter(doc, pageWidth, clientName) {
-    // Fundo preto cobrindo todo o final da página
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 280, pageWidth, 20, "F");
-
-    // Texto no rodapé
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text(`Aluno(a): ${clientName}`, 15, 290);
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - 15, 290, { align: "right" });
-  }
-
   // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
@@ -106,81 +70,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 40;
 
-    const clientName = document.getElementById("clientName").value || "Nome não especificado";
-    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-    const weight = document.getElementById("weight").value || "Não especificado";
-    const currentDate = new Date().toLocaleDateString("pt-BR");
+    const supplementation = document.getElementById("supplementation").value || "Não especificado";
+    const guidance = document.getElementById("guidance").value || "Não especificado";
 
-    // Desenhar cabeçalho na primeira página
-    drawHeader(doc, pageWidth);
+    // Cabeçalho
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 0, pageWidth, 30, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor("#FFFFFF");
+    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
 
-    yPosition += 10;
-
-    // Informações principais do aluno
+    // SUPLEMENTAÇÃO E MANIPULADOS
+    yPosition += 20;
+    doc.setFillColor("#ff6600");
+    doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
     doc.setFontSize(12);
+    doc.setTextColor("#FFFFFF");
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
+    yPosition += 15;
+    doc.setFontSize(10);
     doc.setTextColor("#000");
-    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
-    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 8);
-    doc.text(`Data: ${currentDate}`, margin, yPosition + 16);
-    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 24);
+    doc.setFillColor("#f5f5f5");
+    doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "F");
+    doc.text(supplementation, margin + 5, yPosition + 10);
 
-    yPosition += 35;
+    // ORIENTAÇÕES
+    yPosition += 30;
+    doc.setFillColor("#ff6600");
+    doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
+    doc.setFontSize(12);
+    doc.setTextColor("#FFFFFF");
+    doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
+    yPosition += 15;
+    doc.setFontSize(10);
+    doc.setTextColor("#000");
+    doc.setFillColor("#f5f5f5");
+    doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "F");
+    doc.text(guidance, margin + 5, yPosition + 10);
 
-    // Refeições
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-
-      // Nome da refeição e fundo laranja alinhado às linhas
-      doc.setFontSize(14);
-      const textWidth = doc.getTextWidth(mealName);
-      const centerX = (pageWidth - textWidth) / 2;
-
-      // Fundo laranja menor com bordas arredondadas
-      doc.setFillColor("#ff6600");
-      doc.roundedRect(centerX - 10, yPosition + 3, textWidth + 20, 8, 2, 2, "F");
-
-      // Nome da refeição (branco, centralizado)
-      doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
-
-      // Linhas horizontais preta e laranja alinhadas ao nome (pegando a metade do fundo)
-      doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 8, centerX - 10, yPosition + 8); // Linha preta à esquerda
-      doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 10, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha laranja à direita
-
-      yPosition += 20;
-
-      // Quadrinhos para alimentos e proporções
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        // Quadrinhos para alimentos e proporções com demarcações leves
-        doc.setFillColor("#f5f5f5");
-        doc.setDrawColor("#ccc"); // Demarcação leve
-        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Alimento
-        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Proporção
-
-        doc.setFontSize(10);
-        doc.setTextColor("#000");
-        doc.text(foodName, margin + 5, yPosition + 7);
-        doc.text(foodProportion, margin + (pageWidth - 2 * margin) / 2 + 5, yPosition + 7);
-
-        yPosition += 12;
-
-        if (yPosition > 270) {
-          doc.addPage();
-          yPosition = 40;
-          drawHeader(doc, pageWidth);
-          drawFooter(doc, pageWidth, clientName);
-        }
-      });
-
-      yPosition += 10;
-    });
-
-    drawFooter(doc, pageWidth, clientName);
+    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
