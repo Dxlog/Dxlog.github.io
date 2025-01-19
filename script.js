@@ -130,25 +130,24 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição
+      // Nome da refeição e fundo laranja alinhado às linhas
       doc.setFontSize(14);
-      doc.setTextColor("#000");
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
-      // Fundo laranja abaixo da palavra
+      // Fundo laranja alinhado com as linhas
       doc.setFillColor("#ff6600");
       doc.rect(centerX - 10, yPosition + 3, textWidth + 20, 5, "F");
 
-      // Nome da refeição (centralizado)
+      // Nome da refeição
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
       // Linhas horizontais pretas e laranjas
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 10, centerX - 10, yPosition + 10); // Linha preta esquerda
+      doc.line(margin, yPosition + 10, centerX - 10, yPosition + 10); // Linha preta à esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 10, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja direita
+      doc.line(centerX + textWidth + 10, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja à direita
 
       yPosition += 20;
 
@@ -157,10 +156,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos para separação
+        // Quadrinhos para alimentos e proporções
         doc.setFillColor("#f5f5f5");
-        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F"); // Alimento
-        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F"); // Proporção
+        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
+        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
 
         doc.setFontSize(10);
         doc.setTextColor("#000");
@@ -169,12 +168,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         yPosition += 12;
 
-        // Adicionar nova página se necessário
         if (yPosition > 270) {
           doc.addPage();
           yPosition = 40;
-
-          // Repetir cabeçalho e rodapé na nova página
           drawHeader(doc, pageWidth);
           drawFooter(doc, pageWidth, clientName);
         }
@@ -183,10 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
       yPosition += 10;
     });
 
-    // Rodapé na última página
     drawFooter(doc, pageWidth, clientName);
-
-    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
