@@ -15,11 +15,33 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* Seções gerais */
-h3 {
+/* Informações do aluno */
+#studentInfo {
+  margin-bottom: 20px;
+}
+
+#studentInfo label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#studentInfo input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   margin-bottom: 10px;
-  font-size: 18px;
-  color: #ff6600;
+}
+
+/* SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES */
+#supplementationSection,
+#guidanceSection {
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+  margin-bottom: 20px;
 }
 
 textarea {
@@ -29,16 +51,6 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
-}
-
-/* Contêineres para SUPLEMENTAÇÃO e ORIENTAÇÕES */
-#supplementationSection,
-#guidanceSection {
-  margin-bottom: 20px;
-  padding: 15px;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Refeições */
