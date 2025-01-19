@@ -135,19 +135,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
-      // Fundo laranja maior
+      // Fundo laranja maior com bordas arredondadas
       doc.setFillColor("#ff6600");
-      doc.rect(centerX - 15, yPosition + 3, textWidth + 30, 10, "F");
+      doc.roundedRect(centerX - 15, yPosition + 3, textWidth + 30, 10, 2, 2, "F");
 
       // Nome da refeição (branco, centralizado)
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
 
-      // Linhas horizontais preta e laranja alinhadas ao nome
+      // Linhas horizontais preta e laranja alinhadas ao nome (pegando a metade do fundo)
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 13, centerX - 15, yPosition + 13); // Linha preta à esquerda
+      doc.line(margin, yPosition + 8, centerX - 15, yPosition + 8); // Linha preta à esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 15, yPosition + 13, pageWidth - margin, yPosition + 13); // Linha laranja à direita
+      doc.line(centerX + textWidth + 15, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha laranja à direita
 
       yPosition += 20;
 
