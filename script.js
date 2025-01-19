@@ -68,6 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 40;
 
+    const clientName = document.getElementById("clientName").value || "Não especificado";
+    const weight = document.getElementById("weight").value || "Não especificado";
+    const currentDate = document.getElementById("currentDate").value || "Não especificado";
+    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
     const guidance = document.getElementById("guidance").value || "Não especificado";
 
@@ -79,31 +83,41 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF");
     doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
 
-    // SUPLEMENTAÇÃO
-    yPosition += 20;
-    doc.setFillColor("#ff6600");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
-    yPosition += 15;
-    doc.setFillColor("#f5f5f5");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "F");
+    // Informações do aluno
+    doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(supplementation, margin + 5, yPosition + 10);
+    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
+    doc.text(`Peso Atual: ${weight}`, margin, yPosition + 8);
+    doc.text(`Data: ${currentDate}`, margin, yPosition + 16);
+    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 24);
+
+    yPosition += 40;
+
+    // SUPLEMENTAÇÃO E MANIPULADOS
+    doc.setFillColor("#ff6600");
+    doc.rect(margin, yPosition, (pageWidth - margin * 2) / 2, 10, "F");
+    doc.setTextColor("#FFFFFF");
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", margin + 5, yPosition + 7);
+
+    doc.setFontSize(10);
+    doc.setTextColor("#000");
+    doc.rect(margin, yPosition + 15, (pageWidth - margin * 2) / 2, 20, "D");
+    doc.text(supplementation, margin + 5, yPosition + 25);
 
     // ORIENTAÇÕES
-    yPosition += 30;
     doc.setFillColor("#ff6600");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
+    doc.rect(margin + (pageWidth - margin * 2) / 2 + 5, yPosition, (pageWidth - margin * 2) / 2 - 5, 10, "F");
     doc.setTextColor("#FFFFFF");
-    doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
-    yPosition += 15;
-    doc.setFillColor("#f5f5f5");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "F");
-    doc.setTextColor("#000");
-    doc.text(guidance, margin + 5, yPosition + 10);
+    doc.text("ORIENTAÇÕES", margin + (pageWidth - margin * 2) / 2 + 10, yPosition + 7);
 
-    // Salvar PDF
+    doc.setFontSize(10);
+    doc.setTextColor("#000");
+    doc.rect(margin + (pageWidth - margin * 2) / 2 + 5, yPosition + 15, (pageWidth - margin * 2) / 2 - 5, 20, "D");
+    doc.text(guidance, margin + (pageWidth - margin * 2) / 2 + 10, yPosition + 25);
+
+    yPosition += 40;
+
+    // Gerar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
