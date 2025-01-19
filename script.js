@@ -130,18 +130,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição com fundo laranja e linhas laterais
+      // Nome da refeição com fundo laranja abaixo e linhas laterais
       doc.setFontSize(14);
       doc.setFillColor("#ff6600");
-      doc.rect(margin, yPosition, pageWidth - 2 * margin, 5, "F");
-      doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 3, { align: "center" });
+      doc.rect(margin, yPosition + 5, pageWidth - 2 * margin, 7, "F"); // Fundo laranja maior
+      doc.setTextColor("#000000");
+      doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
-      // Linhas laterais em preto e laranja
+      // Linhas laterais preta e laranja
+      doc.setDrawColor("#000000");
+      doc.line(margin - 5, yPosition, margin - 5, yPosition + 12); // Linha preta
       doc.setDrawColor("#ff6600");
-      doc.setLineWidth(1);
-      doc.line(margin, yPosition + 5, margin, yPosition + 25);
-      doc.line(pageWidth - margin, yPosition + 5, pageWidth - margin, yPosition + 25);
+      doc.line(pageWidth - margin + 5, yPosition, pageWidth - margin + 5, yPosition + 12); // Linha laranja
 
       yPosition += 20;
 
