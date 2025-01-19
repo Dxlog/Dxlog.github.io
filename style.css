@@ -36,12 +36,14 @@ h1 {
 }
 
 /* SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES */
-#supplementationSection,
-#guidanceSection {
-  display: inline-block;
-  width: 48%;
-  vertical-align: top;
+#supplementationAndGuidance {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
+}
+
+#supplementationSection, #guidanceSection {
+  width: 48%;
 }
 
 textarea {
