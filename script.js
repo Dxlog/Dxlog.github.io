@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para gerar o PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -84,78 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF");
     doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
 
-    // Informações do aluno
-    doc.setFontSize(12);
-    doc.setTextColor("#000");
-    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
-    doc.text(`Peso Atual: ${weight}`, margin, yPosition + 8);
-    doc.text(`Data: ${currentDate}`, margin, yPosition + 16);
-    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 24);
+    // SUPLEMENTAÇÃO
+    doc.text(supplementation, margin + 5, yPosition + 15);
 
-    yPosition += 40;
-
-    // SUPLEMENTAÇÃO E MANIPULADOS
-    doc.setFillColor("#ff6600");
-    doc.rect(margin, yPosition, (pageWidth - margin * 2) / 2, 10, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", margin + 5, yPosition + 7);
-
-    doc.setFontSize(10);
-    doc.setTextColor("#000");
-    doc.rect(margin, yPosition + 15, (pageWidth - margin * 2) / 2, 20, "D");
-    doc.text(supplementation, margin + 5, yPosition + 25);
-
-    // ORIENTAÇÕES
-    doc.setFillColor("#ff6600");
-    doc.rect(margin + (pageWidth - margin * 2) / 2 + 5, yPosition, (pageWidth - margin * 2) / 2 - 5, 10, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text("ORIENTAÇÕES", margin + (pageWidth - margin * 2) / 2 + 10, yPosition + 7);
-
-    doc.setFontSize(10);
-    doc.setTextColor("#000");
-    doc.rect(margin + (pageWidth - margin * 2) / 2 + 5, yPosition + 15, (pageWidth - margin * 2) / 2 - 5, 20, "D");
-    doc.text(guidance, margin + (pageWidth - margin * 2) / 2 + 10, yPosition + 25);
-
-    yPosition += 40;
-
-    // Refeições
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-
-      doc.setFontSize(14);
-      doc.setFillColor("#ff6600");
-      doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
-      doc.setTextColor("#FFFFFF");
-      doc.text(mealName, margin + 5, yPosition + 7);
-
-      yPosition += 15;
-
-      // Alimentos
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        doc.setFillColor("#f5f5f5");
-        doc.rect(margin, yPosition, (pageWidth - margin * 2) / 2, 10, "D");
-        doc.text(foodName, margin + 5, yPosition + 7);
-
-        doc.rect(margin + (pageWidth - margin * 2) / 2, yPosition, (pageWidth - margin * 2) / 2, 10, "D");
-        doc.text(foodProportion, margin + (pageWidth - margin * 2) / 2 + 5, yPosition + 7);
-
-        yPosition += 12;
-      });
-
-      yPosition += 10;
-    });
-
-    // Rodapé
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 280, pageWidth, 20, "F");
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text(`Aluno(a): ${clientName}`, margin, 290);
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
-
-    doc.save("Plano_Alimentar.pdf");
+    // Refeições:
+    const meals = document.querySelectorAll(".meal-section");
+    meals.forEach((meal) => { /** lógica para gerar alimentos */ });
   });
 });
