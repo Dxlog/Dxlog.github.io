@@ -35,7 +35,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES */
+/* SUPLEMENTAÇÃO E MANIPULADOS / ORIENTAÇÕES */
 #supplementationAndGuidance {
   display: flex;
   justify-content: space-between;
@@ -52,7 +52,7 @@ textarea {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: vertical;
+  resize: none; /* Impede redimensionamento manual */
 }
 
 /* Refeições */
