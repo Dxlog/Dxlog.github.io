@@ -135,19 +135,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
-      // Fundo laranja alinhado com as linhas
+      // Fundo laranja maior
       doc.setFillColor("#ff6600");
-      doc.rect(centerX - 15, yPosition + 3, textWidth + 30, 5, "F");
+      doc.rect(centerX - 15, yPosition + 3, textWidth + 30, 10, "F");
 
-      // Nome da refeição
+      // Nome da refeição (branco, centralizado)
       doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
+      doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
 
       // Linhas horizontais preta e laranja alinhadas ao nome
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 10, centerX - 15, yPosition + 10); // Linha preta à esquerda
+      doc.line(margin, yPosition + 13, centerX - 15, yPosition + 13); // Linha preta à esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 15, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja à direita
+      doc.line(centerX + textWidth + 15, yPosition + 13, pageWidth - margin, yPosition + 13); // Linha laranja à direita
 
       yPosition += 20;
 
@@ -156,10 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos para alimentos e proporções
+        // Quadrinhos para alimentos e proporções com demarcações leves
         doc.setFillColor("#f5f5f5");
-        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
-        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
+        doc.setDrawColor("#ccc"); // Demarcação leve
+        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Alimento
+        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Proporção
 
         doc.setFontSize(10);
         doc.setTextColor("#000");
