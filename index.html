@@ -1,52 +1,90 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plano Alimentar Personalizado</title>
-  <!-- Link para o CSS -->
-  <link rel="stylesheet" href="style.css">
-  <!-- Importação do jsPDF via CDN (versão funcional 2.4.0) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #supplementationSection,
+    #guidanceSection {
+      margin-bottom: 20px;
+    }
+
+    .meal-section {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e05500;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img src="logo-henrique-cordeiro.png.png" alt="Logo" class="logo">
-      <h1>Plano Alimentar Personalizado</h1>
-    </header>
-    <main>
-      <!-- Informações do Cliente -->
-      <section class="client-info">
-        <h2>Informações do Cliente</h2>
-        <div class="form-group">
-          <label for="clientName">Nome do Cliente:</label>
-          <input type="text" id="clientName" placeholder="Digite o nome do cliente">
-        </div>
-        <div class="form-group">
-          <label for="protocolNumber">Número do Protocolo:</label>
-          <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
-        </div>
-        <div class="form-group">
-          <label for="weight">Peso Atual (kg):</label>
-          <input type="number" id="weight" placeholder="Digite o peso atual">
-        </div>
-      </section>
+  <h1>Plano Alimentar Personalizado</h1>
 
-      <!-- Refeições -->
-      <section id="mealsContainer">
-        <h2>Refeições</h2>
-      </section>
-      <button id="addMealButton" class="btn">Adicionar Refeição</button>
-
-      <!-- Botão para gerar PDF -->
-      <div class="button-container">
-        <button id="generatePdfButton" class="btn btn-primary">Gerar PDF</button>
-      </div>
-    </main>
+  <!-- SUPLEMENTAÇÃO E MANIPULADOS -->
+  <div id="supplementationSection">
+    <h3>SUPLEMENTAÇÃO E MANIPULADOS</h3>
+    <textarea id="supplementation" rows="4" placeholder="Preencha as informações de suplementação e manipulados"></textarea>
   </div>
 
-  <!-- Script JS -->
+  <!-- ORIENTAÇÕES -->
+  <div id="guidanceSection">
+    <h3>ORIENTAÇÕES</h3>
+    <textarea id="guidance" rows="4" placeholder="Preencha as orientações"></textarea>
+  </div>
+
+  <!-- Refeições -->
+  <div id="mealsContainer">
+    <button id="addMealButton">Adicionar Refeição</button>
+  </div>
+
+  <!-- Botão para gerar PDF -->
+  <button id="generatePdfButton">Gerar PDF</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
