@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Função para gerar o PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -117,7 +118,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 40;
 
-    // Gerar PDF
+    // Refeições
+    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
+      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+
+      doc.setFontSize(14);
+      doc.setFillColor("#ff6600");
+      doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
+      doc.setTextColor("#FFFFFF");
+      doc.text(mealName, margin + 5, yPosition + 7);
+
+      yPosition += 15;
+
+      // Alimentos
+      mealSection.querySelectorAll("tbody tr").forEach((row) => {
+        const foodName = row.querySelector(".foodName").value || "Não especificado";
+        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
+
+        doc.setFillColor("#f5f5f5");
+        doc.rect(margin, yPosition, (pageWidth - margin * 2) / 2, 10, "D");
+        doc.text(foodName, margin + 5, yPosition + 7);
+
+        doc.rect(margin + (pageWidth - margin * 2) / 2, yPosition, (pageWidth - margin * 2) / 2, 10, "D");
+        doc.text(foodProportion, margin + (pageWidth - margin * 2) / 2 + 5, yPosition + 7);
+
+        yPosition += 12;
+      });
+
+      yPosition += 10;
+    });
+
+    // Rodapé
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 280, pageWidth, 20, "F");
+    doc.setFontSize(10);
+    doc.setTextColor("#FFFFFF");
+    doc.text(`Aluno(a): ${clientName}`, margin, 290);
+    doc.text("henrique.cordeiro@gmail.com", pageWidth - margin, 290, { align: "right" });
+
     doc.save("Plano_Alimentar.pdf");
   });
 });
