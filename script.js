@@ -67,21 +67,25 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // "V" estilizado no canto superior esquerdo
+    // Detalhe no canto superior esquerdo (|-, alinhado na quina)
     doc.setDrawColor("#ff6600");
     doc.setLineWidth(0.8);
-    doc.line(5, 5, 25, 15); // Primeira linha diagonal
-    doc.line(5, 15, 25, 5); // Segunda linha diagonal
+    doc.line(5, 5, 15, 5); // Linha horizontal
+    doc.line(5, 5, 5, 15); // Linha vertical
+
+    doc.setLineWidth(0.8);
+    doc.line(8, 8, 20, 8); // Linha horizontal mais acima
+    doc.line(8, 8, 8, 20); // Linha vertical mais acima
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
     doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
 
-    // Título
+    // Título centralizado
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
+    doc.setFontSize(22); // Aumentado o tamanho da fonte
     doc.setTextColor("#FFFFFF"); // Texto branco
-    doc.text("Plano Alimentar Personalizado", pageWidth / 2, 20, { align: "center" });
+    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
   }
 
   // Função para desenhar o rodapé
@@ -143,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
-      // Linhas horizontais pretas e laranjas
+      // Linhas horizontais preta e laranja
       doc.setDrawColor("#000");
       doc.line(margin, yPosition + 10, centerX - 10, yPosition + 10); // Linha preta à esquerda
       doc.setDrawColor("#ff6600");
@@ -156,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos para alimentos e proporções
         doc.setFillColor("#f5f5f5");
         doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
         doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
