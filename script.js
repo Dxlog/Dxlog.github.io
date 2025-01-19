@@ -130,18 +130,25 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição com fundo laranja abaixo e linhas laterais
+      // Nome da refeição com fundo laranja e linhas horizontais pretas e laranjas
       doc.setFontSize(14);
+      doc.setTextColor("#000");
+      const textWidth = doc.getTextWidth(mealName);
+      const centerX = (pageWidth - textWidth) / 2;
+
+      // Fundo laranja abaixo da palavra
       doc.setFillColor("#ff6600");
-      doc.rect(margin, yPosition + 5, pageWidth - 2 * margin, 7, "F"); // Fundo laranja maior
-      doc.setTextColor("#000000");
+      doc.rect(centerX - 5, yPosition + 3, textWidth + 10, 5, "F");
+
+      // Nome da refeição
+      doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
-      // Linhas laterais preta e laranja
-      doc.setDrawColor("#000000");
-      doc.line(margin - 5, yPosition, margin - 5, yPosition + 12); // Linha preta
+      // Linhas horizontais pretas e laranjas
+      doc.setDrawColor("#000");
+      doc.line(margin, yPosition + 10, centerX - 5, yPosition + 10); // Linha preta esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(pageWidth - margin + 5, yPosition, pageWidth - margin + 5, yPosition + 12); // Linha laranja
+      doc.line(centerX + textWidth + 5, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja direita
 
       yPosition += 20;
 
