@@ -67,11 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe no canto superior esquerdo (|-)
+    // Detalhe no canto superior esquerdo (mais moderno)
     doc.setDrawColor("#ff6600");
     doc.setLineWidth(1);
-    doc.line(5, 5, 15, 5); // Linha horizontal
-    doc.line(5, 5, 5, 15); // Linha vertical
+    doc.line(5, 5, 20, 10); // Linha diagonal maior
+    doc.line(5, 10, 20, 5); // Linha diagonal menor
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
@@ -135,9 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
-      // Fundo laranja maior com bordas arredondadas
+      // Fundo laranja menor com bordas arredondadas
       doc.setFillColor("#ff6600");
-      doc.roundedRect(centerX - 15, yPosition + 3, textWidth + 30, 10, 2, 2, "F");
+      doc.roundedRect(centerX - 10, yPosition + 3, textWidth + 20, 8, 2, 2, "F");
 
       // Nome da refeição (branco, centralizado)
       doc.setTextColor("#FFFFFF");
@@ -145,9 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Linhas horizontais preta e laranja alinhadas ao nome (pegando a metade do fundo)
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 8, centerX - 15, yPosition + 8); // Linha preta à esquerda
+      doc.line(margin, yPosition + 8, centerX - 10, yPosition + 8); // Linha preta à esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 15, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha laranja à direita
+      doc.line(centerX + textWidth + 10, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha laranja à direita
 
       yPosition += 20;
 
