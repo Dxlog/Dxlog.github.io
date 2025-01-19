@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Função para anexar eventos às refeições
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -61,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -81,32 +79,28 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF");
     doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
 
-    // SUPLEMENTAÇÃO E MANIPULADOS
+    // SUPLEMENTAÇÃO
     yPosition += 20;
     doc.setFillColor("#ff6600");
     doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
-    doc.setFontSize(12);
     doc.setTextColor("#FFFFFF");
     doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
     yPosition += 15;
-    doc.setFontSize(10);
-    doc.setTextColor("#000");
     doc.setFillColor("#f5f5f5");
     doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "F");
+    doc.setTextColor("#000");
     doc.text(supplementation, margin + 5, yPosition + 10);
 
     // ORIENTAÇÕES
     yPosition += 30;
     doc.setFillColor("#ff6600");
     doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
-    doc.setFontSize(12);
     doc.setTextColor("#FFFFFF");
     doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
     yPosition += 15;
-    doc.setFontSize(10);
-    doc.setTextColor("#000");
     doc.setFillColor("#f5f5f5");
     doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "F");
+    doc.setTextColor("#000");
     doc.text(guidance, margin + 5, yPosition + 10);
 
     // Salvar PDF
