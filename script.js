@@ -67,15 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe no canto superior esquerdo (|-, alinhado na quina)
+    // Detalhe no canto superior esquerdo (|-)
     doc.setDrawColor("#ff6600");
-    doc.setLineWidth(0.8);
+    doc.setLineWidth(1);
     doc.line(5, 5, 15, 5); // Linha horizontal
     doc.line(5, 5, 5, 15); // Linha vertical
-
-    doc.setLineWidth(0.8);
-    doc.line(8, 8, 20, 8); // Linha horizontal mais acima
-    doc.line(8, 8, 8, 20); // Linha vertical mais acima
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
@@ -141,17 +137,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Fundo laranja alinhado com as linhas
       doc.setFillColor("#ff6600");
-      doc.rect(centerX - 10, yPosition + 3, textWidth + 20, 5, "F");
+      doc.rect(centerX - 15, yPosition + 3, textWidth + 30, 5, "F");
 
       // Nome da refeição
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
-      // Linhas horizontais preta e laranja
+      // Linhas horizontais preta e laranja alinhadas ao nome
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 10, centerX - 10, yPosition + 10); // Linha preta à esquerda
+      doc.line(margin, yPosition + 10, centerX - 15, yPosition + 10); // Linha preta à esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 10, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja à direita
+      doc.line(centerX + textWidth + 15, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja à direita
 
       yPosition += 20;
 
@@ -160,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
+        // Quadrinhos para alimentos e proporções
         doc.setFillColor("#f5f5f5");
         doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
         doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F");
