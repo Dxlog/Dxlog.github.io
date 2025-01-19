@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição com fundo laranja e linhas horizontais pretas e laranjas
+      // Nome da refeição
       doc.setFontSize(14);
       doc.setTextColor("#000");
       const textWidth = doc.getTextWidth(mealName);
@@ -138,17 +138,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Fundo laranja abaixo da palavra
       doc.setFillColor("#ff6600");
-      doc.rect(centerX - 5, yPosition + 3, textWidth + 10, 5, "F");
+      doc.rect(centerX - 10, yPosition + 3, textWidth + 20, 5, "F");
 
-      // Nome da refeição
+      // Nome da refeição (centralizado)
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition, { align: "center" });
 
       // Linhas horizontais pretas e laranjas
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 10, centerX - 5, yPosition + 10); // Linha preta esquerda
+      doc.line(margin, yPosition + 10, centerX - 10, yPosition + 10); // Linha preta esquerda
       doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 5, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja direita
+      doc.line(centerX + textWidth + 10, yPosition + 10, pageWidth - margin, yPosition + 10); // Linha laranja direita
 
       yPosition += 20;
 
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos mais evidentes
+        // Quadrinhos para separação
         doc.setFillColor("#f5f5f5");
         doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "F"); // Alimento
         doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "F"); // Proporção
