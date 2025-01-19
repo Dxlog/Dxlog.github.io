@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealButton = document.getElementById("addMealButton");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Função para adicionar nova refeição
+  // Adicionar nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
