@@ -97,14 +97,14 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`N° do Protocolo: ${protocolNumber}`, 10, y + 30);
     y += 40;
 
-    // SUPLEMENTAÇÃO E ORIENTAÇÕES
+    // SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES
     doc.setFontSize(14);
     doc.setFillColor(255, 140, 0);
     // Títulos
-    doc.rect(10, y, 80, 10, "F"); // SUPLEMENTAÇÃO
-    doc.rect(110, y, 80, 10, "F"); // ORIENTAÇÕES
+    doc.roundedRect(10, y, 90, 10, 3, 3, "F"); // SUPLEMENTAÇÃO
+    doc.roundedRect(110, y, 90, 10, 3, 3, "F"); // ORIENTAÇÕES
     doc.setTextColor(0, 0, 0);
-    doc.text("SUPLEMENTAÇÃO", 15, y + 7);
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", 15, y + 7);
     doc.text("ORIENTAÇÕES", 115, y + 7);
     y += 15;
 
@@ -113,8 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const guidance = document.getElementById("guidance").value || "Não especificado";
     doc.setFontSize(12);
     doc.setFillColor(240);
-    doc.rect(10, y, 80, 30, "F"); // Caixa SUPLEMENTAÇÃO
-    doc.rect(110, y, 80, 30, "F"); // Caixa ORIENTAÇÕES
+    doc.roundedRect(10, y, 90, 30, 3, 3, "F"); // Caixa SUPLEMENTAÇÃO
+    doc.roundedRect(110, y, 90, 30, 3, 3, "F"); // Caixa ORIENTAÇÕES
     doc.text(supplementation, 15, y + 10);
     doc.text(guidance, 115, y + 10);
     y += 40;
@@ -132,11 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Tabela de alimentos
       doc.setFontSize(12);
+      doc.setFillColor(240);
       const tableBody = mealSection.querySelector("table tbody");
       tableBody.querySelectorAll("tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-        doc.setFillColor(240);
         doc.rect(10, y, doc.internal.pageSize.getWidth() - 20, 10, "F");
         doc.text(`${foodName} - ${foodProportion}`, 15, y + 7);
         y += 10;
