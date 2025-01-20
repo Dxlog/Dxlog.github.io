@@ -1,12 +1,12 @@
-/* Estilo Global */
+/* Global */
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
   color: #333;
 }
 
-/* Título */
+/* Title */
 h1 {
   text-align: center;
   font-size: 28px;
@@ -14,7 +14,7 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* Informações do aluno */
+/* Student Info */
 #studentInfo {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -34,7 +34,7 @@ h1 {
   width: 100%;
 }
 
-/* SUPLEMENTAÇÃO E MANIPULADOS / ORIENTAÇÕES */
+/* Supplementation and Guidance */
 #supplementationAndGuidance {
   display: flex;
   gap: 20px;
@@ -53,7 +53,7 @@ textarea {
   border-radius: 4px;
 }
 
-/* Refeições */
+/* Meals */
 .meal-section {
   background-color: #fff;
   padding: 15px;
@@ -74,7 +74,7 @@ th, td {
   text-align: left;
 }
 
-/* Botões */
+/* Buttons */
 button {
   display: inline-block;
   background-color: #ff6600;
