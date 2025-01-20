@@ -73,12 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor(255, 255, 255);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
-    // Detalhes no cabeçalho
+    // Detalhes do cabeçalho
     doc.setDrawColor(255, 140, 0);
     doc.setLineWidth(2);
-    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29); // Linha laranja no canto inferior direito
-    doc.line(0, 0, 15, 15); // Detalhe em "|-" no canto superior esquerdo
-    doc.line(0, 15, 15, 15);
+    // Linha no canto superior esquerdo
+    doc.line(0, 0, 0, 15); // Linha vertical
+    doc.line(0, 0, 15, 0); // Linha horizontal
+    // Linha no canto inferior direito
+    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29);
 
     // Informações do aluno
     let y = 40;
@@ -118,10 +120,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       doc.setFontSize(14);
       doc.setFillColor(255, 140, 0);
-      doc.roundedRect(10, y, 80, 10, 2, 2, "F");
-      doc.text(mealName, 15, y + 7);
-      y += 15;
+      doc.roundedRect(60, y, 90, 10, 3, 3, "F");
+      doc.setTextColor(0, 0, 0);
+      doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
 
+      // Linhas pretas e laranjas ao lado do fundo
+      doc.setDrawColor(0, 0, 0); // Preto
+      doc.line(10, y + 5, 55, y + 5); // Esquerda
+      doc.line(doc.internal.pageSize.getWidth() - 55, y + 5, doc.internal.pageSize.getWidth() - 10, y + 5); // Direita
+      doc.setDrawColor(255, 140, 0); // Laranja
+      doc.line(10, y + 7, 55, y + 7); // Esquerda
+      doc.line(doc.internal.pageSize.getWidth() - 55, y + 7, doc.internal.pageSize.getWidth() - 10, y + 7); // Direita
+
+      y += 20;
+
+      // Tabela de alimentos
       const tableBody = mealSection.querySelector("table tbody");
       tableBody.querySelectorAll("tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
