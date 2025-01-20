@@ -1,16 +1,16 @@
-/* Global */
+/* Estilo Global */
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background-color: #f9f9f9;
+  background-color: #f4f4f4;
   color: #333;
 }
 
 /* Título */
 h1 {
   text-align: center;
+  font-size: 28px;
   color: #333;
-  font-size: 24px;
   margin-bottom: 30px;
 }
 
@@ -23,17 +23,15 @@ h1 {
 }
 
 #studentInfo label {
-  display: block;
-  font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 #studentInfo input {
-  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  width: 100%;
 }
 
 /* SUPLEMENTAÇÃO E MANIPULADOS / ORIENTAÇÕES */
@@ -49,44 +47,41 @@ h1 {
 
 textarea {
   width: 100%;
-  height: 80px;
+  height: 100px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  resize: none;
 }
 
 /* Refeições */
-#mealsContainer {
-  margin-bottom: 20px;
-}
-
 .meal-section {
   background-color: #fff;
   padding: 15px;
+  margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  margin-bottom: 20px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 th, td {
-  text-align: left;
-  padding: 10px;
   border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
 
 /* Botões */
 button {
   display: inline-block;
-  padding: 10px 20px;
   background-color: #ff6600;
   color: white;
   border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
 }
