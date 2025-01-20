@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
+  // Função para gerenciar eventos de adicionar/remover linhas nas refeições
   function attachMealEvents(section) {
     const addRowBtn = section.querySelector(".addRowBtn");
     const tableBody = section.querySelector("table tbody");
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Gerar PDF
+  // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -69,26 +70,58 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 15;
     let yPosition = 40;
 
+    // Informações do aluno
     const clientName = document.getElementById("clientName").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = document.getElementById("currentDate").value || "Não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-    const supplementation = document.getElementById("supplementation").value || "Não especificado";
-    const guidance = document.getElementById("guidance").value || "Não especificado";
 
-    // Cabeçalho
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 0, pageWidth, 30, "F");
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.setTextColor("#FFFFFF");
-    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
+    doc.setFontSize(12);
+    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
+    doc.text(`Peso Atual: ${weight}`, margin, yPosition + 10);
+    doc.text(`Data: ${currentDate}`, margin, yPosition + 20);
+    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 30);
+    yPosition += 40;
 
     // SUPLEMENTAÇÃO
-    doc.text(supplementation, margin + 5, yPosition + 15);
+    const supplementation = document.getElementById("supplementation").value || "Não especificado";
+    doc.setFontSize(14);
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS:", margin, yPosition);
+    doc.setFontSize(12);
+    doc.text(supplementation, margin, yPosition + 10);
+    yPosition += 20;
 
-    // Refeições:
-    const meals = document.querySelectorAll(".meal-section");
-    meals.forEach((meal) => { /** lógica para gerar alimentos */ });
+    // ORIENTAÇÕES
+    const guidance = document.getElementById("guidance").value || "Não especificado";
+    doc.setFontSize(14);
+    doc.text("ORIENTAÇÕES:", margin, yPosition);
+    doc.setFontSize(12);
+    doc.text(guidance, margin, yPosition + 10);
+    yPosition += 20;
+
+    // Refeições
+    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
+      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      doc.setFontSize(14);
+      doc.text(mealName, margin, yPosition);
+      yPosition += 10;
+
+      const tableBody = mealSection.querySelector("table tbody");
+      tableBody.querySelectorAll("tr").forEach((row) => {
+        const foodName = row.querySelector(".foodName").value || "Não especificado";
+        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
+        doc.setFontSize(12);
+        doc.text(`${foodName} - ${foodProportion}`, margin, yPosition);
+        yPosition += 10;
+      });
+      yPosition += 10;
+    });
+
+    // Rodapé
+    doc.setFontSize(10);
+    doc.text("henrique.cordeiro@gmail.com", margin, 290, { align: "right" });
+
+    // Salvar PDF
+    doc.save("Plano_Alimentar.pdf");
   });
 });
