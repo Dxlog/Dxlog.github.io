@@ -97,23 +97,27 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`N° do Protocolo: ${protocolNumber}`, 10, y + 30);
     y += 40;
 
-    // SUPLEMENTAÇÃO
+    // SUPLEMENTAÇÃO E ORIENTAÇÕES
+    doc.setFontSize(14);
+    doc.setFillColor(255, 140, 0);
+    // Títulos
+    doc.rect(10, y, 80, 10, "F"); // SUPLEMENTAÇÃO
+    doc.rect(110, y, 80, 10, "F"); // ORIENTAÇÕES
+    doc.setTextColor(0, 0, 0);
+    doc.text("SUPLEMENTAÇÃO", 15, y + 7);
+    doc.text("ORIENTAÇÕES", 115, y + 7);
+    y += 15;
+
+    // Descrições
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
-    doc.setFontSize(14);
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS:", 10, y);
-    doc.setFontSize(12);
-    doc.text(supplementation, 10, y + 10);
-
-    y += 30;
-
-    // ORIENTAÇÕES
     const guidance = document.getElementById("guidance").value || "Não especificado";
-    doc.setFontSize(14);
-    doc.text("ORIENTAÇÕES:", 10, y);
     doc.setFontSize(12);
-    doc.text(guidance, 10, y + 10);
-
-    y += 30;
+    doc.setFillColor(240);
+    doc.rect(10, y, 80, 30, "F"); // Caixa SUPLEMENTAÇÃO
+    doc.rect(110, y, 80, 30, "F"); // Caixa ORIENTAÇÕES
+    doc.text(supplementation, 15, y + 10);
+    doc.text(guidance, 115, y + 10);
+    y += 40;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -124,22 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor(0, 0, 0);
       doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
 
-      // Linhas pretas e laranjas ao lado do fundo
-      doc.setDrawColor(0, 0, 0); // Preto
-      doc.line(10, y + 5, 55, y + 5); // Esquerda
-      doc.line(doc.internal.pageSize.getWidth() - 55, y + 5, doc.internal.pageSize.getWidth() - 10, y + 5); // Direita
-      doc.setDrawColor(255, 140, 0); // Laranja
-      doc.line(10, y + 7, 55, y + 7); // Esquerda
-      doc.line(doc.internal.pageSize.getWidth() - 55, y + 7, doc.internal.pageSize.getWidth() - 10, y + 7); // Direita
-
       y += 20;
 
       // Tabela de alimentos
+      doc.setFontSize(12);
       const tableBody = mealSection.querySelector("table tbody");
       tableBody.querySelectorAll("tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-        doc.setFontSize(12);
         doc.setFillColor(240);
         doc.rect(10, y, doc.internal.pageSize.getWidth() - 20, 10, "F");
         doc.text(`${foodName} - ${foodProportion}`, 15, y + 7);
