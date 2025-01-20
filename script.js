@@ -73,6 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor(255, 255, 255);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
+    // Detalhes do cabeçalho
+    doc.setDrawColor(255, 140, 0);
+    doc.setLineWidth(2);
+    // Linha no canto superior esquerdo
+    doc.line(0, 0, 0, 15); // Linha vertical
+    doc.line(0, 0, 15, 0); // Linha horizontal
+    // Linha no canto inferior direito
+    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29);
+
     // Informações do aluno
     let y = 40;
     const clientName = document.getElementById("clientName").value || "Não especificado";
@@ -100,29 +109,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Tabela de alimentos e proporções
       const tableBody = mealSection.querySelector("table tbody");
-      let tableStartY = y;
-      let rowHeight = 10;
+      const rowHeight = 10;
 
-      // Cabeçalho da tabela
-      doc.setFontSize(12);
-      doc.setFillColor(240);
-      doc.setDrawColor(200);
-      doc.rect(10, y, 90, rowHeight, "F");
-      doc.rect(100, y, 50, rowHeight, "F");
-      doc.text("Alimento", 15, y + 7);
-      doc.text("Proporção", 105, y + 7);
-      y += rowHeight;
-
-      // Linhas da tabela
       tableBody.querySelectorAll("tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        doc.setFillColor(255);
-        doc.rect(10, y, 90, rowHeight, "F");
-        doc.rect(100, y, 50, rowHeight, "F");
+        doc.setFontSize(12);
+        doc.setFillColor(240); // Fundo cinza
+        doc.rect(10, y, 140, rowHeight, "F"); // Célula do alimento
+        doc.rect(150, y, 50, rowHeight, "F"); // Célula da proporção
+
         doc.text(foodName, 15, y + 7);
-        doc.text(foodProportion, 105, y + 7);
+        doc.text(foodProportion, 155, y + 7);
         y += rowHeight;
       });
 
