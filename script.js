@@ -100,9 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      const mealNameWidth = doc.getTextWidth(mealName) + 10; // Ajustar o fundo ao tamanho do texto
       doc.setFontSize(14);
       doc.setFillColor(255, 140, 0);
-      doc.roundedRect(10, y, 190, 10, 3, 3, "F");
+      doc.roundedRect((doc.internal.pageSize.getWidth() - mealNameWidth) / 2, y, mealNameWidth, 10, 3, 3, "F");
       doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
 
       y += 20;
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         doc.setFontSize(12);
         doc.setFillColor(240); // Fundo cinza
+        doc.setDrawColor(200); // Bordas claras
         doc.rect(10, y, 140, rowHeight, "F"); // Célula do alimento
         doc.rect(150, y, 50, rowHeight, "F"); // Célula da proporção
 
