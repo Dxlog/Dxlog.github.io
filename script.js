@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const mealsContainer = document.getElementById("mealsContainer");
   const addMealButton = document.getElementById("addMealButton");
+  const mealsContainer = document.getElementById("mealsContainer");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
   // Adicionar nova refeição
@@ -35,10 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
     attachMealEvents(mealSection);
   });
 
-  // Função para gerenciar eventos de adicionar/remover linhas nas refeições
-  function attachMealEvents(section) {
-    const addRowBtn = section.querySelector(".addRowBtn");
-    const tableBody = section.querySelector("table tbody");
+  function attachMealEvents(mealSection) {
+    const addRowBtn = mealSection.querySelector(".addRowBtn");
+    const tableBody = mealSection.querySelector("table tbody");
 
     addRowBtn.addEventListener("click", () => {
       const newRow = document.createElement("tr");
@@ -54,74 +53,28 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    section.querySelectorAll(".removeRowBtn").forEach((btn) => {
+    mealSection.querySelectorAll(".removeRowBtn").forEach((btn) => {
       btn.addEventListener("click", () => {
         btn.closest("tr").remove();
       });
     });
   }
 
-  // Função para gerar PDF
+  // Gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 15;
-    let yPosition = 40;
-
-    // Informações do aluno
     const clientName = document.getElementById("clientName").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = document.getElementById("currentDate").value || "Não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-
-    doc.setFontSize(12);
-    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
-    doc.text(`Peso Atual: ${weight}`, margin, yPosition + 10);
-    doc.text(`Data: ${currentDate}`, margin, yPosition + 20);
-    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 30);
-    yPosition += 40;
-
-    // SUPLEMENTAÇÃO
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
-    doc.setFontSize(14);
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS:", margin, yPosition);
-    doc.setFontSize(12);
-    doc.text(supplementation, margin, yPosition + 10);
-    yPosition += 20;
-
-    // ORIENTAÇÕES
     const guidance = document.getElementById("guidance").value || "Não especificado";
-    doc.setFontSize(14);
-    doc.text("ORIENTAÇÕES:", margin, yPosition);
+
     doc.setFontSize(12);
-    doc.text(guidance, margin, yPosition + 10);
-    yPosition += 20;
-
-    // Refeições
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      doc.setFontSize(14);
-      doc.text(mealName, margin, yPosition);
-      yPosition += 10;
-
-      const tableBody = mealSection.querySelector("table tbody");
-      tableBody.querySelectorAll("tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-        doc.setFontSize(12);
-        doc.text(`${foodName} - ${foodProportion}`, margin, yPosition);
-        yPosition += 10;
-      });
-      yPosition += 10;
-    });
-
-    // Rodapé
-    doc.setFontSize(10);
-    doc.text("henrique.cordeiro@gmail.com", margin, 290, { align: "right" });
-
-    // Salvar PDF
-    doc.save("Plano_Alimentar.pdf");
+    doc.text(`Aluno(a): ${clientName}`, 10, 10);
+    doc.text(`Peso Atual: ${weight}`, 10, 20);
+    doc.save("plano_alimentar.pdf");
   });
 });
