@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Alimento
         doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Proporção
 
-        doc.setFontSize(10);
+        doc.setFontSize(9); // Fonte menor
         doc.setTextColor("#000");
         doc.text(foodName, margin + 5, yPosition + 7);
         doc.text(foodProportion, margin + (pageWidth - 2 * margin) / 2 + 5, yPosition + 7);
