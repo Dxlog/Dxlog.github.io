@@ -73,116 +73,17 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor(255, 255, 255);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
-    // Detalhes do cabeçalho
-    doc.setDrawColor(255, 140, 0);
-    doc.setLineWidth(2);
-    // Linha no canto superior esquerdo
-    doc.line(0, 0, 0, 15); // Linha vertical
-    doc.line(0, 0, 15, 0); // Linha horizontal
-    // Linha no canto inferior direito
-    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29);
-
-    // Informações do aluno
-    let y = 40;
-    const clientName = document.getElementById("clientName").value || "Não especificado";
-    const weight = document.getElementById("weight").value || "Não especificado";
-    const currentDate = document.getElementById("currentDate").value || "Não especificado";
-    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
-
-    doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Aluno(a): ${clientName}`, 10, y);
-    doc.text(`Peso Atual: ${weight}`, 10, y + 10);
-    doc.text(`Data: ${currentDate}`, 10, y + 20);
-    doc.text(`N° do Protocolo: ${protocolNumber}`, 10, y + 30);
-    y += 40;
-
-    // SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES
+    // SUPLEMENTAÇÃO E MANIPULADOS
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
     const guidance = document.getElementById("guidance").value || "Não especificado";
 
-    // SUPLEMENTAÇÃO E MANIPULADOS
+    // SUPLEMENTAÇÃO
     doc.setFontSize(14);
     doc.setFillColor(255, 140, 0);
-    doc.roundedRect(110, y, 80, 10, 3, 3, "F");
+    doc.roundedRect(110, 40, 80, 10, 3, 3, "F");
     doc.setTextColor(0, 0, 0);
-    doc.text("SUPLEMENTAÇÃO", 115, y + 5);
-    doc.text("E MANIPULADOS", 115, y + 10);
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", 115, 45);
 
-    y += 15;
-    doc.setFontSize(12);
-    doc.setFillColor(240);
-    doc.setDrawColor(100); // Bordas cinza escuras
-    doc.rect(110, y, 80, 20, "F");
-    doc.text(supplementation, 115, y + 10);
-
-    // ORIENTAÇÕES
-    doc.setFontSize(14);
-    doc.setFillColor(255, 140, 0);
-    doc.roundedRect(10, y, 80, 10, 3, 3, "F");
-    doc.setTextColor(0, 0, 0);
-    doc.text("ORIENTAÇÕES", 15, y + 7);
-
-    y += 15;
-    doc.setFontSize(12);
-    doc.setFillColor(240);
-    doc.setDrawColor(100); // Bordas cinza escuras
-    doc.rect(10, y, 80, 20, "F");
-    doc.text(guidance, 15, y + 10);
-
-    y += 40;
-
-    // Refeições e tabela de alimentos e proporções
-    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      const mealNameWidth = doc.getTextWidth(mealName) + 10;
-      const mealNameX = (doc.internal.pageSize.getWidth() - mealNameWidth) / 2;
-
-      // Fundo do nome da refeição
-      doc.setFontSize(14);
-      doc.setFillColor(255, 140, 0);
-      doc.roundedRect(mealNameX, y, mealNameWidth, 10, 3, 3, "F");
-      doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
-
-      // Linhas pretas horizontais ao lado do fundo
-      const lineY = y + 5;
-      doc.setDrawColor(0, 0, 0);
-      doc.line(10, lineY, mealNameX, lineY); // Esquerda
-      doc.line(mealNameX + mealNameWidth, lineY, doc.internal.pageSize.getWidth() - 10, lineY); // Direita
-
-      y += 20;
-
-      // Tabela de alimentos e proporções
-      const tableBody = mealSection.querySelector("table tbody");
-      const rowHeight = 10;
-
-      tableBody.querySelectorAll("tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        doc.setFontSize(12);
-        doc.setFillColor(240); // Fundo cinza claro
-        doc.setDrawColor(100); // Bordas escuras para destacar
-        doc.rect(10, y, 140, rowHeight, "F"); // Célula do alimento
-        doc.rect(150, y, 50, rowHeight, "F"); // Célula da proporção
-
-        doc.text(foodName, 15, y + 7);
-        doc.text(foodProportion, 155, y + 7);
-        y += rowHeight;
-      });
-
-      y += 10; // Espaçamento entre refeições
-    });
-
-    // Rodapé
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 280, doc.internal.pageSize.getWidth(), 20, "F");
-    doc.setFontSize(10);
-    doc.setTextColor(255, 255, 255);
-    doc.text(clientName, 10, 290);
-    doc.text("henrique.cordeiro@gmail.com", doc.internal.pageSize.getWidth() - 10, 290, { align: "right" });
-
-    // Salvar PDF
     doc.save("Plano_Alimentar.pdf");
   });
 });
