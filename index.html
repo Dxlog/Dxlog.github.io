@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plano Alimentar Personalizado</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Plano Alimentar</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <h1>Plano Alimentar Personalizado</h1>
-
-  <!-- Informações do aluno -->
-  <div id="studentInfo">
-    <label>Aluno(a):</label>
-    <input type="text" id="clientName" placeholder="Digite o nome do aluno">
-    <label>Peso Atual:</label>
-    <input type="text" id="weight" placeholder="Ex.: 70 kg">
-    <label>Data:</label>
-    <input type="date" id="currentDate">
-    <label>N° do Protocolo:</label>
-    <input type="text" id="protocolNumber" placeholder="Ex.: 12345">
-  </div>
-
-  <!-- SUPLEMENTAÇÃO E MANIPULADOS / ORIENTAÇÕES -->
-  <div id="supplementationAndGuidance">
-    <div id="supplementationSection">
-      <h3>SUPLEMENTAÇÃO E MANIPULADOS</h3>
-      <textarea id="supplementation" maxlength="200" placeholder="Máximo 200 caracteres"></textarea>
+  <div class="container">
+    <h1>Plano Alimentar Personalizado</h1>
+    
+    <div class="client-info">
+      <label>Nome do Aluno:</label>
+      <input type="text" id="clientName" placeholder="Digite o nome do aluno">
+      <label>Peso Atual:</label>
+      <input type="text" id="weight" placeholder="Digite o peso atual">
+      <label>Data:</label>
+      <input type="date" id="currentDate">
+      <label>Protocolo Nº:</label>
+      <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
     </div>
-    <div id="guidanceSection">
-      <h3>ORIENTAÇÕES</h3>
-      <textarea id="guidance" maxlength="200" placeholder="Máximo 200 caracteres"></textarea>
+    
+    <div class="supplement-guidance">
+      <div class="supplementation">
+        <h2>SUPLEMENTAÇÃO E MANIPULADOS</h2>
+        <textarea id="supplementation" placeholder="Digite as suplementações..."></textarea>
+      </div>
+      <div class="guidance">
+        <h2>ORIENTAÇÕES</h2>
+        <textarea id="guidance" placeholder="Digite as orientações..."></textarea>
+      </div>
     </div>
-  </div>
-
-  <!-- Refeições -->
-  <div id="mealsContainer">
+    
+    <div id="mealsContainer"></div>
     <button id="addMealButton">Adicionar Refeição</button>
+    <button id="generatePdfButton">Gerar PDF</button>
   </div>
-
-  <!-- Botão para gerar PDF -->
-  <button id="generatePdfButton">Gerar PDF</button>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
