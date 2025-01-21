@@ -3,11 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const mealsContainer = document.getElementById("mealsContainer");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Adicionar nova refeição
+  // Adicionar uma nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
-
     mealSection.innerHTML = `
       <h3>Refeição</h3>
       <label>Nome da Refeição:</label>
@@ -24,43 +23,33 @@ document.addEventListener("DOMContentLoaded", () => {
           <tr>
             <td><input type="text" class="foodName" placeholder="Ex.: Frango"></td>
             <td><input type="text" class="foodProportion" placeholder="Ex.: 100g"></td>
-            <td><button type="button" class="removeRowBtn">Excluir</button></td>
+            <td><button type="button" class="removeRow">Excluir</button></td>
           </tr>
         </tbody>
       </table>
-      <button type="button" class="addRowBtn">Adicionar Linha</button>
+      <button type="button" class="addRow">Adicionar Alimento</button>
     `;
-
     mealsContainer.appendChild(mealSection);
     attachMealEvents(mealSection);
   });
 
-  function attachMealEvents(mealSection) {
-    const addRowBtn = mealSection.querySelector(".addRowBtn");
-    const tableBody = mealSection.querySelector("table tbody");
+  function attachMealEvents(section) {
+    const addRowBtn = section.querySelector(".addRow");
+    const tbody = section.querySelector("tbody");
 
     addRowBtn.addEventListener("click", () => {
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
         <td><input type="text" class="foodName" placeholder="Ex.: Arroz"></td>
         <td><input type="text" class="foodProportion" placeholder="Ex.: 50g"></td>
-        <td><button type="button" class="removeRowBtn">Excluir</button></td>
+        <td><button type="button" class="removeRow">Excluir</button></td>
       `;
-      tableBody.appendChild(newRow);
-
-      newRow.querySelector(".removeRowBtn").addEventListener("click", () => {
-        newRow.remove();
-      });
-    });
-
-    mealSection.querySelectorAll(".removeRowBtn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        btn.closest("tr").remove();
-      });
+      tbody.appendChild(newRow);
+      newRow.querySelector(".removeRow").addEventListener("click", () => newRow.remove());
     });
   }
 
-  // Gerar PDF
+  // Gerar o PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -68,27 +57,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cabeçalho
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, doc.internal.pageSize.getWidth(), 30, "F");
-    doc.setFontSize(18);
     doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
-    // Detalhes no cabeçalho
-    doc.setDrawColor(255, 140, 0);
-    doc.setLineWidth(2);
-    doc.line(0, 0, 0, 15); // Linha vertical no canto superior esquerdo
-    doc.line(0, 0, 15, 0); // Linha horizontal no canto superior esquerdo
-    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29); // Linha inferior direita
-
     // Dados do aluno
-    const clientName = document.getElementById("clientName").value || "Não especificado";
+    const name = document.getElementById("clientName").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
-    const currentDate = document.getElementById("currentDate").value || "Não especificado";
-    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
+    const date = document.getElementById("currentDate").value || "Não especificado";
+    const protocol = document.getElementById("protocolNumber").value || "Não especificado";
 
-    doc.text(`Aluno(a): ${clientName}`, 10, 40);
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    doc.text(`Aluno(a): ${name}`, 10, 40);
     doc.text(`Peso Atual: ${weight}`, 10, 50);
-    doc.text(`Data: ${currentDate}`, 10, 60);
-    doc.text(`Protocolo Nº: ${protocolNumber}`, 10, 70);
+    doc.text(`Data: ${date}`, 10, 60);
+    doc.text(`Protocolo Nº: ${protocol}`, 10, 70);
 
     doc.save("Plano_Alimentar.pdf");
   });
