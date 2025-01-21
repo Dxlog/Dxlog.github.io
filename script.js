@@ -73,14 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor(255, 255, 255);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
-    // Detalhes do cabeçalho
+    // Detalhe no canto inferior direito do cabeçalho
     doc.setDrawColor(255, 140, 0);
     doc.setLineWidth(2);
-    // Linha no canto superior esquerdo
-    doc.line(0, 0, 0, 15); // Linha vertical
-    doc.line(0, 0, 15, 0); // Linha horizontal
-    // Linha no canto inferior direito
-    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29);
+    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29); // Linha laranja até metade da página
 
     // Informações do aluno
     let y = 40;
@@ -99,9 +95,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // SUPLEMENTAÇÃO E MANIPULADOS
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
+    const guidance = document.getElementById("guidance").value || "Não especificado";
+
+    // SUPLEMENTAÇÃO E MANIPULADOS
     doc.setFontSize(14);
     doc.setFillColor(255, 140, 0);
-    doc.roundedRect(110, y, 80, 10, 3, 3, "F"); // Fundo laranja
+    doc.roundedRect(110, y, 80, 10, 3, 3, "F");
     doc.setTextColor(0, 0, 0);
     doc.text("SUPLEMENTAÇÃO", 115, y + 5);
     doc.text("E MANIPULADOS", 115, y + 10);
@@ -110,22 +109,21 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(12);
     doc.setFillColor(240);
     doc.setDrawColor(100); // Bordas cinza escuras
-    doc.rect(110, y, 80, 20, "F"); // Caixa com bordas
+    doc.rect(110, y, 80, 20, "F");
     doc.text(supplementation, 115, y + 10);
 
     // ORIENTAÇÕES
-    const guidance = document.getElementById("guidance").value || "Não especificado";
     doc.setFontSize(14);
     doc.setFillColor(255, 140, 0);
-    doc.roundedRect(10, y, 80, 10, 3, 3, "F"); // Fundo laranja
+    doc.roundedRect(10, y, 80, 10, 3, 3, "F");
     doc.setTextColor(0, 0, 0);
     doc.text("ORIENTAÇÕES", 15, y + 7);
 
     y += 15;
     doc.setFontSize(12);
     doc.setFillColor(240);
-    doc.setDrawColor(100); // Bordas cinza escuras
-    doc.rect(10, y, 80, 20, "F"); // Caixa com bordas
+    doc.setDrawColor(100);
+    doc.rect(10, y, 80, 20, "F");
     doc.text(guidance, 15, y + 10);
 
     y += 40;
@@ -142,9 +140,9 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.roundedRect(mealNameX, y, mealNameWidth, 10, 3, 3, "F");
       doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
 
-      // Linha preta ao lado do fundo
-      doc.setDrawColor(0, 0, 0); // Preto
-      const lineY = y + 5; // Alinhamento vertical
+      // Linhas pretas horizontais ao lado do fundo
+      const lineY = y + 5;
+      doc.setDrawColor(0, 0, 0);
       doc.line(10, lineY, mealNameX, lineY); // Esquerda
       doc.line(mealNameX + mealNameWidth, lineY, doc.internal.pageSize.getWidth() - 10, lineY); // Direita
 
@@ -159,8 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
         doc.setFontSize(12);
-        doc.setFillColor(240); // Fundo cinza claro
-        doc.setDrawColor(100); // Bordas mais escuras
+        doc.setFillColor(240);
+        doc.setDrawColor(100); // Delimitação bem evidente
         doc.rect(10, y, 140, rowHeight, "F"); // Célula do alimento
         doc.rect(150, y, 50, rowHeight, "F"); // Célula da proporção
 
