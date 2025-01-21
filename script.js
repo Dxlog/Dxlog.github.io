@@ -97,10 +97,44 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`N° do Protocolo: ${protocolNumber}`, 10, y + 30);
     y += 40;
 
+    // SUPLEMENTAÇÃO E MANIPULADOS
+    const supplementation = document.getElementById("supplementation").value || "Não especificado";
+    doc.setFontSize(14);
+    doc.setFillColor(255, 140, 0);
+    doc.roundedRect(10, y, 190, 10, 3, 3, "F");
+    doc.setTextColor(0, 0, 0);
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", 15, y + 7);
+
+    y += 15;
+    doc.setFontSize(12);
+    doc.setFillColor(240);
+    doc.setDrawColor(0, 0, 0); // Borda preta
+    doc.rect(10, y, 190, 20, "F");
+    doc.text(supplementation, 15, y + 10);
+
+    y += 30;
+
+    // ORIENTAÇÕES
+    const guidance = document.getElementById("guidance").value || "Não especificado";
+    doc.setFontSize(14);
+    doc.setFillColor(255, 140, 0);
+    doc.roundedRect(10, y, 190, 10, 3, 3, "F");
+    doc.setTextColor(0, 0, 0);
+    doc.text("ORIENTAÇÕES", 15, y + 7);
+
+    y += 15;
+    doc.setFontSize(12);
+    doc.setFillColor(240);
+    doc.setDrawColor(0, 0, 0); // Borda preta
+    doc.rect(10, y, 190, 20, "F");
+    doc.text(guidance, 15, y + 10);
+
+    y += 30;
+
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-      const mealNameWidth = doc.getTextWidth(mealName) + 10; // Ajustar o fundo ao tamanho do texto
+      const mealNameWidth = doc.getTextWidth(mealName) + 10;
       const mealNameX = (doc.internal.pageSize.getWidth() - mealNameWidth) / 2;
 
       // Fundo do nome da refeição
@@ -109,15 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.roundedRect(mealNameX, y, mealNameWidth, 10, 3, 3, "F");
       doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
 
-      // Linhas horizontais laranjas e pretas
-      const lineLength = 20; // Tamanho das linhas
-      const lineY = y + 5; // Alinhamento vertical das linhas
-      doc.setDrawColor(255, 140, 0); // Laranja
-      doc.line(mealNameX - lineLength, lineY, mealNameX, lineY); // Esquerda
-      doc.line(mealNameX + mealNameWidth, lineY, mealNameX + mealNameWidth + lineLength, lineY); // Direita
+      // Linha preta ao lado do fundo
       doc.setDrawColor(0, 0, 0); // Preto
-      doc.line(mealNameX - lineLength, lineY + 2, mealNameX, lineY + 2); // Esquerda
-      doc.line(mealNameX + mealNameWidth, lineY + 2, mealNameX + mealNameWidth + lineLength, lineY + 2); // Direita
+      const lineY = y + 5; // Alinhamento vertical
+      doc.line(10, lineY, mealNameX, lineY); // Esquerda
+      doc.line(mealNameX + mealNameWidth, lineY, doc.internal.pageSize.getWidth() - 10, lineY); // Direita
 
       y += 20;
 
@@ -129,14 +159,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Fundo cinza para as células
         doc.setFontSize(12);
         doc.setFillColor(240); // Fundo cinza claro
         doc.setDrawColor(100); // Bordas mais escuras
         doc.rect(10, y, 140, rowHeight, "F"); // Célula do alimento
         doc.rect(150, y, 50, rowHeight, "F"); // Célula da proporção
 
-        // Texto dentro das células
         doc.text(foodName, 15, y + 7);
         doc.text(foodProportion, 155, y + 7);
         y += rowHeight;
