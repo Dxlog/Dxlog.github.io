@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plano Alimentar Personalizado</title>
-  <!-- Link para o CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
-  <!-- Importação do jsPDF via CDN (versão funcional 2.4.0) -->
+  <!-- jsPDF CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="logo-henrique-cordeiro.png.png" alt="Logo" class="logo">
+      <img src="logo-henrique-cordeiro.png" alt="Logo" class="logo">
       <h1>Plano Alimentar Personalizado</h1>
     </header>
     <main>
@@ -33,6 +33,18 @@
         </div>
       </section>
 
+      <!-- SUPLEMENTAÇÃO E ORIENTAÇÕES -->
+      <section class="supplement-guidance">
+        <div class="form-group">
+          <label for="supplementation">SUPLEMENTAÇÃO E MANIPULADOS:</label>
+          <textarea id="supplementation" maxlength="200" placeholder="Digite as suplementações..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="guidance">ORIENTAÇÕES:</label>
+          <textarea id="guidance" maxlength="200" placeholder="Digite as orientações..."></textarea>
+        </div>
+      </section>
+
       <!-- Refeições -->
       <section id="mealsContainer">
         <h2>Refeições</h2>
@@ -45,8 +57,7 @@
       </div>
     </main>
   </div>
-
-  <!-- Script JS -->
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
