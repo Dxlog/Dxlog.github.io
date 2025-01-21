@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar o cabeçalho
+  // Função para desenhar o cabeçalho (somente na primeira página)
   function drawHeader(doc, pageWidth) {
     // Fundo preto no cabeçalho
     doc.setFillColor(0, 0, 0);
@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Título centralizado
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(22); // Aumentado o tamanho da fonte
-    doc.setTextColor("#FFFFFF"); // Texto branco
+    doc.setFontSize(22);
+    doc.setTextColor("#FFFFFF");
     doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
   }
 
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const weight = document.getElementById("weight").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
-    // Desenhar cabeçalho na primeira página
+    // Desenhar cabeçalho (somente na primeira página)
     drawHeader(doc, pageWidth);
 
     yPosition += 10;
@@ -163,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (yPosition > 270) {
           doc.addPage();
           yPosition = 40;
-          drawHeader(doc, pageWidth);
           drawFooter(doc, pageWidth, clientName);
         }
       });
