@@ -101,35 +101,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
     doc.setFontSize(14);
     doc.setFillColor(255, 140, 0);
-    doc.roundedRect(10, y, 190, 10, 3, 3, "F");
+    doc.roundedRect(110, y, 80, 10, 3, 3, "F"); // Fundo laranja
     doc.setTextColor(0, 0, 0);
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", 15, y + 7);
+    doc.text("SUPLEMENTAÇÃO", 115, y + 5);
+    doc.text("E MANIPULADOS", 115, y + 10);
 
     y += 15;
     doc.setFontSize(12);
     doc.setFillColor(240);
-    doc.setDrawColor(0, 0, 0); // Borda preta
-    doc.rect(10, y, 190, 20, "F");
-    doc.text(supplementation, 15, y + 10);
-
-    y += 30;
+    doc.setDrawColor(100); // Bordas cinza escuras
+    doc.rect(110, y, 80, 20, "F"); // Caixa com bordas
+    doc.text(supplementation, 115, y + 10);
 
     // ORIENTAÇÕES
     const guidance = document.getElementById("guidance").value || "Não especificado";
     doc.setFontSize(14);
     doc.setFillColor(255, 140, 0);
-    doc.roundedRect(10, y, 190, 10, 3, 3, "F");
+    doc.roundedRect(10, y, 80, 10, 3, 3, "F"); // Fundo laranja
     doc.setTextColor(0, 0, 0);
     doc.text("ORIENTAÇÕES", 15, y + 7);
 
     y += 15;
     doc.setFontSize(12);
     doc.setFillColor(240);
-    doc.setDrawColor(0, 0, 0); // Borda preta
-    doc.rect(10, y, 190, 20, "F");
+    doc.setDrawColor(100); // Bordas cinza escuras
+    doc.rect(10, y, 80, 20, "F"); // Caixa com bordas
     doc.text(guidance, 15, y + 10);
 
-    y += 30;
+    y += 40;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -142,12 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setFillColor(255, 140, 0);
       doc.roundedRect(mealNameX, y, mealNameWidth, 10, 3, 3, "F");
       doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
-
-      // Linha preta ao lado do fundo
-      doc.setDrawColor(0, 0, 0); // Preto
-      const lineY = y + 5; // Alinhamento vertical
-      doc.line(10, lineY, mealNameX, lineY); // Esquerda
-      doc.line(mealNameX + mealNameWidth, lineY, doc.internal.pageSize.getWidth() - 10, lineY); // Direita
 
       y += 20;
 
