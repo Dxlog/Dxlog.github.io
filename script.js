@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`N° do Protocolo: ${protocolNumber}`, 10, y + 30);
     y += 40;
 
-    // SUPLEMENTAÇÃO E MANIPULADOS
+    // SUPLEMENTAÇÃO E ORIENTAÇÕES
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
     const guidance = document.getElementById("guidance").value || "Não especificado";
 
