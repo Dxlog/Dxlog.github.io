@@ -73,10 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor(255, 255, 255);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
-    // Detalhe no canto inferior direito do cabeçalho
+    // Detalhes do cabeçalho
     doc.setDrawColor(255, 140, 0);
     doc.setLineWidth(2);
-    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29); // Linha laranja até metade da página
+    // Linha no canto superior esquerdo
+    doc.line(0, 0, 0, 15); // Linha vertical
+    doc.line(0, 0, 15, 0); // Linha horizontal
+    // Linha no canto inferior direito
+    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29);
 
     // Informações do aluno
     let y = 40;
@@ -93,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`N° do Protocolo: ${protocolNumber}`, 10, y + 30);
     y += 40;
 
-    // SUPLEMENTAÇÃO E ORIENTAÇÕES
+    // SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES
     const supplementation = document.getElementById("supplementation").value || "Não especificado";
     const guidance = document.getElementById("guidance").value || "Não especificado";
 
@@ -122,13 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
     y += 15;
     doc.setFontSize(12);
     doc.setFillColor(240);
-    doc.setDrawColor(100);
+    doc.setDrawColor(100); // Bordas cinza escuras
     doc.rect(10, y, 80, 20, "F");
     doc.text(guidance, 15, y + 10);
 
     y += 40;
 
-    // Refeições
+    // Refeições e tabela de alimentos e proporções
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
       const mealNameWidth = doc.getTextWidth(mealName) + 10;
@@ -157,8 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
         doc.setFontSize(12);
-        doc.setFillColor(240);
-        doc.setDrawColor(100); // Delimitação bem evidente
+        doc.setFillColor(240); // Fundo cinza claro
+        doc.setDrawColor(100); // Bordas escuras para destacar
         doc.rect(10, y, 140, rowHeight, "F"); // Célula do alimento
         doc.rect(150, y, 50, rowHeight, "F"); // Célula da proporção
 
