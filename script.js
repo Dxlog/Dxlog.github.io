@@ -72,7 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor(255, 255, 255);
     doc.text("PLANO ALIMENTAR PERSONALIZADO", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
-    // Salvar PDF
+    // Detalhes no cabeçalho
+    doc.setDrawColor(255, 140, 0);
+    doc.setLineWidth(2);
+    doc.line(0, 0, 0, 15); // Linha vertical no canto superior esquerdo
+    doc.line(0, 0, 15, 0); // Linha horizontal no canto superior esquerdo
+    doc.line(doc.internal.pageSize.getWidth() - 60, 29, doc.internal.pageSize.getWidth(), 29); // Linha inferior direita
+
     doc.save("Plano_Alimentar.pdf");
   });
 });
