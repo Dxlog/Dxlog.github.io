@@ -1,45 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plano Alimentar Personalizado</title>
-  <link rel="stylesheet" href="styles.css">
+  <!-- Link para o CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Importação do jsPDF via CDN (versão funcional 2.4.0) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Plano Alimentar Personalizado</h1>
+    <header>
+      <img src="logo-henrique-cordeiro.png.png" alt="Logo" class="logo">
+      <h1>Plano Alimentar Personalizado</h1>
+    </header>
+    <main>
+      <!-- Informações do Cliente -->
+      <section class="client-info">
+        <h2>Informações do Cliente</h2>
+        <div class="form-group">
+          <label for="clientName">Nome do Cliente:</label>
+          <input type="text" id="clientName" placeholder="Digite o nome do cliente">
+        </div>
+        <div class="form-group">
+          <label for="protocolNumber">Número do Protocolo:</label>
+          <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
+        </div>
+        <div class="form-group">
+          <label for="weight">Peso Atual (kg):</label>
+          <input type="number" id="weight" placeholder="Digite o peso atual">
+        </div>
+      </section>
 
-    <!-- Informações do Aluno -->
-    <div class="client-info">
-      <label for="clientName">Nome do Aluno:</label>
-      <input type="text" id="clientName" placeholder="Digite o nome do aluno">
-      <label for="weight">Peso Atual:</label>
-      <input type="text" id="weight" placeholder="Digite o peso atual">
-      <label for="currentDate">Data:</label>
-      <input type="date" id="currentDate">
-      <label for="protocolNumber">Protocolo Nº:</label>
-      <input type="text" id="protocolNumber" placeholder="Digite o número do protocolo">
-    </div>
+      <!-- Refeições -->
+      <section id="mealsContainer">
+        <h2>Refeições</h2>
+      </section>
+      <button id="addMealButton" class="btn">Adicionar Refeição</button>
 
-    <!-- SUPLEMENTAÇÃO E ORIENTAÇÕES -->
-    <div class="supplement-guidance">
-      <div class="supplementation">
-        <h2>SUPLEMENTAÇÃO E MANIPULADOS</h2>
-        <textarea id="supplementation" placeholder="Digite as suplementações..."></textarea>
+      <!-- Botão para gerar PDF -->
+      <div class="button-container">
+        <button id="generatePdfButton" class="btn btn-primary">Gerar PDF</button>
       </div>
-      <div class="guidance">
-        <h2>ORIENTAÇÕES</h2>
-        <textarea id="guidance" placeholder="Digite as orientações..."></textarea>
-      </div>
-    </div>
-
-    <!-- Refeições -->
-    <div id="mealsContainer"></div>
-    <button id="addMealButton">Adicionar Refeição</button>
-    <button id="generatePdfButton">Gerar PDF</button>
+    </main>
   </div>
+
+  <!-- Script JS -->
   <script src="script.js"></script>
 </body>
 </html>
