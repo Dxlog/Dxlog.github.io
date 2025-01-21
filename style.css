@@ -1,103 +1,116 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  background-color: #f7f7f7;
   color: #333;
 }
 
 .container {
   max-width: 900px;
-  margin: auto;
+  margin: 30px auto;
   padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+header {
   text-align: center;
-  color: #FF8C00;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+header .logo {
+  width: 80px;
+  height: auto;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+header h1 {
+  font-size: 28px;
+  color: #ff6600;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 22px;
+  color: #ff6600;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.form-group {
   margin-bottom: 20px;
 }
 
 label {
-  display: block;
-  margin-top: 10px;
   font-weight: bold;
-}
-
-input,
-textarea {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 2px solid #FF8C00;
-  border-radius: 5px;
-}
-
-textarea {
-  resize: none;
-  height: 100px;
-}
-
-button {
+  font-size: 14px;
   display: block;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
   margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #FF8C00;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
   font-size: 16px;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-
-button:hover {
-  background-color: #e67e00;
-}
-
-.supplement-guidance {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.supplementation,
-.guidance {
-  flex: 1;
-}
-
-.supplementation h2,
-.guidance h2 {
-  background: #FF8C00;
   color: white;
-  padding: 10px;
-  border-radius: 5px;
+  background-color: #ff6600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #ff4500;
+}
+
+.btn:hover {
+  background-color: #cc5200;
+}
+
+.button-container {
+  margin-top: 30px;
   text-align: center;
 }
 
-#mealsContainer .meal-section {
-  margin-top: 20px;
+.meal-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
 }
 
-#mealsContainer table {
+table {
   width: 100%;
-  border-collapse: collapse;
   margin-top: 10px;
+  border-collapse: collapse;
 }
 
-#mealsContainer th,
-#mealsContainer td {
-  border: 1px solid #ccc;
+table th, table td {
+  border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  text-align: center;
 }
 
-#mealsContainer th {
-  background: #FF8C00;
-  color: #fff;
+table th {
+  background-color: #ff6600;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
 }
