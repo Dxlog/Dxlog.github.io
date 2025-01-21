@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe no canto superior esquerdo
+    // Detalhe no canto superior esquerdo (|-)
     doc.setDrawColor("#ff6600");
     doc.setLineWidth(1);
     doc.line(5, 5, 20, 5); // Linha horizontal
@@ -67,7 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
-    doc.rect(pageWidth - 60, 28, 60, 2, "F");
+    const lineWidth = doc.getTextWidth("PLANO ALIMENTAR | PERSONALIZADO");
+    doc.rect(pageWidth - lineWidth - 40, 28, lineWidth + 40, 2, "F");
 
     // Título centralizado
     doc.setFont("helvetica", "bold");
@@ -135,24 +136,24 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
 
-      // Duas linhas pretas ao lado do fundo
+      // Linhas laterais ajustadas ao centro do fundo laranja
       doc.setDrawColor("#000");
       doc.line(margin, yPosition + 8, centerX - 10, yPosition + 8); // Linha preta à esquerda
       doc.line(centerX + textWidth + 10, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha preta à direita
 
       yPosition += 20;
 
-      // Quadrinhos para alimentos e proporções
+      // Tabela de alimentos e proporções com ajustes
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos para alimentos e proporções com demarcações leves e mais finas
-        doc.setDrawColor("#ddd"); // Demarcação leve e fina
-        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Alimento
-        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Proporção
+        // Demarcações mais finas e texto menor
+        doc.setDrawColor("#ddd");
+        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D");
+        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D");
 
-        doc.setFontSize(9); // Fonte menor
+        doc.setFontSize(9); // Texto menor
         doc.setTextColor("#000");
         doc.text(foodName, margin + 5, yPosition + 7);
         doc.text(foodProportion, margin + (pageWidth - 2 * margin) / 2 + 5, yPosition + 7);
