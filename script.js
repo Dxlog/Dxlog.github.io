@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe no canto superior esquerdo (moderno)
+    // Detalhe no canto superior esquerdo (mais moderno)
     doc.setDrawColor("#ff6600");
     doc.setLineWidth(1);
     doc.line(5, 5, 20, 10); // Linha diagonal maior
@@ -126,38 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 35;
 
-    // SUPLEMENTAÇÃO E MANIPULADOS
-    doc.setFontSize(14);
-    doc.setTextColor("#FFFFFF");
-    doc.setFillColor("#ff6600");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
-
-    yPosition += 15;
-
-    // Caixa para SUPLEMENTAÇÃO E MANIPULADOS
-    doc.setFillColor("#f5f5f5");
-    doc.setDrawColor("#ccc");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "D");
-
-    yPosition += 30;
-
-    // ORIENTAÇÕES
-    doc.setFontSize(14);
-    doc.setTextColor("#FFFFFF");
-    doc.setFillColor("#ff6600");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 10, "F");
-    doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
-
-    yPosition += 15;
-
-    // Caixa para ORIENTAÇÕES
-    doc.setFillColor("#f5f5f5");
-    doc.setDrawColor("#ccc");
-    doc.rect(margin, yPosition, pageWidth - margin * 2, 20, "D");
-
-    yPosition += 30;
-
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
@@ -167,33 +135,46 @@ document.addEventListener("DOMContentLoaded", () => {
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
-      // Fundo laranja
+      // Fundo laranja menor com bordas arredondadas
       doc.setFillColor("#ff6600");
-      doc.rect(centerX - 10, yPosition, textWidth + 20, 8, "F");
+      doc.roundedRect(centerX - 10, yPosition + 3, textWidth + 20, 8, 2, 2, "F");
 
       // Nome da refeição (branco, centralizado)
       doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 5, { align: "center" });
+      doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
 
-      yPosition += 15;
+      // Linhas horizontais preta e laranja alinhadas ao nome (pegando a metade do fundo)
+      doc.setDrawColor("#000");
+      doc.line(margin, yPosition + 8, centerX - 10, yPosition + 8); // Linha preta à esquerda
+      doc.setDrawColor("#ff6600");
+      doc.line(centerX + textWidth + 10, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha laranja à direita
 
-      // Alimentos
+      yPosition += 20;
+
+      // Quadrinhos para alimentos e proporções
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos para alimentos
+        // Quadrinhos para alimentos e proporções com demarcações leves
         doc.setFillColor("#f5f5f5");
-        doc.setDrawColor("#ccc");
-        doc.rect(margin, yPosition, (pageWidth - margin * 2) / 2, 10, "D");
-        doc.rect(margin + (pageWidth - margin * 2) / 2, yPosition, (pageWidth - margin * 2) / 2, 10, "D");
+        doc.setDrawColor("#ccc"); // Demarcação leve
+        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Alimento
+        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Proporção
 
         doc.setFontSize(10);
         doc.setTextColor("#000");
         doc.text(foodName, margin + 5, yPosition + 7);
-        doc.text(foodProportion, margin + (pageWidth - margin * 2) / 2 + 5, yPosition + 7);
+        doc.text(foodProportion, margin + (pageWidth - 2 * margin) / 2 + 5, yPosition + 7);
 
         yPosition += 12;
+
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 40;
+          drawHeader(doc, pageWidth);
+          drawFooter(doc, pageWidth, clientName);
+        }
       });
 
       yPosition += 10;
