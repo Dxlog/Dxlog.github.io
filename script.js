@@ -142,6 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.roundedRect(mealNameX, y, mealNameWidth, 10, 3, 3, "F");
       doc.text(mealName, doc.internal.pageSize.getWidth() / 2, y + 7, { align: "center" });
 
+      // Linha preta ao lado do fundo
+      doc.setDrawColor(0, 0, 0); // Preto
+      const lineY = y + 5; // Alinhamento vertical
+      doc.line(10, lineY, mealNameX, lineY); // Esquerda
+      doc.line(mealNameX + mealNameWidth, lineY, doc.internal.pageSize.getWidth() - 10, lineY); // Direita
+
       y += 20;
 
       // Tabela de alimentos e proporções
