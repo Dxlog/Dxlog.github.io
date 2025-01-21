@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const mealsContainer = document.getElementById("mealsContainer");
   const addMealButton = document.getElementById("addMealButton");
+  const mealsContainer = document.getElementById("mealsContainer");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Função para adicionar nova refeição
+  // Adicionar uma nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
-
     mealSection.innerHTML = `
       <h3>Refeição</h3>
       <label>Nome da Refeição:</label>
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </table>
       <button type="button" class="addRowBtn">Adicionar Linha</button>
     `;
-
     mealsContainer.appendChild(mealSection);
     attachMealEvents(mealSection);
   });
@@ -53,12 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
         newRow.remove();
       });
     });
-
-    section.querySelectorAll(".removeRowBtn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        btn.closest("tr").remove();
-      });
-    });
   }
 
   // Função para desenhar o cabeçalho
@@ -67,15 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe no canto superior esquerdo (mais moderno)
+    // Detalhe no canto superior esquerdo
     doc.setDrawColor("#ff6600");
     doc.setLineWidth(1);
-    doc.line(5, 5, 20, 10); // Linha diagonal maior
-    doc.line(5, 10, 20, 5); // Linha diagonal menor
+    doc.line(5, 5, 20, 5); // Linha horizontal
+    doc.line(5, 5, 5, 20); // Linha vertical
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
-    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
+    doc.rect(pageWidth - 60, 28, 60, 2, "F");
 
     // Título centralizado
     doc.setFont("helvetica", "bold");
@@ -143,11 +135,10 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
 
-      // Linhas horizontais preta e laranja alinhadas ao nome (pegando a metade do fundo)
+      // Duas linhas pretas ao lado do fundo
       doc.setDrawColor("#000");
       doc.line(margin, yPosition + 8, centerX - 10, yPosition + 8); // Linha preta à esquerda
-      doc.setDrawColor("#ff6600");
-      doc.line(centerX + textWidth + 10, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha laranja à direita
+      doc.line(centerX + textWidth + 10, yPosition + 8, pageWidth - margin, yPosition + 8); // Linha preta à direita
 
       yPosition += 20;
 
@@ -156,9 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
-        // Quadrinhos para alimentos e proporções com demarcações leves
-        doc.setFillColor("#f5f5f5");
-        doc.setDrawColor("#ccc"); // Demarcação leve
+        // Quadrinhos para alimentos e proporções com demarcações leves e mais finas
+        doc.setDrawColor("#ddd"); // Demarcação leve e fina
         doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Alimento
         doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D"); // Proporção
 
