@@ -53,6 +53,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Função para desenhar títulos com linhas laterais e fundo
+  function drawSectionTitle(doc, title, yPosition, pageWidth, backgroundColor = "#ff6600") {
+    const textWidth = doc.getTextWidth(title);
+    const centerX = (pageWidth - textWidth) / 2;
+
+    // Fundo
+    doc.setFillColor(backgroundColor);
+    doc.roundedRect(centerX - 10, yPosition, textWidth + 20, 10, 2, 2, "F");
+
+    // Texto centralizado
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.setTextColor("#FFFFFF");
+    doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
+
+    // Linhas laterais horizontais
+    doc.setDrawColor("#000");
+    doc.line(15, yPosition + 7, centerX - 10, yPosition + 7); // Linha à esquerda
+    doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - 15, yPosition + 7); // Linha à direita
+
+    return yPosition + 15; // Nova posição Y
+  }
+
   // Função para desenhar o cabeçalho
   function drawHeader(doc, pageWidth) {
     // Fundo preto no cabeçalho
@@ -99,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const guidance = document.getElementById("guidance").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
-    // Desenhar cabeçalho (somente na primeira página)
+    // Desenhar cabeçalho
     drawHeader(doc, pageWidth);
 
     yPosition += 10;
@@ -115,20 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 35;
 
     // SUPLEMENTAÇÃO E MANIPULADOS
-    const supText = "SUPLEMENTAÇÃO E MANIPULADOS";
-    const supTextWidth = doc.getTextWidth(supText);
-    const supCenterX = (pageWidth - supTextWidth) / 2;
+    yPosition = drawSectionTitle(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
 
-    doc.setFillColor("#ff6600");
-    doc.roundedRect(supCenterX - 10, yPosition, supTextWidth + 20, 10, 2, 2, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text(supText, pageWidth / 2, yPosition + 7, { align: "center" });
-
-    doc.setDrawColor("#ff6600");
-    doc.line(margin, yPosition + 7, supCenterX - 10, yPosition + 7);
-    doc.line(supCenterX + supTextWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
-
-    yPosition += 15;
     doc.setFontSize(10);
     doc.setTextColor("#000");
     doc.text(supplementation, margin, yPosition);
@@ -136,59 +147,24 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 20;
 
     // ORIENTAÇÕES
-    const guideText = "ORIENTAÇÕES";
-    const guideTextWidth = doc.getTextWidth(guideText);
-    const guideCenterX = (pageWidth - guideTextWidth) / 2;
+    yPosition = drawSectionTitle(doc, "ORIENTAÇÕES", yPosition, pageWidth);
 
-    doc.setFillColor("#ff6600");
-    doc.roundedRect(guideCenterX - 10, yPosition, guideTextWidth + 20, 10, 2, 2, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text(guideText, pageWidth / 2, yPosition + 7, { align: "center" });
-
-    doc.setDrawColor("#ff6600");
-    doc.line(margin, yPosition + 7, guideCenterX - 10, yPosition + 7);
-    doc.line(guideCenterX + guideTextWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
-
-    yPosition += 15;
     doc.setFontSize(10);
     doc.setTextColor("#000");
     doc.text(guidance, margin, yPosition);
 
     yPosition += 25;
 
-    // Título "REFEIÇÕES"
-    const refeicoesTitle = "REFEIÇÕES";
-    const titleWidth = doc.getTextWidth(refeicoesTitle);
-    const titleX = (pageWidth - titleWidth) / 2;
+    // Título "REFEIÇÕES" com fundo preto
+    yPosition = drawSectionTitle(doc, "REFEIÇÕES", yPosition, pageWidth, "#000000");
 
-    doc.setFillColor("#ff6600");
-    doc.roundedRect(titleX - 10, yPosition, titleWidth + 20, 10, 2, 2, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text(refeicoesTitle, pageWidth / 2, yPosition + 7, { align: "center" });
-
-    doc.setDrawColor("#000");
-    doc.line(margin, yPosition + 7, titleX - 10, yPosition + 7);
-    doc.line(titleX + titleWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
-
-    yPosition += 20;
+    yPosition += 10;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      const textWidth = doc.getTextWidth(mealName);
-      const centerX = (pageWidth - textWidth) / 2;
-
-      doc.setFillColor("#ff6600");
-      doc.roundedRect(centerX - 10, yPosition, textWidth + 20, 10, 2, 2, "F");
-      doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
-
-      doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7);
-      doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
-
-      yPosition += 15;
+      yPosition = drawSectionTitle(doc, mealName, yPosition, pageWidth);
 
       const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
         row.querySelector(".foodName").value || "Não especificado",
@@ -198,8 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.autoTable({
         startY: yPosition,
         body: tableData,
-        theme: "plain",
+        tableWidth: pageWidth / 1.5, // Mais curta
         styles: { lineColor: [0, 0, 0], lineWidth: 0.5 },
+        margin: { left: (pageWidth - pageWidth / 1.5) / 2 }, // Centralizada
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
