@@ -53,29 +53,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar títulos com linhas horizontais acima e fundo laranja
-  function drawSectionTitle(doc, title, yPosition, pageWidth, backgroundColor = "#ff6600") {
+  // Função para desenhar títulos com fundo laranja e descrição
+  function drawSectionTitleWithDescription(doc, title, description, yPosition, pageWidth) {
     const textWidth = doc.getTextWidth(title);
     const centerX = (pageWidth - textWidth) / 2;
 
-    // Linhas horizontais acima do título
-    doc.setDrawColor("#000");
-    doc.setLineWidth(1); // Linha mais fina
-    doc.line(15, yPosition, pageWidth - 15, yPosition); // Linha acima do título
-
-    yPosition += 5;
-
-    // Fundo
-    doc.setFillColor(backgroundColor);
+    // Fundo do título
+    doc.setFillColor("#ff6600");
     doc.roundedRect(centerX - 10, yPosition, textWidth + 20, 10, 2, 2, "F");
 
-    // Texto centralizado
+    // Título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.setTextColor("#FFFFFF");
     doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
 
-    return yPosition + 15; // Nova posição Y
+    yPosition += 15;
+
+    // Descrição (sem negrito)
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor("#000");
+    doc.text(description, 15, yPosition, { maxWidth: pageWidth - 30 });
+
+    // Ajustar altura dependendo do texto
+    const textHeight = doc.getTextDimensions(description).h + 10;
+    yPosition += textHeight;
+
+    return yPosition;
   }
 
   // Função para desenhar o cabeçalho
@@ -97,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para desenhar o rodapé
   function drawFooter(doc, pageWidth, clientName) {
-    // Fundo preto cobrindo todo o final da página
+    // Fundo preto no rodapé
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 280, pageWidth, 20, "F");
 
@@ -140,24 +145,10 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 35;
 
     // SUPLEMENTAÇÃO E MANIPULADOS
-    yPosition = drawSectionTitle(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
-
-    doc.setFontSize(10);
-    doc.setTextColor("#000"); // Texto preto sem negrito
-    doc.setFont("helvetica", "normal"); // Remover negrito
-    doc.text(supplementation, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
-
-    yPosition += 20;
+    yPosition = drawSectionTitleWithDescription(doc, "SUPLEMENTAÇÃO E MANIPULADOS", supplementation, yPosition, pageWidth);
 
     // ORIENTAÇÕES
-    yPosition = drawSectionTitle(doc, "ORIENTAÇÕES", yPosition, pageWidth);
-
-    doc.setFontSize(10);
-    doc.setTextColor("#000"); // Texto preto sem negrito
-    doc.setFont("helvetica", "normal"); // Remover negrito
-    doc.text(guidance, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
-
-    yPosition += 25;
+    yPosition = drawSectionTitleWithDescription(doc, "ORIENTAÇÕES", guidance, yPosition, pageWidth);
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -171,19 +162,22 @@ document.addEventListener("DOMContentLoaded", () => {
         drawFooter(doc, pageWidth, clientName);
       }
 
-      yPosition = drawSectionTitle(doc, mealName, yPosition, pageWidth);
+      // Nome da refeição
+      yPosition = drawSectionTitleWithDescription(doc, mealName, "", yPosition, pageWidth);
 
+      // Dados da tabela
       const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
         row.querySelector(".foodName").value || "Não especificado",
         row.querySelector(".foodProportion").value || "Não especificado",
       ]);
 
+      // Tabela com ajustes centralizados
       doc.autoTable({
         startY: yPosition,
         body: tableData,
-        tableWidth: pageWidth / 1.5, // Mais curta
-        styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" }, // Letras pretas
-        margin: { left: (pageWidth - pageWidth / 1.5) / 2 }, // Centralizada
+        tableWidth: pageWidth / 1.5,
+        styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" },
+        margin: { left: (pageWidth - pageWidth / 1.5) / 2 },
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
