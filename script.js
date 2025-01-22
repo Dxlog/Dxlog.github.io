@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF");
     doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
 
-    // Linhas laterais horizontais (mais grossas e padrão)
+    // Linhas laterais horizontais
     doc.setDrawColor("#000");
     doc.setLineWidth(1.5);
     doc.line(15, yPosition + 7, centerX - 10, yPosition + 7); // Linha à esquerda
@@ -157,14 +157,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     yPosition += 25;
 
-    // Título "REFEIÇÕES" com fundo preto
-    yPosition = drawSectionTitle(doc, "REFEIÇÕES", yPosition, pageWidth, "#000000");
-
-    yPosition += 10;
-
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+
+      // Verificar espaço disponível antes de adicionar nova refeição
+      if (yPosition + 40 > 270) {
+        doc.addPage();
+        yPosition = 40;
+        drawHeader(doc, pageWidth);
+        drawFooter(doc, pageWidth, clientName);
+      }
 
       yPosition = drawSectionTitle(doc, mealName, yPosition, pageWidth);
 
