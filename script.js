@@ -59,6 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
+    // Linha laranja no canto inferior direito
+    doc.setFillColor("#ff6600");
+    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
+
     // Título centralizado
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
@@ -111,14 +115,20 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 35;
 
     // SUPLEMENTAÇÃO E MANIPULADOS
-    doc.setFontSize(14);
+    const supText = "SUPLEMENTAÇÃO E MANIPULADOS";
+    const supTextWidth = doc.getTextWidth(supText);
+    const supCenterX = (pageWidth - supTextWidth) / 2;
+
     doc.setFillColor("#ff6600");
-    doc.rect(0, yPosition, pageWidth, 10, "F"); // Fundo laranja em toda a largura
+    doc.roundedRect(supCenterX - 10, yPosition, supTextWidth + 20, 10, 2, 2, "F");
     doc.setTextColor("#FFFFFF");
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
+    doc.text(supText, pageWidth / 2, yPosition + 7, { align: "center" });
+
+    doc.setDrawColor("#ff6600");
+    doc.line(margin, yPosition + 7, supCenterX - 10, yPosition + 7);
+    doc.line(supCenterX + supTextWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
 
     yPosition += 15;
-    doc.setDrawColor("#000");
     doc.setFontSize(10);
     doc.setTextColor("#000");
     doc.text(supplementation, margin, yPosition);
@@ -126,11 +136,18 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 20;
 
     // ORIENTAÇÕES
-    doc.setFontSize(14);
+    const guideText = "ORIENTAÇÕES";
+    const guideTextWidth = doc.getTextWidth(guideText);
+    const guideCenterX = (pageWidth - guideTextWidth) / 2;
+
     doc.setFillColor("#ff6600");
-    doc.rect(0, yPosition, pageWidth, 10, "F"); // Fundo laranja em toda a largura
+    doc.roundedRect(guideCenterX - 10, yPosition, guideTextWidth + 20, 10, 2, 2, "F");
     doc.setTextColor("#FFFFFF");
-    doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
+    doc.text(guideText, pageWidth / 2, yPosition + 7, { align: "center" });
+
+    doc.setDrawColor("#ff6600");
+    doc.line(margin, yPosition + 7, guideCenterX - 10, yPosition + 7);
+    doc.line(guideCenterX + guideTextWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
 
     yPosition += 15;
     doc.setFontSize(10);
@@ -142,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Título "REFEIÇÕES"
     doc.setFontSize(14);
     doc.setFillColor(0, 0, 0);
-    doc.rect(0, yPosition, pageWidth, 10, "F"); // Fundo preto
+    doc.rect(0, yPosition, pageWidth, 10, "F");
     doc.setTextColor("#FFFFFF");
     doc.text("REFEIÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
 
@@ -152,8 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição com fundo laranja e linhas
-      doc.setFontSize(14);
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
@@ -163,12 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
 
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7); // Linha preta à esquerda
-      doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7); // Linha preta à direita
+      doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7);
+      doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
 
       yPosition += 15;
 
-      // Tabela de alimentos e proporções
       const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
         row.querySelector(".foodName").value || "Não especificado",
         row.querySelector(".foodProportion").value || "Não especificado",
@@ -177,8 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.autoTable({
         startY: yPosition,
         body: tableData,
-        theme: "plain",
-        styles: { lineColor: [0, 0, 0], lineWidth: 0.5 }, // Traços finos e pretos
+        tableWidth: pageWidth / 1.5, // Tabela mais curta
+        styles: { lineColor: [0, 0, 0], lineWidth: 0.5 },
+        margin: { left: (pageWidth - pageWidth / 1.5) / 2 }, // Centralizar
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
