@@ -157,13 +157,20 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 25;
 
     // Título "REFEIÇÕES"
-    doc.setFontSize(14);
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, yPosition, pageWidth, 10, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text("REFEIÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
+    const refeicoesTitle = "REFEIÇÕES";
+    const titleWidth = doc.getTextWidth(refeicoesTitle);
+    const titleX = (pageWidth - titleWidth) / 2;
 
-    yPosition += 15;
+    doc.setFillColor("#ff6600");
+    doc.roundedRect(titleX - 10, yPosition, titleWidth + 20, 10, 2, 2, "F");
+    doc.setTextColor("#FFFFFF");
+    doc.text(refeicoesTitle, pageWidth / 2, yPosition + 7, { align: "center" });
+
+    doc.setDrawColor("#000");
+    doc.line(margin, yPosition + 7, titleX - 10, yPosition + 7);
+    doc.line(titleX + titleWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
+
+    yPosition += 20;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -191,9 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.autoTable({
         startY: yPosition,
         body: tableData,
-        tableWidth: pageWidth / 1.5, // Tabela mais curta
+        theme: "plain",
         styles: { lineColor: [0, 0, 0], lineWidth: 0.5 },
-        margin: { left: (pageWidth - pageWidth / 1.5) / 2 }, // Centralizar
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
