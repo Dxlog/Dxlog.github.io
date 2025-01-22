@@ -67,8 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Linha laranja no canto inferior direito
     doc.setFillColor("#ff6600");
-    const lineWidth = doc.getTextWidth("PLANO ALIMENTAR | PERSONALIZADO");
-    doc.rect(pageWidth - lineWidth - 40, 28, lineWidth + 40, 2, "F");
+    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
 
     // Título centralizado
     doc.setFont("helvetica", "bold");
@@ -122,14 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 35;
 
     // SUPLEMENTAÇÃO E MANIPULADOS
-    doc.setFillColor("#ff6600");
-    doc.rect(0, yPosition, pageWidth, 15, "F");
-    doc.setTextColor("#FFFFFF");
     doc.setFontSize(14);
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", margin, yPosition + 10);
+    doc.setFillColor("#ff6600");
+    const supWidth = doc.getTextWidth("SUPLEMENTAÇÃO E MANIPULADOS") + 20;
+    doc.roundedRect((pageWidth - supWidth) / 2, yPosition, supWidth, 10, 2, 2, "F");
+    doc.setTextColor("#FFFFFF");
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
 
-    yPosition += 20;
-
+    yPosition += 15;
     doc.setFontSize(12);
     doc.setTextColor("#000");
     doc.text(supplementation, margin, yPosition);
@@ -137,14 +136,14 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 20;
 
     // ORIENTAÇÕES
-    doc.setFillColor("#ff6600");
-    doc.rect(0, yPosition, pageWidth, 15, "F");
-    doc.setTextColor("#FFFFFF");
     doc.setFontSize(14);
-    doc.text("ORIENTAÇÕES", margin, yPosition + 10);
+    doc.setFillColor("#ff6600");
+    const guideWidth = doc.getTextWidth("ORIENTAÇÕES") + 20;
+    doc.roundedRect((pageWidth - guideWidth) / 2, yPosition, guideWidth, 10, 2, 2, "F");
+    doc.setTextColor("#FFFFFF");
+    doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
 
-    yPosition += 20;
-
+    yPosition += 15;
     doc.setFontSize(12);
     doc.setTextColor("#000");
     doc.text(guidance, margin, yPosition);
@@ -165,32 +164,34 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
 
+      // Linhas laterais alinhadas
+      doc.setDrawColor("#000");
+      doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7);
+      doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
+
       yPosition += 15;
 
-      // Linha preta abaixo do título da refeição
-      doc.setDrawColor("#000");
-      doc.line(margin, yPosition, pageWidth - margin, yPosition);
-
-      yPosition += 5;
-
       // Tabela de alimentos e proporções
-      mealSection.querySelectorAll("tbody tr").forEach((row) => {
-        const foodName = row.querySelector(".foodName").value || "Não especificado";
-        const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
+      const headers = ["Alimento", "Proporção"];
+      const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
+        row.querySelector(".foodName").value || "Não especificado",
+        row.querySelector(".foodProportion").value || "Não especificado",
+      ]);
 
-        doc.setFontSize(10);
-        doc.text(`${foodName}`, margin, yPosition);
-        doc.text(`${foodProportion}`, pageWidth / 2, yPosition);
-        yPosition += 10;
-
-        if (yPosition > 270) {
-          doc.addPage();
-          yPosition = 40;
-          drawFooter(doc, pageWidth, clientName);
-        }
+      doc.autoTable({
+        startY: yPosition,
+        head: [headers],
+        body: tableData,
+        theme: "plain",
+        headStyles: { fillColor: [255, 102, 0], textColor: [255, 255, 255] },
+        bodyStyles: { textColor: [0, 0, 0] },
+        columnStyles: {
+          0: { cellWidth: pageWidth / 2 - margin },
+          1: { cellWidth: pageWidth / 2 - margin },
+        },
       });
 
-      yPosition += 10;
+      yPosition = doc.lastAutoTable.finalY + 10;
     });
 
     drawFooter(doc, pageWidth, clientName);
