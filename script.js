@@ -60,8 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Linha horizontal acima do título
     doc.setDrawColor("#000");
-    doc.setLineWidth(1); // Linha mais fina
-    doc.line(15, yPosition - 5, pageWidth - 15, yPosition - 5); // Linha horizontal
+    doc.setLineWidth(1);
+    doc.line(15, yPosition - 5, pageWidth - 15, yPosition - 5);
 
     // Fundo do título
     doc.setFillColor("#ff6600");
@@ -74,6 +74,16 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
 
     return yPosition + 15; // Retornar nova posição Y
+  }
+
+  // Função para desenhar textos descritivos abaixo dos títulos
+  function drawDescription(doc, description, yPosition, pageWidth) {
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor("#000");
+    const lines = doc.splitTextToSize(description, pageWidth - 30); // Divide texto em linhas automáticas
+    doc.text(lines, 15, yPosition); // Desenha o texto
+    return yPosition + lines.length * 5 + 5; // Ajusta a posição Y conforme o texto
   }
 
   // Função para desenhar o cabeçalho
@@ -139,16 +149,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // SUPLEMENTAÇÃO E MANIPULADOS
     yPosition = drawSectionTitleWithLines(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal"); // Fonte sem negrito
-    doc.text(supplementation, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
-    yPosition += doc.getTextDimensions(supplementation).h + 10;
+    yPosition = drawDescription(doc, supplementation, yPosition, pageWidth);
 
     // ORIENTAÇÕES
     yPosition = drawSectionTitleWithLines(doc, "ORIENTAÇÕES", yPosition, pageWidth);
-    doc.setFontSize(10);
-    doc.text(guidance, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
-    yPosition += doc.getTextDimensions(guidance).h + 10;
+    yPosition = drawDescription(doc, guidance, yPosition, pageWidth);
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
