@@ -8,13 +8,15 @@
   <link rel="stylesheet" href="style.css">
   <!-- jsPDF CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="logo-henrique-cordeiro.png" alt="Logo" class="logo">
+      <img src="logo-henrique-cordeiro.png.png" alt="Logo" class="logo">
       <h1>Plano Alimentar Personalizado</h1>
     </header>
+
     <main>
       <!-- Informações do Cliente -->
       <section class="client-info">
@@ -33,16 +35,16 @@
         </div>
       </section>
 
-      <!-- SUPLEMENTAÇÃO E ORIENTAÇÕES -->
-      <section class="supplement-guidance">
-        <div class="form-group">
-          <label for="supplementation">SUPLEMENTAÇÃO E MANIPULADOS:</label>
-          <textarea id="supplementation" maxlength="200" placeholder="Digite as suplementações..."></textarea>
-        </div>
-        <div class="form-group">
-          <label for="guidance">ORIENTAÇÕES:</label>
-          <textarea id="guidance" maxlength="200" placeholder="Digite as orientações..."></textarea>
-        </div>
+      <!-- SUPLEMENTAÇÃO E MANIPULADOS -->
+      <section>
+        <h2>SUPLEMENTAÇÃO E MANIPULADOS</h2>
+        <textarea id="supplementation" maxlength="200" placeholder="Digite as informações sobre suplementação e manipulados"></textarea>
+      </section>
+
+      <!-- ORIENTAÇÕES -->
+      <section>
+        <h2>ORIENTAÇÕES</h2>
+        <textarea id="guidance" maxlength="200" placeholder="Digite as orientações"></textarea>
       </section>
 
       <!-- Refeições -->
@@ -57,7 +59,7 @@
       </div>
     </main>
   </div>
-  <!-- Script -->
+
   <script src="script.js"></script>
 </body>
 </html>
