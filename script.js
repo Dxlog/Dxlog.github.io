@@ -122,40 +122,44 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 35;
 
     // SUPLEMENTAÇÃO E MANIPULADOS
-    doc.setFontSize(12);
     doc.setFillColor("#ff6600");
-    doc.roundedRect(margin, yPosition, 90, 10, 2, 2, "F");
+    doc.rect(0, yPosition, pageWidth, 15, "F");
     doc.setTextColor("#FFFFFF");
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", margin + 5, yPosition + 7);
+    doc.setFontSize(14);
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", margin, yPosition + 10);
 
-    doc.setFillColor("#f5f5f5");
-    doc.rect(margin, yPosition + 12, pageWidth / 2 - margin, 20, "F");
+    yPosition += 20;
+
+    doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(supplementation, margin + 5, yPosition + 20);
+    doc.text(supplementation, margin, yPosition);
+
+    yPosition += 20;
 
     // ORIENTAÇÕES
     doc.setFillColor("#ff6600");
-    doc.roundedRect(pageWidth / 2, yPosition, pageWidth / 2 - margin, 10, 2, 2, "F");
+    doc.rect(0, yPosition, pageWidth, 15, "F");
     doc.setTextColor("#FFFFFF");
-    doc.text("ORIENTAÇÕES", pageWidth / 2 + 5, yPosition + 7);
+    doc.setFontSize(14);
+    doc.text("ORIENTAÇÕES", margin, yPosition + 10);
 
-    doc.setFillColor("#f5f5f5");
-    doc.rect(pageWidth / 2, yPosition + 12, pageWidth / 2 - margin, 20, "F");
+    yPosition += 20;
+
+    doc.setFontSize(12);
     doc.setTextColor("#000");
-    doc.text(guidance, pageWidth / 2 + 5, yPosition + 20);
+    doc.text(guidance, margin, yPosition);
 
-    yPosition += 40;
+    yPosition += 25;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição
+      // Nome da refeição e fundo laranja arredondado
       doc.setFontSize(14);
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
 
-      // Fundo laranja do nome da refeição
       doc.setFillColor("#ff6600");
       doc.roundedRect(centerX - 10, yPosition, textWidth + 20, 10, 2, 2, "F");
       doc.setTextColor("#FFFFFF");
@@ -163,15 +167,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       yPosition += 15;
 
-      // Alimentos e proporções
+      // Linha preta abaixo do título da refeição
+      doc.setDrawColor("#000");
+      doc.line(margin, yPosition, pageWidth - margin, yPosition);
+
+      yPosition += 5;
+
+      // Tabela de alimentos e proporções
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
 
         doc.setFontSize(10);
-        doc.setTextColor("#000");
-        doc.text(`${foodName} - ${foodProportion}`, margin, yPosition);
-        yPosition += 6;
+        doc.text(`${foodName}`, margin, yPosition);
+        doc.text(`${foodProportion}`, pageWidth / 2, yPosition);
+        yPosition += 10;
 
         if (yPosition > 270) {
           doc.addPage();
