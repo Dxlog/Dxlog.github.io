@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar o cabeçalho (somente na primeira página)
+  // Função para desenhar o cabeçalho
   function drawHeader(doc, pageWidth) {
     // Fundo preto no cabeçalho
     doc.setFillColor(0, 0, 0);
@@ -149,6 +149,16 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(guidance, margin, yPosition);
 
     yPosition += 25;
+
+    // Adicionar título "Refeições"
+    doc.setFontSize(14);
+    doc.setFillColor("#ff6600");
+    doc.setDrawColor("#000");
+    doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, 10, 2, 2, "DF");
+    doc.setTextColor("#FFFFFF");
+    doc.text("Refeições", pageWidth / 2, yPosition + 7, { align: "center" });
+
+    yPosition += 15;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
