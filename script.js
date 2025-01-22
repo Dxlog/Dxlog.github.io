@@ -185,10 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
         theme: "plain",
         headStyles: { fillColor: [255, 102, 0], textColor: [255, 255, 255] },
         bodyStyles: { textColor: [0, 0, 0] },
-        columnStyles: {
-          0: { cellWidth: pageWidth / 2 - margin },
-          1: { cellWidth: pageWidth / 2 - margin },
-        },
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
