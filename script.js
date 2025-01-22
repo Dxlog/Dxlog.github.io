@@ -68,11 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF");
     doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
 
-    // Linhas laterais horizontais
+    // Linhas laterais horizontais (mais grossas e padrão)
     doc.setDrawColor("#000");
+    doc.setLineWidth(1.5);
     doc.line(15, yPosition + 7, centerX - 10, yPosition + 7); // Linha à esquerda
     doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - 15, yPosition + 7); // Linha à direita
 
+    doc.setLineWidth(0.5); // Resetar espessura padrão
     return yPosition + 15; // Nova posição Y
   }
 
