@@ -129,9 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
 
     yPosition += 15;
-    doc.setFontSize(12);
+    doc.setFontSize(10);
     doc.setTextColor("#000");
-    doc.text(supplementation, margin, yPosition);
+    doc.setDrawColor("#ddd");
+    doc.text(supplementation, margin, yPosition, { align: "left" });
 
     yPosition += 20;
 
@@ -144,27 +145,17 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
 
     yPosition += 15;
-    doc.setFontSize(12);
+    doc.setFontSize(10);
     doc.setTextColor("#000");
-    doc.text(guidance, margin, yPosition);
+    doc.text(guidance, margin, yPosition, { align: "left" });
 
     yPosition += 25;
-
-    // Adicionar título "Refeições"
-    doc.setFontSize(14);
-    doc.setFillColor("#ff6600");
-    doc.setDrawColor("#000");
-    doc.roundedRect(margin, yPosition, pageWidth - 2 * margin, 10, 2, 2, "DF");
-    doc.setTextColor("#FFFFFF");
-    doc.text("Refeições", pageWidth / 2, yPosition + 7, { align: "center" });
-
-    yPosition += 15;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
 
-      // Nome da refeição e fundo laranja arredondado
+      // Nome da refeição com fundo laranja e linhas
       doc.setFontSize(14);
       const textWidth = doc.getTextWidth(mealName);
       const centerX = (pageWidth - textWidth) / 2;
@@ -174,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.setTextColor("#FFFFFF");
       doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
 
-      // Linhas laterais alinhadas
       doc.setDrawColor("#000");
       doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7);
       doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
@@ -182,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
       yPosition += 15;
 
       // Tabela de alimentos e proporções
-      const headers = ["Alimento", "Proporção"];
       const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
         row.querySelector(".foodName").value || "Não especificado",
         row.querySelector(".foodProportion").value || "Não especificado",
@@ -190,10 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       doc.autoTable({
         startY: yPosition,
-        head: [headers],
         body: tableData,
         theme: "plain",
-        headStyles: { fillColor: [255, 102, 0], textColor: [255, 255, 255] },
         bodyStyles: { textColor: [0, 0, 0] },
       });
 
