@@ -131,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 15;
     doc.setFontSize(10);
     doc.setTextColor("#000");
-    doc.setDrawColor("#ddd");
     doc.text(supplementation, margin, yPosition, { align: "left" });
 
     yPosition += 20;
