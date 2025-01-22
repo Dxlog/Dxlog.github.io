@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar títulos com linhas acima e fundo laranja
+  // Função para desenhar títulos com linhas horizontais acima e fundo laranja
   function drawSectionTitle(doc, title, yPosition, pageWidth, backgroundColor = "#ff6600") {
     const textWidth = doc.getTextWidth(title);
     const centerX = (pageWidth - textWidth) / 2;
@@ -144,7 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     doc.setFontSize(10);
     doc.setTextColor("#000"); // Texto preto sem negrito
-    doc.text(supplementation, margin, yPosition);
+    doc.setFont("helvetica", "normal"); // Remover negrito
+    doc.text(supplementation, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
 
     yPosition += 20;
 
@@ -153,7 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     doc.setFontSize(10);
     doc.setTextColor("#000"); // Texto preto sem negrito
-    doc.text(guidance, margin, yPosition);
+    doc.setFont("helvetica", "normal"); // Remover negrito
+    doc.text(guidance, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
 
     yPosition += 25;
 
