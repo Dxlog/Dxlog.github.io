@@ -53,10 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar títulos com fundo laranja e descrição
-  function drawSectionTitleWithDescription(doc, title, description, yPosition, pageWidth) {
+  // Função para desenhar títulos com fundo laranja e linhas horizontais acima
+  function drawSectionTitleWithLines(doc, title, yPosition, pageWidth) {
     const textWidth = doc.getTextWidth(title);
     const centerX = (pageWidth - textWidth) / 2;
+
+    // Linha horizontal acima do título
+    doc.setDrawColor("#000");
+    doc.setLineWidth(1); // Linha mais fina
+    doc.line(15, yPosition - 5, pageWidth - 15, yPosition - 5); // Linha horizontal
 
     // Fundo do título
     doc.setFillColor("#ff6600");
@@ -68,19 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#FFFFFF");
     doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
 
-    yPosition += 15;
-
-    // Descrição (sem negrito)
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.setTextColor("#000");
-    doc.text(description, 15, yPosition, { maxWidth: pageWidth - 30 });
-
-    // Ajustar altura dependendo do texto
-    const textHeight = doc.getTextDimensions(description).h + 10;
-    yPosition += textHeight;
-
-    return yPosition;
+    return yPosition + 15; // Retornar nova posição Y
   }
 
   // Função para desenhar o cabeçalho
@@ -145,10 +138,17 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition += 35;
 
     // SUPLEMENTAÇÃO E MANIPULADOS
-    yPosition = drawSectionTitleWithDescription(doc, "SUPLEMENTAÇÃO E MANIPULADOS", supplementation, yPosition, pageWidth);
+    yPosition = drawSectionTitleWithLines(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal"); // Fonte sem negrito
+    doc.text(supplementation, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
+    yPosition += doc.getTextDimensions(supplementation).h + 10;
 
     // ORIENTAÇÕES
-    yPosition = drawSectionTitleWithDescription(doc, "ORIENTAÇÕES", guidance, yPosition, pageWidth);
+    yPosition = drawSectionTitleWithLines(doc, "ORIENTAÇÕES", yPosition, pageWidth);
+    doc.setFontSize(10);
+    doc.text(guidance, margin, yPosition, { maxWidth: pageWidth - margin * 2 });
+    yPosition += doc.getTextDimensions(guidance).h + 10;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -162,16 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
         drawFooter(doc, pageWidth, clientName);
       }
 
-      // Nome da refeição
-      yPosition = drawSectionTitleWithDescription(doc, mealName, "", yPosition, pageWidth);
+      yPosition = drawSectionTitleWithLines(doc, mealName, yPosition, pageWidth);
 
-      // Dados da tabela
       const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
         row.querySelector(".foodName").value || "Não especificado",
         row.querySelector(".foodProportion").value || "Não especificado",
       ]);
 
-      // Tabela com ajustes centralizados
+      // Tabela de alimentos e proporções
       doc.autoTable({
         startY: yPosition,
         body: tableData,
