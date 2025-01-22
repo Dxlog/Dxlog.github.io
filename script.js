@@ -53,48 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar o cabeçalho (somente na primeira página)
-  function drawHeader(doc, pageWidth) {
-    // Fundo preto no cabeçalho
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 0, pageWidth, 30, "F");
-
-    // Detalhe no canto superior esquerdo (|-)
-    doc.setDrawColor("#ff6600");
-    doc.setLineWidth(1);
-    doc.line(5, 5, 20, 5); // Linha horizontal
-    doc.line(5, 5, 5, 20); // Linha vertical
-
-    // Linha laranja no canto inferior direito
-    doc.setFillColor("#ff6600");
-    const lineWidth = doc.getTextWidth("PLANO ALIMENTAR | PERSONALIZADO");
-    doc.rect(pageWidth - lineWidth - 40, 28, lineWidth + 40, 2, "F");
-
-    // Título centralizado
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.setTextColor("#FFFFFF");
-    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
-  }
-
-  // Função para desenhar o rodapé
-  function drawFooter(doc, pageWidth, clientName) {
-    // Fundo preto cobrindo todo o final da página
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 280, pageWidth, 20, "F");
-
-    // Texto no rodapé
-    doc.setFontSize(10);
-    doc.setTextColor("#FFFFFF");
-    doc.text(`Aluno(a): ${clientName}`, 15, 290);
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - 15, 290, { align: "right" });
-  }
-
   // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
     let yPosition = 40;
@@ -102,95 +64,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const clientName = document.getElementById("clientName").value || "Nome não especificado";
     const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
     const weight = document.getElementById("weight").value || "Não especificado";
-    const currentDate = new Date().toLocaleDateString("pt-BR");
-    const supplementation = document.getElementById("supplementation").value || "Não especificado";
-    const guidance = document.getElementById("guidance").value || "Não especificado";
+    const supplementation = document.getElementById("supplementation").value || "Não informado";
+    const guidance = document.getElementById("guidance").value || "Não informado";
 
-    // Desenhar cabeçalho (somente na primeira página)
-    drawHeader(doc, pageWidth);
+    // Cabeçalho
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 0, pageWidth, 30, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor("#FFFFFF");
+    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
 
     yPosition += 10;
 
-    // Informações principais do aluno
+    // Informações do cliente
     doc.setFontSize(12);
     doc.setTextColor("#000");
     doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
     doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 8);
-    doc.text(`Data: ${currentDate}`, margin, yPosition + 16);
-    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 24);
+    doc.text(`Protocolo: ${protocolNumber}`, margin, yPosition + 16);
 
-    yPosition += 35;
+    yPosition += 20;
 
-    // SUPLEMENTAÇÃO E MANIPULADOS e ORIENTAÇÕES
-    doc.setFontSize(14);
-    doc.setFillColor("#ff6600");
-    doc.roundedRect(margin, yPosition, 90, 10, 2, 2, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text("SUPLEMENTAÇÃO E MANIPULADOS", margin + 5, yPosition + 7);
+    // SUPLEMENTAÇÃO E MANIPULADOS
+    doc.setFontSize(12);
+    doc.text("SUPLEMENTAÇÃO E MANIPULADOS:", margin, yPosition);
+    doc.setFontSize(10);
+    doc.text(supplementation, margin, yPosition + 6);
 
-    doc.setFillColor("#f5f5f5");
-    doc.rect(margin, yPosition + 12, 90, 20, "F");
-    doc.setTextColor("#000");
-    doc.text(supplementation, margin + 5, yPosition + 20);
+    yPosition += 20;
 
-    doc.setFillColor("#ff6600");
-    doc.roundedRect(pageWidth - 105, yPosition, 90, 10, 2, 2, "F");
-    doc.setTextColor("#FFFFFF");
-    doc.text("ORIENTAÇÕES", pageWidth - 100, yPosition + 7);
+    // ORIENTAÇÕES
+    doc.setFontSize(12);
+    doc.text("ORIENTAÇÕES:", margin, yPosition);
+    doc.setFontSize(10);
+    doc.text(guidance, margin, yPosition + 6);
 
-    doc.setFillColor("#f5f5f5");
-    doc.rect(pageWidth - 105, yPosition + 12, 90, 20, "F");
-    doc.setTextColor("#000");
-    doc.text(guidance, pageWidth - 100, yPosition + 20);
+    yPosition += 20;
 
-    yPosition += 40;
-
-    // Refeições
+    // Gerar as refeições e tabela de alimentos
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
       const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
-
-      // Nome da refeição e fundo laranja alinhado às linhas
       doc.setFontSize(14);
-      const textWidth = doc.getTextWidth(mealName);
-      const centerX = (pageWidth - textWidth) / 2;
+      doc.text(mealName, margin, yPosition);
 
-      // Fundo laranja menor com bordas arredondadas
-      doc.setFillColor("#ff6600");
-      doc.roundedRect(centerX - 10, yPosition + 3, textWidth + 20, 8, 2, 2, "F");
+      yPosition += 10;
 
-      // Nome da refeição (branco, centralizado)
-      doc.setTextColor("#FFFFFF");
-      doc.text(mealName, pageWidth / 2, yPosition + 8, { align: "center" });
-
-      yPosition += 20;
-
-      // Tabela de alimentos e proporções com ajustes
       mealSection.querySelectorAll("tbody tr").forEach((row) => {
         const foodName = row.querySelector(".foodName").value || "Não especificado";
         const foodProportion = row.querySelector(".foodProportion").value || "Não especificado";
-
-        doc.setDrawColor("#ddd");
-        doc.rect(margin, yPosition, (pageWidth - 2 * margin) / 2, 10, "D");
-        doc.rect(margin + (pageWidth - 2 * margin) / 2, yPosition, (pageWidth - 2 * margin) / 2, 10, "D");
-
-        doc.setFontSize(9);
-        doc.setTextColor("#000");
-        doc.text(foodName, margin + 5, yPosition + 7);
-        doc.text(foodProportion, margin + (pageWidth - 2 * margin) / 2 + 5, yPosition + 7);
-
-        yPosition += 12;
-
-        if (yPosition > 270) {
-          doc.addPage();
-          yPosition = 40;
-          drawFooter(doc, pageWidth, clientName);
-        }
+        doc.setFontSize(10);
+        doc.text(`${foodName} - ${foodProportion}`, margin, yPosition);
+        yPosition += 6;
       });
 
       yPosition += 10;
     });
 
-    drawFooter(doc, pageWidth, clientName);
     doc.save("Plano_Alimentar.pdf");
   });
 });
