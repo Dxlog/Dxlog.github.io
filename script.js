@@ -59,16 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFillColor(0, 0, 0);
     doc.rect(0, 0, pageWidth, 30, "F");
 
-    // Detalhe no canto superior esquerdo (|-)
-    doc.setDrawColor("#ff6600");
-    doc.setLineWidth(1);
-    doc.line(5, 5, 20, 5); // Linha horizontal
-    doc.line(5, 5, 5, 20); // Linha vertical
-
-    // Linha laranja no canto inferior direito
-    doc.setFillColor("#ff6600");
-    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
-
     // Título centralizado
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
@@ -123,32 +113,40 @@ document.addEventListener("DOMContentLoaded", () => {
     // SUPLEMENTAÇÃO E MANIPULADOS
     doc.setFontSize(14);
     doc.setFillColor("#ff6600");
-    const supWidth = doc.getTextWidth("SUPLEMENTAÇÃO E MANIPULADOS") + 20;
-    doc.roundedRect((pageWidth - supWidth) / 2, yPosition, supWidth, 10, 2, 2, "F");
+    doc.rect(0, yPosition, pageWidth, 10, "F"); // Fundo laranja em toda a largura
     doc.setTextColor("#FFFFFF");
     doc.text("SUPLEMENTAÇÃO E MANIPULADOS", pageWidth / 2, yPosition + 7, { align: "center" });
 
     yPosition += 15;
+    doc.setDrawColor("#000");
     doc.setFontSize(10);
     doc.setTextColor("#000");
-    doc.text(supplementation, margin, yPosition, { align: "left" });
+    doc.text(supplementation, margin, yPosition);
 
     yPosition += 20;
 
     // ORIENTAÇÕES
     doc.setFontSize(14);
     doc.setFillColor("#ff6600");
-    const guideWidth = doc.getTextWidth("ORIENTAÇÕES") + 20;
-    doc.roundedRect((pageWidth - guideWidth) / 2, yPosition, guideWidth, 10, 2, 2, "F");
+    doc.rect(0, yPosition, pageWidth, 10, "F"); // Fundo laranja em toda a largura
     doc.setTextColor("#FFFFFF");
     doc.text("ORIENTAÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
 
     yPosition += 15;
     doc.setFontSize(10);
     doc.setTextColor("#000");
-    doc.text(guidance, margin, yPosition, { align: "left" });
+    doc.text(guidance, margin, yPosition);
 
     yPosition += 25;
+
+    // Título "REFEIÇÕES"
+    doc.setFontSize(14);
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, yPosition, pageWidth, 10, "F"); // Fundo preto
+    doc.setTextColor("#FFFFFF");
+    doc.text("REFEIÇÕES", pageWidth / 2, yPosition + 7, { align: "center" });
+
+    yPosition += 15;
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -165,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.text(mealName, pageWidth / 2, yPosition + 7, { align: "center" });
 
       doc.setDrawColor("#000");
-      doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7);
-      doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7);
+      doc.line(margin, yPosition + 7, centerX - 10, yPosition + 7); // Linha preta à esquerda
+      doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - margin, yPosition + 7); // Linha preta à direita
 
       yPosition += 15;
 
@@ -180,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startY: yPosition,
         body: tableData,
         theme: "plain",
-        bodyStyles: { textColor: [0, 0, 0] },
+        styles: { lineColor: [0, 0, 0], lineWidth: 0.5 }, // Traços finos e pretos
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
