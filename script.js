@@ -53,10 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar títulos com linhas laterais e fundo
+  // Função para desenhar títulos com linhas acima e fundo laranja
   function drawSectionTitle(doc, title, yPosition, pageWidth, backgroundColor = "#ff6600") {
     const textWidth = doc.getTextWidth(title);
     const centerX = (pageWidth - textWidth) / 2;
+
+    // Linhas horizontais acima do título
+    doc.setDrawColor("#000");
+    doc.setLineWidth(1); // Linha mais fina
+    doc.line(15, yPosition, pageWidth - 15, yPosition); // Linha acima do título
+
+    yPosition += 5;
 
     // Fundo
     doc.setFillColor(backgroundColor);
@@ -67,12 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(14);
     doc.setTextColor("#FFFFFF");
     doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
-
-    // Linhas laterais horizontais ajustadas
-    doc.setDrawColor("#000");
-    doc.setLineWidth(1); // Linha mais fina
-    doc.line(15, yPosition + 7, centerX - 10, yPosition + 7); // Linha à esquerda
-    doc.line(centerX + textWidth + 10, yPosition + 7, pageWidth - 15, yPosition + 7); // Linha à direita
 
     return yPosition + 15; // Nova posição Y
   }
@@ -142,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition = drawSectionTitle(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
 
     doc.setFontSize(10);
-    doc.setTextColor("#000"); // Texto preto
+    doc.setTextColor("#000"); // Texto preto sem negrito
     doc.text(supplementation, margin, yPosition);
 
     yPosition += 20;
@@ -151,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     yPosition = drawSectionTitle(doc, "ORIENTAÇÕES", yPosition, pageWidth);
 
     doc.setFontSize(10);
-    doc.setTextColor("#000"); // Texto preto
+    doc.setTextColor("#000"); // Texto preto sem negrito
     doc.text(guidance, margin, yPosition);
 
     yPosition += 25;
@@ -179,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startY: yPosition,
         body: tableData,
         tableWidth: pageWidth / 1.5, // Mais curta
-        styles: { lineColor: [0, 0, 0], lineWidth: 0.5 },
+        styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" }, // Letras pretas
         margin: { left: (pageWidth - pageWidth / 1.5) / 2 }, // Centralizada
       });
 
