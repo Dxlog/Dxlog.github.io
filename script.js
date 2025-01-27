@@ -53,19 +53,139 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Função para desenhar o cabeçalho (somente na primeira página)
+  function drawHeader(doc, pageWidth) {
+    // Fundo preto no cabeçalho
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 0, pageWidth, 30, "F");
+
+    // Linha laranja no canto inferior direito
+    doc.setFillColor("#ff6600");
+    doc.rect(pageWidth / 2, 28, pageWidth / 2, 2, "F");
+
+    // Título centralizado
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor("#FFFFFF");
+    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
+  }
+
+  // Função para desenhar o rodapé (somente na última página)
+  function drawFooter(doc, pageWidth, clientName) {
+    // Fundo preto no rodapé
+    doc.setFillColor(0, 0, 0);
+    doc.rect(0, 280, pageWidth, 20, "F");
+
+    // Texto no rodapé
+    doc.setFontSize(10);
+    doc.setTextColor("#FFFFFF");
+    doc.text(`Aluno(a): ${clientName}`, 15, 290);
+  }
+
+  // Função para desenhar títulos com fundo laranja e linhas horizontais acima
+  function drawSectionTitleWithLines(doc, title, yPosition, pageWidth) {
+    const textWidth = doc.getTextWidth(title);
+    const centerX = (pageWidth - textWidth) / 2;
+
+    // Linha horizontal acima do título
+    doc.setDrawColor("#000");
+    doc.setLineWidth(1);
+    doc.line(15, yPosition - 5, pageWidth - 15, yPosition - 5);
+
+    // Fundo do título
+    doc.setFillColor("#ff6600");
+    doc.roundedRect(centerX - 10, yPosition, textWidth + 20, 10, 2, 2, "F");
+
+    // Título
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.setTextColor("#FFFFFF");
+    doc.text(title, pageWidth / 2, yPosition + 7, { align: "center" });
+
+    return yPosition + 15; // Retornar nova posição Y
+  }
+
+  // Função para desenhar textos descritivos com alinhamento
+  function drawDescription(doc, description, yPosition, pageWidth) {
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor("#000");
+
+    const lines = doc.splitTextToSize(description, pageWidth - 30); // Divide texto em linhas automáticas
+    doc.text(lines, 15, yPosition); // Desenha o texto
+    return yPosition + lines.length * 5 + 5; // Ajusta a posição Y conforme o texto
+  }
+
   // Função para gerar PDF
   generatePdfButton.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Ajustes no layout
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
     let yPosition = 40;
 
-    // ...
-    // Funções para SUPLEMENTAÇÃO, TABELAS e ALINHAMENTOS
-    // ...
+    const clientName = document.getElementById("clientName").value || "Nome não especificado";
+    const protocolNumber = document.getElementById("protocolNumber").value || "Não especificado";
+    const weight = document.getElementById("weight").value || "Não especificado";
+    const supplementation = document.getElementById("supplementation").value || "Não especificado";
+    const guidance = document.getElementById("guidance").value || "Não especificado";
+    const currentDate = new Date().toLocaleDateString("pt-BR");
+
+    // Desenhar cabeçalho (somente na primeira página)
+    drawHeader(doc, pageWidth);
+
+    yPosition += 10;
+
+    // Informações principais do aluno
+    doc.setFontSize(12);
+    doc.setTextColor("#000");
+    doc.text(`Aluno(a): ${clientName}`, margin, yPosition);
+    doc.text(`Peso Atual: ${weight} kg`, margin, yPosition + 8);
+    doc.text(`Data: ${currentDate}`, margin, yPosition + 16);
+    doc.text(`N° do Protocolo: ${protocolNumber}`, margin, yPosition + 24);
+
+    yPosition += 35;
+
+    // SUPLEMENTAÇÃO E MANIPULADOS
+    yPosition = drawSectionTitleWithLines(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
+    yPosition = drawDescription(doc, supplementation, yPosition, pageWidth);
+
+    // ORIENTAÇÕES
+    yPosition = drawSectionTitleWithLines(doc, "ORIENTAÇÕES", yPosition, pageWidth);
+    yPosition = drawDescription(doc, guidance, yPosition, pageWidth);
+
+    // Refeições
+    document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
+      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+
+      // Verificar espaço disponível antes de adicionar nova refeição
+      if (yPosition + 40 > 270) {
+        doc.addPage();
+        yPosition = 40;
+      }
+
+      yPosition = drawSectionTitleWithLines(doc, mealName, yPosition, pageWidth);
+
+      const tableData = Array.from(mealSection.querySelectorAll("tbody tr")).map((row) => [
+        row.querySelector(".foodName").value || "Não especificado",
+        row.querySelector(".foodProportion").value || "Não especificado",
+      ]);
+
+      // Tabela de alimentos e proporções com largura padrão
+      doc.autoTable({
+        startY: yPosition,
+        body: tableData,
+        tableWidth: pageWidth - margin * 2,
+        styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" },
+        margin: { left: margin },
+      });
+
+      yPosition = doc.lastAutoTable.finalY + 10;
+    });
+
+    // Desenhar rodapé apenas na última página
+    drawFooter(doc, pageWidth, clientName);
 
     doc.save("Plano_Alimentar.pdf");
   });
