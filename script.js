@@ -76,14 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return yPosition + 15; // Retornar nova posição Y
   }
 
-  // Função para desenhar textos descritivos abaixo dos títulos
-  function drawDescription(doc, description, yPosition, pageWidth) {
+  // Função para desenhar textos descritivos com bullet points
+  function drawDescriptionWithBullets(doc, description, yPosition, pageWidth) {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     doc.setTextColor("#000");
-    const lines = doc.splitTextToSize(description, pageWidth - 30); // Divide texto em linhas automáticas
-    doc.text(lines, 15, yPosition); // Desenha o texto
-    return yPosition + lines.length * 5 + 5; // Ajusta a posição Y conforme o texto
+
+    const lines = description.split("\n").map((line) => `• ${line}`); // Adiciona bolinhas no início
+    lines.forEach((line) => {
+      doc.text(line, 15, yPosition, { maxWidth: pageWidth - 30 });
+      yPosition += 5;
+    });
+
+    return yPosition + 5; // Ajusta a posição Y
   }
 
   // Função para desenhar o cabeçalho (somente na primeira página)
@@ -148,11 +153,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // SUPLEMENTAÇÃO E MANIPULADOS
     yPosition = drawSectionTitleWithLines(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
-    yPosition = drawDescription(doc, supplementation, yPosition, pageWidth);
+    yPosition = drawDescriptionWithBullets(doc, supplementation, yPosition, pageWidth);
 
     // ORIENTAÇÕES
     yPosition = drawSectionTitleWithLines(doc, "ORIENTAÇÕES", yPosition, pageWidth);
-    yPosition = drawDescription(doc, guidance, yPosition, pageWidth);
+    yPosition = drawDescriptionWithBullets(doc, guidance, yPosition, pageWidth);
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
@@ -171,12 +176,16 @@ document.addEventListener("DOMContentLoaded", () => {
         row.querySelector(".foodProportion").value || "Não especificado",
       ]);
 
-      // Tabela de alimentos e proporções com largura padrão
+      // Tabela de alimentos e proporções com largura padrão e linha central ajustada
       doc.autoTable({
         startY: yPosition,
         body: tableData,
         tableWidth: pageWidth - margin * 2,
         styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" },
+        columnStyles: {
+          0: { cellWidth: (pageWidth - margin * 2) / 2 },
+          1: { cellWidth: (pageWidth - margin * 2) / 2 },
+        },
         margin: { left: margin },
       });
 
