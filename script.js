@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mealsContainer = document.getElementById("mealsContainer");
   const generatePdfButton = document.getElementById("generatePdfButton");
 
-  // Adicionar uma nova refeição
+  // Função para adicionar uma nova refeição
   addMealButton.addEventListener("click", () => {
     const mealSection = document.createElement("div");
     mealSection.classList.add("meal-section");
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para desenhar o cabeçalho (somente na primeira página)
+  // Função para desenhar o cabeçalho (apenas na primeira página)
   function drawHeader(doc, pageWidth) {
     // Fundo preto no cabeçalho
     doc.setFillColor(0, 0, 0);
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
   }
 
-  // Função para desenhar o rodapé (somente na última página)
+  // Função para desenhar o rodapé (apenas na última página)
   function drawFooter(doc, pageWidth, clientName) {
     // Fundo preto no rodapé
     doc.setFillColor(0, 0, 0);
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`Aluno(a): ${clientName}`, 15, 290);
   }
 
-  // Função para desenhar títulos com fundo laranja e linhas horizontais acima
+  // Função para desenhar títulos com fundo laranja e linhas horizontais
   function drawSectionTitleWithLines(doc, title, yPosition, pageWidth) {
     const textWidth = doc.getTextWidth(title);
     const centerX = (pageWidth - textWidth) / 2;
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return yPosition + 15; // Retornar nova posição Y
   }
 
-  // Função para desenhar textos descritivos com alinhamento
+  // Função para desenhar textos descritivos com alinhamento dinâmico
   function drawDescription(doc, description, yPosition, pageWidth) {
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         row.querySelector(".foodProportion").value || "Não especificado",
       ]);
 
-      // Tabela de alimentos e proporções com largura padrão
+      // Tabela de alimentos e proporções
       doc.autoTable({
         startY: yPosition,
         body: tableData,
