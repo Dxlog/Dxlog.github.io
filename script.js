@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return yPosition + lines.length * 5 + 5; // Ajusta a posição Y conforme o texto
   }
 
-  // Função para desenhar o cabeçalho
+  // Função para desenhar o cabeçalho (somente na primeira página)
   function drawHeader(doc, pageWidth) {
     // Fundo preto no cabeçalho
     doc.setFillColor(0, 0, 0);
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
   }
 
-  // Função para desenhar o rodapé
+  // Função para desenhar o rodapé (somente na última página)
   function drawFooter(doc, pageWidth, clientName) {
     // Fundo preto no rodapé
     doc.setFillColor(0, 0, 0);
@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(10);
     doc.setTextColor("#FFFFFF");
     doc.text(`Aluno(a): ${clientName}`, 15, 290);
-    doc.text("henrique.cordeiro@gmail.com", pageWidth - 15, 290, { align: "right" });
   }
 
   // Função para gerar PDF
@@ -132,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const guidance = document.getElementById("guidance").value || "Não especificado";
     const currentDate = new Date().toLocaleDateString("pt-BR");
 
-    // Desenhar cabeçalho
+    // Desenhar cabeçalho (somente na primeira página)
     drawHeader(doc, pageWidth);
 
     yPosition += 10;
@@ -163,8 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (yPosition + 40 > 270) {
         doc.addPage();
         yPosition = 40;
-        drawHeader(doc, pageWidth);
-        drawFooter(doc, pageWidth, clientName);
       }
 
       yPosition = drawSectionTitleWithLines(doc, mealName, yPosition, pageWidth);
@@ -174,19 +171,21 @@ document.addEventListener("DOMContentLoaded", () => {
         row.querySelector(".foodProportion").value || "Não especificado",
       ]);
 
-      // Tabela de alimentos e proporções
+      // Tabela de alimentos e proporções com largura padrão
       doc.autoTable({
         startY: yPosition,
         body: tableData,
-        tableWidth: pageWidth / 1.5,
+        tableWidth: pageWidth - margin * 2,
         styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" },
-        margin: { left: (pageWidth - pageWidth / 1.5) / 2 },
+        margin: { left: margin },
       });
 
       yPosition = doc.lastAutoTable.finalY + 10;
     });
 
+    // Desenhar rodapé apenas na última página
     drawFooter(doc, pageWidth, clientName);
+
     doc.save("Plano_Alimentar.pdf");
   });
 });
