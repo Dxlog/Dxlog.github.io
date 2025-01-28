@@ -113,8 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#000");
 
     lines.forEach((line) => {
-      doc.circle(15, yPosition + 2, 1, "F"); // Adiciona uma bolinha antes de cada linha
-      doc.text(line.trim(), 20, yPosition + 5);
+      // Adiciona uma bolinha menor, alinhada ao texto
+      doc.circle(12, yPosition + 2.5, 0.8, "F");
+      doc.text(line.trim(), 15, yPosition + 5);
       yPosition += 8; // Incrementa a posição Y
     });
 
@@ -182,6 +183,10 @@ document.addEventListener("DOMContentLoaded", () => {
         startY: yPosition,
         body: tableData,
         tableWidth: pageWidth - margin * 2,
+        columnStyles: {
+          0: { cellWidth: (pageWidth - 2 * margin) / 2 },
+          1: { cellWidth: (pageWidth - 2 * margin) / 2 },
+        },
         styles: { lineColor: [0, 0, 0], lineWidth: 0.5, textColor: "#000" },
         margin: { left: margin },
       });
