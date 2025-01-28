@@ -113,8 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setTextColor("#000");
 
     lines.forEach((line) => {
-      // Adiciona uma bolinha menor, alinhada ao texto
-      doc.circle(12, yPosition + 2.5, 0.8, "F");
+      // Bolinha ajustada para tamanho menor e alinhada ao texto
+      doc.circle(12, yPosition + 2.5, 0.5, "F");
       doc.text(line.trim(), 15, yPosition + 5);
       yPosition += 8; // Incrementa a posição Y
     });
