@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(22);
     doc.setTextColor("#FFFFFF");
-    doc.text("PLANO ALIMENTAR | PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
+    doc.text("PLANO ALIMENTAR PERSONALIZADO", pageWidth / 2, 20, { align: "center" });
   }
 
   // Função para desenhar o rodapé (apenas na última página)
@@ -105,16 +105,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return yPosition + 15; // Retornar nova posição Y
   }
 
-  // Função para desenhar textos descritivos com bolinhas
-  function drawDescriptionWithBullets(doc, description, yPosition, pageWidth) {
+  // Função para desenhar textos descritivos (sem bolinhas)
+  function drawDescription(doc, description, yPosition, pageWidth) {
     const lines = description.split("\n"); // Divide o texto em linhas
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     doc.setTextColor("#000");
 
     lines.forEach((line) => {
-      // Bolinha ajustada para tamanho menor e alinhada ao texto
-      doc.circle(12, yPosition + 2.5, 0.5, "F");
       doc.text(line.trim(), 15, yPosition + 5);
       yPosition += 8; // Incrementa a posição Y
     });
@@ -155,15 +153,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // SUPLEMENTAÇÃO E MANIPULADOS
     yPosition = drawSectionTitleWithLines(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
-    yPosition = drawDescriptionWithBullets(doc, supplementation, yPosition, pageWidth);
+    yPosition = drawDescription(doc, supplementation, yPosition, pageWidth);
 
     // ORIENTAÇÕES
     yPosition = drawSectionTitleWithLines(doc, "ORIENTAÇÕES", yPosition, pageWidth);
-    yPosition = drawDescriptionWithBullets(doc, guidance, yPosition, pageWidth);
+    yPosition = drawDescription(doc, guidance, yPosition, pageWidth);
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
-      const mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      let mealName = mealSection.querySelector(".mealName").value || `Refeição ${index + 1}`;
+      mealName = mealName.toUpperCase(); // Converter o nome da refeição para letras maiúsculas
 
       // Verificar espaço disponível antes de adicionar nova refeição
       if (yPosition + 40 > 270) {
