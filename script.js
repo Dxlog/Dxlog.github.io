@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return yPosition + 15; // Retornar nova posição Y
   }
 
-  // Função para desenhar textos descritivos (sem bolinhas)
+  // Função para desenhar descrições organizadas (sem bolinhas)
   function drawDescription(doc, description, yPosition, pageWidth) {
     const lines = description.split("\n"); // Divide o texto em linhas
     doc.setFont("helvetica", "normal");
