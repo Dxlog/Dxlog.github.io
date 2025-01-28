@@ -105,15 +105,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return yPosition + 15; // Retornar nova posição Y
   }
 
-  // Função para desenhar textos descritivos com alinhamento dinâmico
-  function drawDescription(doc, description, yPosition, pageWidth) {
-    doc.setFontSize(10);
+  // Função para desenhar textos descritivos com bolinhas
+  function drawDescriptionWithBullets(doc, description, yPosition, pageWidth) {
+    const lines = description.split("\n"); // Divide o texto em linhas
     doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
     doc.setTextColor("#000");
 
-    const lines = doc.splitTextToSize(description, pageWidth - 30); // Divide texto em linhas automáticas
-    doc.text(lines, 15, yPosition); // Desenha o texto
-    return yPosition + lines.length * 5 + 5; // Ajusta a posição Y conforme o texto
+    lines.forEach((line) => {
+      doc.circle(15, yPosition + 2, 1, "F"); // Adiciona uma bolinha antes de cada linha
+      doc.text(line.trim(), 20, yPosition + 5);
+      yPosition += 8; // Incrementa a posição Y
+    });
+
+    return yPosition + 5; // Retornar nova posição Y
   }
 
   // Função para gerar PDF
@@ -149,11 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // SUPLEMENTAÇÃO E MANIPULADOS
     yPosition = drawSectionTitleWithLines(doc, "SUPLEMENTAÇÃO E MANIPULADOS", yPosition, pageWidth);
-    yPosition = drawDescription(doc, supplementation, yPosition, pageWidth);
+    yPosition = drawDescriptionWithBullets(doc, supplementation, yPosition, pageWidth);
 
     // ORIENTAÇÕES
     yPosition = drawSectionTitleWithLines(doc, "ORIENTAÇÕES", yPosition, pageWidth);
-    yPosition = drawDescription(doc, guidance, yPosition, pageWidth);
+    yPosition = drawDescriptionWithBullets(doc, guidance, yPosition, pageWidth);
 
     // Refeições
     document.querySelectorAll(".meal-section").forEach((mealSection, index) => {
